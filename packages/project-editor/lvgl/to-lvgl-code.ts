@@ -16,57 +16,74 @@ import {
 ////////////////////////////////////////////////////////////////////////////////
 
 export interface LVGLCode {
-    //
+    // 获取项目对象
     get project(): Project;
 
+    // 获取页面运行时或构建上下文
     get pageRuntime(): LVGLPageRuntime | undefined;
     get lvglBuild(): LVGLBuild | undefined;
 
+    // 是否为 LVGL v9 版本
     get isV9(): boolean;
+    // 检查 LVGL 版本是否匹配给定前缀列表
     isLVGLVersion(prefixes: string[]): boolean;
+    // 是否支持 Flow（数据流）
     get hasFlowSupport(): boolean;
+    // 是否支持屏幕生命周期
     get screensLifetimeSupport(): boolean;
 
+    // 获取 Flow 状态
     get flowState(): any;
 
+    // 获取 LVGL 事件目标对象的函数名
     get lv_event_get_target(): string;
 
-    //
+    // 结束当前控件的生成
     endWidget(): void;
 
-    //
+    // 常量处理
     constant(constant: string): any;
+    // 字符串字面量处理
     stringLiteral(str: string): any;
+    // 字符串属性处理（支持表达式/字面量）
     stringProperty(
         type: string,
         value: string,
         previewValue?: string,
         nonEmpty?: boolean
     ): any;
+    // 颜色处理
     color(color: string | number): any;
+    // 图像资源处理
     image(image: string): any;
 
-    //
+    // 位或运算
     or(...args: any): any;
 
-    //
+    // 获取当前对象访问器
     get objectAccessor(): any;
 
-    //
+    // 创建屏幕
     createScreen(): any;
+    // 创建对象（带位置和尺寸）
     createObject(createObjectFunction: string, ...args: any[]): any;
+    // 创建对象（不带位置和尺寸）
     createObjectWithoutPosAndSize(createObjectFunction: string, ...args: any[]): any;
+    // 获取对象（通过函数）
     getObject(getObjectFunction: string, ...args: any[]): any;
+    // 获取父对象
     getParentObject(getObjectFunction: string, ...args: any[]): any;
 
-    //
+    // 调用对象成员函数
     callObjectFunction(func: string, ...args: any[]): any;
+    // 调用对象成员函数并赋值给变量
     callObjectFunctionWithAssignment(
         declType: string,
         declName: string,
         func: string,
         ...args: any[]
     ): any;
+    // 调用对象成员函数并赋值给状态变量
     callObjectFunctionWithAssignmentToStateVar(
         id: string,
         declType: string,
@@ -74,43 +91,50 @@ export interface LVGLCode {
         func: string,
         ...args: any[]
     ): any;
+    // 内联调用对象成员函数（返回表达式）
     callObjectFunctionInline(func: string, ...args: any[]): any;
 
-    //
+    // 调用全局函数
     callFreeFunction(func: string, ...args: any[]): any;
+    // 调用全局函数并赋值给变量
     callFreeFunctionWithAssignment(
         declType: string,
         declName: string,
         func: string,
         ...args: any[]
     ): any;
+    // 内联调用全局函数（返回表达式）
     callFreeFunctionInline(func: string, ...args: any[]): any;
 
-    //
+    // 计算文本属性（表达式求值）
     evalTextProperty(
         declType: string,
         declName: string,
         propertyValue: string,
         errorMessage: any
     ): any;
+    // 计算整数属性
     evalIntegerProperty(
         declType: string,
         declName: string,
         propertyValue: string,
         errorMessage: any
     ): any;
+    // 计算布尔属性
     evalBooleanProperty(
         declType: string,
         declName: string,
         propertyValue: string,
         errorMessage: any
     ): any;
+    // 计算无符号整数属性
     evalUnsignedIntegerProperty(
         declType: string,
         declName: string,
         propertyValue: string,
         errorMessage: any
     ): any;
+    // 计算字符串数组属性并拼接
     evalStringArrayPropertyAndJoin(
         declType: string,
         declName: string,
@@ -118,18 +142,21 @@ export interface LVGLCode {
         errorMessage: any
     ): any;
 
+    // 赋值整数属性
     assignIntegerProperty(
         propertyName: string,
         propertyValue: string,
         value: any,
         errorMessage: any
     ): void;
+    // 赋值布尔属性
     assignBooleanProperty(
         propertyName: string,
         propertyValue: string,
         value: any,
         errorMessage: any
     ): void;
+    // 赋值字符串属性
     assignStringProperty(
         propertyName: string,
         propertyValue: string,
@@ -137,8 +164,9 @@ export interface LVGLCode {
         errorMessage: any
     ): void;
 
-    //
+    // 添加 tick 回调（单属性）
     addToTick(propertyName: string, callback: () => void): void;
+    // 添加 tick 回调（多属性）
     addToTickMulti(
         properties: {
             propertyName: string;
@@ -146,21 +174,29 @@ export interface LVGLCode {
         }[], 
         finalCallback: (...args: any) => void
     ) : void;
+    // 开始 tick 变化
     tickChangeStart(): void;
+    // 结束 tick 变化
     tickChangeEnd(): void;
 
-    //
+    // 变量赋值语句
     assign(declType: string, declName: string, rhs: any): any;
 
+    // 条件判断 if
     if(a: any, callback: () => void, elseCallback?: () => void): void;
+    // 取反条件判断 if not
     ifNot(a: any, callback: () => void): void;
+    // 字符串不相等判断
     ifStringNotEqual(a: any, b: any, callback: () => void): void;
+    // 字符串前 n 个字符不相等判断
     ifStringNotEqualN(a: any, b: any, n: any, callback: () => void): void;
 
+    // 小于判断
     ifLess(a: any, b: any, callback: () => void): void;
+    // 不等于判断
     ifNotEqual(a: any, b: any, callback: () => void): void;
 
-    //
+    // 构建颜色（单色）
     buildColor<T>(
         object: IEezObject,
         color: string,
@@ -168,6 +204,7 @@ export interface LVGLCode {
         callback: (color: string, params: T) => void,
         updateCallback: (color: any, params: T) => void
     ): void;
+    // 构建颜色（双色）
     buildColor2<T>(
         object: IEezObject,
         color1: string,
@@ -176,28 +213,32 @@ export interface LVGLCode {
         callback: (color1: string, color2: string, params: T) => void,
         updateCallback: (color1: any, color2: any, params: T) => void
     ): void;
+    // 生成状态变量
     genStateVar(id: string, type: string, prefixName: string): string;
+    // 赋值给状态变量
     assingToStateVar(varName: string, value: string): void;
 
-    //
+    // 代码块开始
     blockStart(param: any): void;
+    // 代码块结束
     blockEnd(param: any): void;
 
-    //
+    // 添加事件处理器
     addEventHandler(
         eventName: string,
         callback: (event: any, tick_value_change_obj: any) => void
     ): void;
 
-    //
+    // 控件生成后执行回调
     postWidgetExecute(callback: () => void): void;
 
-    //
+    // 页面生成后执行回调
     postPageExecute(callback: () => void): void;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
+// 模拟器中的 LVGL 代码生成实现
 export class SimulatorLVGLCode implements LVGLCode {
     constructor(
         public runtime: LVGLPageRuntime,
@@ -208,7 +249,7 @@ export class SimulatorLVGLCode implements LVGLCode {
     parentObj: number;
     customWidget?: ICustomWidgetCreateParams;
 
-    obj: number;
+    obj: number; // 当前 LVGL 对象指针
 
     flowState: number;
     componentIndex: number;
@@ -216,10 +257,11 @@ export class SimulatorLVGLCode implements LVGLCode {
 
     buildColorParams: any;
 
-    allocated: number[] = [];
+    allocated: number[] = []; // 记录已分配的内存指针，用于释放
 
     postWidgetExecuteCallbacks: (() => void)[] = [];
 
+    // 开始生成控件
     startWidget(
         widget: LVGLWidget,
         parentObj: number,
@@ -231,6 +273,7 @@ export class SimulatorLVGLCode implements LVGLCode {
         this.buildColorParams = undefined;
     }
 
+    // 结束控件生成，执行回调并释放临时内存
     endWidget() {
         for (const callback of this.postWidgetExecuteCallbacks) {
             callback();
@@ -850,12 +893,13 @@ export class SimulatorLVGLCode implements LVGLCode {
     }
 }
 
+// 构建（生成 C 代码）时的 LVGL 代码生成实现
 export class BuildLVGLCode implements LVGLCode {
     constructor(public build: LVGLBuild) {}
 
     widget: LVGLWidget;
 
-    isTick = false;
+    isTick = false; // 是否处于 tick 回调中
     componentIndex: number;
     propertyIndex: number;
 

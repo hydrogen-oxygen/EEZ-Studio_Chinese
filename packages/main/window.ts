@@ -158,7 +158,7 @@ export function createWindow(params: IWindowParams) {
                     )
                 )();
 
-                // if no visible window left, app can quit
+                // 如果没有可见窗口，应用可以退出
                 if (!windows.find(window => window.browserWindow.isVisible())) {
                     app.quit();
                 }
@@ -319,16 +319,16 @@ ipcMain.on("printPDF", (event: any, { content, options }: any) => {
 
     ipcMain.once("readyToPrintPDF", async event => {
         const showSaveDialogPromise = dialog.showSaveDialog(senderWindow, {
-            filters: [{ name: "PDF files", extensions: ["pdf"] }]
+            filters: [{ name: "PDF 文件", extensions: ["pdf"] }]
         });
 
         let data;
         try {
-            // Use default printing options
+            // 使用默认打印选项
             data = await printWindow.webContents.printToPDF(options);
         } catch (err: any) {
             await dialog.showMessageBox(senderWindow, {
-                title: "Print to PDF - EEZ Studio",
+                title: "打印为 PDF - EEZ Studio",
                 message: err.toString()
             });
         } finally {
@@ -348,7 +348,7 @@ ipcMain.on("printPDF", (event: any, { content, options }: any) => {
                 shell.openPath(filePath);
             } catch (err: any) {
                 await dialog.showMessageBox(senderWindow, {
-                    title: "Print to PDF - EEZ Studio",
+                    title: "打印为 PDF - EEZ Studio",
                     message: err.toString()
                 });
             }

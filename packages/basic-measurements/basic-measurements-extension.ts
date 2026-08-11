@@ -37,7 +37,7 @@ const fftParametersDescription: IFieldProperties[] = [
     // },
     {
         name: "xAxis",
-        displayName: "X axis",
+        displayName: "X轴",
         type: "enum",
         defaultValue: "logarithmic",
         enumItems: [
@@ -48,7 +48,7 @@ const fftParametersDescription: IFieldProperties[] = [
     },
     {
         name: "yAxis",
-        displayName: "Y axis",
+        displayName: "Y轴",
         type: "enum",
         defaultValue: "decibel",
         enumItems: [

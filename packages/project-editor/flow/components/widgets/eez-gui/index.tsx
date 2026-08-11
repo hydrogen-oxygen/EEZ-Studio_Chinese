@@ -132,6 +132,7 @@ import { Button } from "eez-studio-ui/button";
 
 import type * as FileTypeModule from "instrument/connection/file-type";
 
+// 条形图方向常量
 const BAR_GRAPH_ORIENTATION_LEFT_RIGHT = 1;
 const BAR_GRAPH_ORIENTATION_RIGHT_LEFT = 2;
 const BAR_GRAPH_ORIENTATION_TOP_BOTTOM = 3;
@@ -141,14 +142,15 @@ const BAR_GRAPH_DO_NOT_DISPLAY_VALUE = 1 << 4;
 import { isArray } from "eez-studio-shared/util";
 
 ////////////////////////////////////////////////////////////////////////////////
+// 数据显示控件
 
 enum DisplayOption {
-    All = 0,
-    Integer = 1,
-    FractionAndUnit = 2,
-    Fraction = 3,
-    Unit = 4,
-    IntegerAndFraction = 5
+    All = 0,          // 全部
+    Integer = 1,      // 整数
+    FractionAndUnit = 2, // 小数和单位
+    Fraction = 3,     // 小数
+    Unit = 4,         // 单位
+    IntegerAndFraction = 5 // 整数和小数
 }
 
 export class DisplayDataWidget extends Widget {
@@ -166,9 +168,9 @@ export class DisplayDataWidget extends Widget {
 
         properties: [
             makeDataPropertyInfo("data", {}, "any"),
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             Object.assign(
-                makeStylePropertyInfo("focusStyle", "Focused style"),
+                makeStylePropertyInfo("focusStyle", "焦点样式"),
                 { hideInPropertyGrid: isNotV1Project },
                 {
                     isOptional: true
@@ -180,27 +182,27 @@ export class DisplayDataWidget extends Widget {
                 enumItems: [
                     {
                         id: DisplayOption.All,
-                        label: "All"
+                        label: "全部"
                     },
                     {
                         id: DisplayOption.Integer,
-                        label: "Integer"
+                        label: "整数"
                     },
                     {
                         id: DisplayOption.FractionAndUnit,
-                        label: "Fraction and unit"
+                        label: "小数和单位"
                     },
                     {
                         id: DisplayOption.Fraction,
-                        label: "Fraction"
+                        label: "小数"
                     },
                     {
                         id: DisplayOption.Unit,
-                        label: "Unit"
+                        label: "单位"
                     },
                     {
                         id: DisplayOption.IntegerAndFraction,
-                        label: "Integer and fraction"
+                        label: "整数和小数"
                     }
                 ],
                 propertyGridGroup: specificGroup
@@ -278,6 +280,7 @@ export class DisplayDataWidget extends Widget {
     applyDisplayOption(text: string) {
         text = text.toString();
 
+        // 查找小数部分的起始位置
         function findStartOfFraction() {
             let i;
             for (
@@ -292,6 +295,7 @@ export class DisplayDataWidget extends Widget {
             return i;
         }
 
+        // 查找单位的起始位置
         function findStartOfUnit(i: number) {
             for (
                 i = 0;
@@ -375,7 +379,7 @@ export class DisplayDataWidget extends Widget {
 
     buildFlowWidgetSpecific(assets: Assets, dataBuffer: DataBuffer) {
         if (isV3OrNewerProject(this)) {
-            // refreshRate
+            // 刷新速率
             dataBuffer.writeInt16(
                 assets.projectStore.projectTypeTraits.hasFlowSupport
                     ? assets.getWidgetDataItemIndex(this, "refreshRate")
@@ -383,7 +387,7 @@ export class DisplayDataWidget extends Widget {
             );
         }
 
-        // displayOption
+        // 显示选项
         dataBuffer.writeUint8(this.displayOption || 0);
     }
 }
@@ -391,6 +395,7 @@ export class DisplayDataWidget extends Widget {
 registerClass("DisplayDataWidget", DisplayDataWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 文本控件
 
 export class TextWidget extends Widget {
     name: string;
@@ -437,13 +442,13 @@ export class TextWidget extends Widget {
                 displayName: (widget: TextWidget) => {
                     const project = ProjectEditor.getProject(widget);
                     if (project.projectTypeTraits.hasFlowSupport) {
-                        return "Text";
+                        return "文本";
                     }
-                    return "Data";
+                    return "数据";
                 }
             }),
             makeTextPropertyInfo("text", {
-                displayName: "Static text",
+                displayName: "静态文本",
                 disabled: isProjectWithFlowSupport
             }),
             {
@@ -453,9 +458,9 @@ export class TextWidget extends Widget {
                 propertyGridGroup: specificGroup,
                 disabled: isV3OrNewerProject
             },
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             Object.assign(
-                makeStylePropertyInfo("focusStyle", "Focused style"),
+                makeStylePropertyInfo("focusStyle", "焦点样式"),
                 { enabled: isNotV1Project },
                 {
                     isOptional: true
@@ -588,10 +593,10 @@ export class TextWidget extends Widget {
     }
 
     buildFlowWidgetSpecific(assets: Assets, dataBuffer: DataBuffer) {
-        // text
+        // 文本
         buildWidgetText(assets, dataBuffer, this.text);
 
-        // flags
+        // 标志位
         let flags: number = 0;
 
         // ignoreLuminocity
@@ -606,10 +611,11 @@ export class TextWidget extends Widget {
 registerClass("TextWidget", TextWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 多行文本控件
 
 enum MultilineTextRenderStep {
-    MEASURE,
-    RENDER
+    MEASURE, // 测量
+    RENDER   // 渲染
 }
 
 class MultilineTextRender {
@@ -859,28 +865,28 @@ export class MultilineTextWidget extends Widget {
                 displayName: (widget: MultilineTextWidget) => {
                     const project = ProjectEditor.getProject(widget);
                     if (project.projectTypeTraits.hasFlowSupport) {
-                        return "Text";
+                        return "文本";
                     }
-                    return "Data";
+                    return "数据";
                 }
             }),
             makeTextPropertyInfo("text", {
-                displayName: "Static text",
+                displayName: "静态文本",
                 disabled: isProjectWithFlowSupport
             }),
             {
                 name: "firstLineIndent",
-                displayName: "First line",
+                displayName: "首行缩进",
                 type: PropertyType.Number,
                 propertyGridGroup: indentationGroup
             },
             {
                 name: "hangingIndent",
-                displayName: "Hanging",
+                displayName: "悬挂缩进",
                 type: PropertyType.Number,
                 propertyGridGroup: indentationGroup
             },
-            makeStylePropertyInfo("style", "Default style")
+            makeStylePropertyInfo("style", "默认样式")
         ],
 
         beforeLoadHook: (widget: Widget, jsObject: any, project: Project) => {
@@ -895,7 +901,7 @@ export class MultilineTextWidget extends Widget {
         },
 
         defaultValue: {
-            text: "Multiline text",
+            text: "多行文本",
             left: 0,
             top: 0,
             width: 64,
@@ -983,13 +989,13 @@ export class MultilineTextWidget extends Widget {
     }
 
     buildFlowWidgetSpecific(assets: Assets, dataBuffer: DataBuffer) {
-        // text
+        // 文本
         buildWidgetText(assets, dataBuffer, this.text);
 
-        // first line
+        // 首行缩进
         dataBuffer.writeInt16(this.firstLineIndent || 0);
 
-        // hanging
+        // 悬挂缩进
         dataBuffer.writeInt16(this.hangingIndent || 0);
     }
 }
@@ -997,6 +1003,7 @@ export class MultilineTextWidget extends Widget {
 registerClass("MultilineTextWidget", MultilineTextWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 矩形控件
 
 export class RectangleWidget extends Widget {
     ignoreLuminocity: boolean;
@@ -1024,7 +1031,7 @@ export class RectangleWidget extends Widget {
                 defaultValue: false,
                 disabled: isV3OrNewerProject
             },
-            makeStylePropertyInfo("style", "Default style")
+            makeStylePropertyInfo("style", "默认样式")
         ],
 
         defaultValue: {
@@ -1098,7 +1105,7 @@ export class RectangleWidget extends Widget {
     }
 
     buildFlowWidgetSpecific(assets: Assets, dataBuffer: DataBuffer) {
-        // flags
+        // 标志位
         let flags: number = 0;
 
         // invertColors
@@ -1118,6 +1125,7 @@ export class RectangleWidget extends Widget {
 registerClass("RectangleWidget", RectangleWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 位图控件 - 属性网格自定义UI
 
 const BitmapWidgetPropertyGridUI = observer(
     class BitmapWidgetPropertyGridUI extends React.Component<PropertyProps> {
@@ -1169,7 +1177,7 @@ const BitmapWidgetPropertyGridUI = observer(
                     size="small"
                     onClick={this.resizeToFitBitmap}
                 >
-                    Resize to Fit Bitmap
+                    调整大小以适配位图
                 </Button>
             );
         }
@@ -1222,7 +1230,7 @@ export class BitmapWidget extends Widget {
                 computed: true,
                 propertyGridRowComponent: BitmapWidgetPropertyGridUI
             },
-            makeStylePropertyInfo("style", "Default style")
+            makeStylePropertyInfo("style", "默认样式")
         ],
 
         defaultValue: {
@@ -1254,7 +1262,7 @@ export class BitmapWidget extends Widget {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        "Either Bitmap or Data must be set",
+                        "必须设置位图或数据",
                         object
                     )
                 );
@@ -1263,7 +1271,7 @@ export class BitmapWidget extends Widget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            "Both Bitmap and Data set, only Data is used",
+                            "同时设置了位图和数据，仅使用数据",
                             object
                         )
                     );
@@ -1325,7 +1333,7 @@ export class BitmapWidget extends Widget {
                     require("instrument/connection/file-type") as typeof FileTypeModule;
                 const fileType = detectFileType(data);
                 return URL.createObjectURL(
-                    new Blob([Buffer.from(data)], { type: fileType.mime } /* (1) */)
+                    new Blob([Buffer.from(data)], { type: fileType.mime })
                 );
             }
 
@@ -1418,7 +1426,7 @@ export class BitmapWidget extends Widget {
     }
 
     buildFlowWidgetSpecific(assets: Assets, dataBuffer: DataBuffer) {
-        // bitmap
+        // 位图
         let bitmap: number = 0;
         if (this.bitmap) {
             bitmap = assets.getBitmapIndex(this, "bitmap");
@@ -1431,6 +1439,7 @@ export class BitmapWidget extends Widget {
 registerClass("BitmapWidget", BitmapWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 按钮控件
 
 export class ButtonWidget extends Widget {
     text?: string;
@@ -1449,16 +1458,16 @@ export class ButtonWidget extends Widget {
                 displayName: (widget: ButtonWidget) => {
                     const project = ProjectEditor.getProject(widget);
                     if (project.projectTypeTraits.hasFlowSupport) {
-                        return "Label";
+                        return "标签";
                     }
-                    return "Data";
+                    return "数据";
                 }
             }),
             makeTextPropertyInfo("text", {
                 disabled: isProjectWithFlowSupport
             }),
             makeDataPropertyInfo("enabled"),
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             makeStylePropertyInfo("disabledStyle")
         ],
 
@@ -1484,7 +1493,7 @@ export class ButtonWidget extends Widget {
             top: 0,
             width: 80,
             height: 40,
-            data: `"Button"`,
+            data: `"按钮"`,
             eventHandlers: [
                 {
                     eventName: "CLICKED",
@@ -1618,7 +1627,7 @@ export class ButtonWidget extends Widget {
     }
 
     buildFlowWidgetSpecific(assets: Assets, dataBuffer: DataBuffer) {
-        // text
+        // 文本
         buildWidgetText(assets, dataBuffer, this.text);
 
         // enabled
@@ -1632,6 +1641,7 @@ export class ButtonWidget extends Widget {
 registerClass("ButtonWidget", ButtonWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 切换按钮控件
 
 export class ToggleButtonWidget extends Widget {
     static classInfo = makeDerivedClassInfo(Widget.classInfo, {
@@ -1654,7 +1664,7 @@ export class ToggleButtonWidget extends Widget {
                 type: PropertyType.String,
                 propertyGridGroup: specificGroup
             },
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             makeStylePropertyInfo("checkedStyle")
         ],
 
@@ -1736,10 +1746,10 @@ export class ToggleButtonWidget extends Widget {
     }
 
     buildFlowWidgetSpecific(assets: Assets, dataBuffer: DataBuffer) {
-        // text 1
+        // 文本1
         buildWidgetText(assets, dataBuffer, this.text1);
 
-        // text 2
+        // 文本2
         buildWidgetText(assets, dataBuffer, this.text2);
 
         // checkedStyle
@@ -1750,6 +1760,7 @@ export class ToggleButtonWidget extends Widget {
 registerClass("ToggleButtonWidget", ToggleButtonWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 按钮组控件
 
 export class ButtonGroupWidget extends Widget {
     static classInfo = makeDerivedClassInfo(Widget.classInfo, {
@@ -1768,9 +1779,9 @@ export class ButtonGroupWidget extends Widget {
                         project.projectTypeTraits.hasFlowSupport &&
                         project.settings.general.projectVersion == "v3"
                     ) {
-                        return "Button labels";
+                        return "按钮标签";
                     }
-                    return "Data";
+                    return "数据";
                 }
             }),
             makeDataPropertyInfo("selectedButton", {
@@ -1782,7 +1793,7 @@ export class ButtonGroupWidget extends Widget {
                     );
                 }
             }),
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             makeStylePropertyInfo("selectedStyle")
         ],
 
@@ -1881,7 +1892,7 @@ export class ButtonGroupWidget extends Widget {
                         let h = height;
 
                         if (w > h) {
-                            // horizontal orientation
+                            // 水平方向
                             let buttonWidth = Math.floor(
                                 w / buttonLabels.length
                             );
@@ -1917,7 +1928,7 @@ export class ButtonGroupWidget extends Widget {
                                 }
                             }
                         } else {
-                            // vertical orientation
+                            // 垂直方向
                             let buttonWidth = w;
                             let buttonHeight = Math.floor(
                                 h / buttonLabels.length
@@ -1988,6 +1999,7 @@ export class ButtonGroupWidget extends Widget {
 registerClass("ButtonGroupWidget", ButtonGroupWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 条形图控件
 
 export class BarGraphWidget extends Widget {
     orientation?: string;
@@ -2018,16 +2030,20 @@ export class BarGraphWidget extends Widget {
                 propertyGridGroup: specificGroup,
                 enumItems: [
                     {
-                        id: "left-right"
+                        id: "left-right",
+                        label: "左-右"
                     },
                     {
-                        id: "right-left"
+                        id: "right-left",
+                        label: "右-左"
                     },
                     {
-                        id: "top-bottom"
+                        id: "top-bottom",
+                        label: "上-下"
                     },
                     {
-                        id: "bottom-top"
+                        id: "bottom-top",
+                        label: "下-上"
                     }
                 ]
             },
@@ -2037,8 +2053,8 @@ export class BarGraphWidget extends Widget {
                 propertyGridGroup: specificGroup
             },
             makeDataPropertyInfo("data"),
-            makeDataPropertyInfo("line1Data", { displayName: "Threshold1" }),
-            makeDataPropertyInfo("line2Data", { displayName: "Threshold2" }),
+            makeDataPropertyInfo("line1Data", { displayName: "阈值1" }),
+            makeDataPropertyInfo("line2Data", { displayName: "阈值2" }),
             makeDataPropertyInfo("min", {
                 disabled: hasNotFlowSupport
             }),
@@ -2048,10 +2064,10 @@ export class BarGraphWidget extends Widget {
             makeDataPropertyInfo("refreshRate", {
                 disabled: hasNotFlowSupport
             }),
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             makeStylePropertyInfo("textStyle"),
-            makeStylePropertyInfo("line1Style", "Threshold1 style"),
-            makeStylePropertyInfo("line2Style", "Threshold2 style")
+            makeStylePropertyInfo("line1Style", "阈值1样式"),
+            makeStylePropertyInfo("line2Style", "阈值2样式")
         ],
 
         beforeLoadHook: (
@@ -2373,6 +2389,7 @@ export class BarGraphWidget extends Widget {
 registerClass("BarGraphWidget", BarGraphWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// YT 图表控件（Y-T 图）
 
 export class YTGraphWidget extends Widget {
     y1Style: Style;
@@ -2491,6 +2508,7 @@ export class YTGraphWidget extends Widget {
 registerClass("YTGraphWidget", YTGraphWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 上下调节控件（Up/Down）
 
 export class UpDownWidget extends Widget {
     static classInfo = makeDerivedClassInfo(Widget.classInfo, {
@@ -2513,7 +2531,7 @@ export class UpDownWidget extends Widget {
             makeDataPropertyInfo("max", {
                 disabled: isNotProjectWithFlowSupport
             }),
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             makeStylePropertyInfo("buttonsStyle")
         ],
 
@@ -2657,10 +2675,10 @@ export class UpDownWidget extends Widget {
     }
 
     buildFlowWidgetSpecific(assets: Assets, dataBuffer: DataBuffer) {
-        // down button text
+        // 下按钮文本
         buildWidgetText(assets, dataBuffer, this.downButtonText, "<");
 
-        // up button text
+        // 上按钮文本
         buildWidgetText(assets, dataBuffer, this.upButtonText, ">");
 
         // buttonStyle
@@ -2679,6 +2697,7 @@ export class UpDownWidget extends Widget {
 registerClass("UpDownWidget", UpDownWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 列表图控件
 
 export class ListGraphWidget extends Widget {
     dwellData?: string;
@@ -2841,6 +2860,7 @@ export class ListGraphWidget extends Widget {
 registerClass("ListGraphWidget", ListGraphWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 进度条控件
 
 export class ProgressWidget extends Widget {
     static classInfo = makeDerivedClassInfo(Widget.classInfo, {
@@ -2867,14 +2887,16 @@ export class ProgressWidget extends Widget {
                 propertyGridGroup: specificGroup,
                 enumItems: [
                     {
-                        id: "horizontal"
+                        id: "horizontal",
+                        label: "水平"
                     },
                     {
-                        id: "vertical"
+                        id: "vertical",
+                        label: "垂直"
                     }
                 ]
             },
-            makeStylePropertyInfo("style", "Default style")
+            makeStylePropertyInfo("style", "默认样式")
         ],
 
         beforeLoadHook: (
@@ -2985,7 +3007,7 @@ export class ProgressWidget extends Widget {
                             true
                         );
 
-                        // draw thumb
+                        // 绘制滑块
                         eezGuiDraw.setColor(this.style.colorProperty);
                         if (isHorizontal) {
                             eezGuiDraw.drawBackground(
@@ -3039,6 +3061,7 @@ export class ProgressWidget extends Widget {
 registerClass("ProgressWidget", ProgressWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// App 视图控件
 
 export class AppViewWidget extends Widget {
     page: string;
@@ -3145,6 +3168,7 @@ export class AppViewWidget extends Widget {
 registerClass("AppViewWidget", AppViewWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 滚动条控件
 
 export class ScrollBarWidget extends Widget {
     thumbStyle: Style;
@@ -3162,7 +3186,7 @@ export class ScrollBarWidget extends Widget {
 
         properties: [
             makeDataPropertyInfo("data", {}, "struct:$ScrollbarState"),
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             makeStylePropertyInfo("thumbStyle"),
             makeStylePropertyInfo("buttonsStyle"),
             makeTextPropertyInfo("leftButtonText"),
@@ -3238,7 +3262,7 @@ export class ScrollBarWidget extends Widget {
 
                         let buttonSize = isHorizontal ? height : width;
 
-                        // draw left button
+                        // 绘制左按钮
                         eezGuiDraw.drawText(
                             ctx,
                             widget.leftButtonText || "<",
@@ -3250,7 +3274,7 @@ export class ScrollBarWidget extends Widget {
                             false
                         );
 
-                        // draw track
+                        // 绘制轨道
                         let x;
                         let y;
                         let w;
@@ -3271,7 +3295,7 @@ export class ScrollBarWidget extends Widget {
                         eezGuiDraw.setColor(this.style.colorProperty);
                         eezGuiDraw.fillRect(ctx, x, y, x + w - 1, y + h - 1);
 
-                        // draw thumb
+                        // 绘制滑块
                         let data = (widget.data &&
                             flowContext.dataContext.get(widget.data)) || [
                             100, 25, 20
@@ -3319,7 +3343,7 @@ export class ScrollBarWidget extends Widget {
                             yThumb + heightThumb - 1
                         );
 
-                        // draw right button
+                        // 绘制右按钮
                         eezGuiDraw.drawText(
                             ctx,
                             widget.rightButtonText || ">",
@@ -3344,10 +3368,10 @@ export class ScrollBarWidget extends Widget {
         // buttonStyle
         dataBuffer.writeInt16(assets.getStyleIndex(this, "buttonsStyle"));
 
-        // down button text
+        // 左按钮文本
         buildWidgetText(assets, dataBuffer, this.leftButtonText, "<");
 
-        // up button text
+        // 右按钮文本
         buildWidgetText(assets, dataBuffer, this.rightButtonText, ">");
     }
 }
@@ -3355,6 +3379,7 @@ export class ScrollBarWidget extends Widget {
 registerClass("ScrollBarWidget", ScrollBarWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 画布控件
 
 export class CanvasWidget extends Widget {
     static classInfo = makeDerivedClassInfo(Widget.classInfo, {
@@ -3428,6 +3453,7 @@ export class CanvasWidget extends Widget {
 registerClass("CanvasWidget", CanvasWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 折线图 - 线条定义
 
 class LineChartLine extends EezObject {
     label: string;
@@ -3451,7 +3477,7 @@ class LineChartLine extends EezObject {
             },
             {
                 name: "width",
-                displayName: "Line width",
+                displayName: "线宽",
                 type: PropertyType.Number,
                 propertyGridGroup: specificGroup
             },
@@ -3483,7 +3509,7 @@ class LineChartLine extends EezObject {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `Invalid expression: ${err}`,
+                        `无效表达式: ${err}`,
                         getChildOfObject(lineChartTrace, "label")
                     )
                 );
@@ -3500,7 +3526,7 @@ class LineChartLine extends EezObject {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `Invalid expression: ${err}`,
+                        `无效表达式: ${err}`,
                         getChildOfObject(lineChartTrace, "value")
                     )
                 );
@@ -3542,7 +3568,7 @@ export class LineChartEmbeddedWidget extends Widget {
             makeExpressionProperty(
                 {
                     name: "xValue",
-                    displayName: "X value",
+                    displayName: "X 值",
                     type: PropertyType.MultilineText,
                     propertyGridGroup: specificGroup
                 },
@@ -3561,12 +3587,12 @@ export class LineChartEmbeddedWidget extends Widget {
             makeDataPropertyInfo("showLegend", {}, "boolean"),
             makeDataPropertyInfo(
                 "showXAxis",
-                { displayName: "Show X axis" },
+                { displayName: "显示 X 轴" },
                 "boolean"
             ),
             makeDataPropertyInfo(
                 "showYAxis",
-                { displayName: "Show Y axis" },
+                { displayName: "显示 Y 轴" },
                 "boolean"
             ),
             makeDataPropertyInfo("showYAxis", {}, "boolean"),
@@ -3578,11 +3604,11 @@ export class LineChartEmbeddedWidget extends Widget {
                 enumItems: [
                     {
                         id: "floating",
-                        label: "Floating"
+                        label: "浮动"
                     },
                     {
                         id: "fixed",
-                        label: "Fixed"
+                        label: "固定"
                     }
                 ],
                 propertyGridGroup: specificGroup
@@ -3616,7 +3642,7 @@ export class LineChartEmbeddedWidget extends Widget {
                 enumerable: false
             },
             makeDataPropertyInfo("marker", {}, "float"),
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             makeStylePropertyInfo("titleStyle"),
             makeStylePropertyInfo("legendStyle"),
             makeStylePropertyInfo("xAxisStyle"),
@@ -3810,6 +3836,7 @@ export class LineChartEmbeddedWidget extends Widget {
                             ticksDelta: number;
                         }
 
+                        // 计算自动刻度
                         function calcAutoTicks(axis: Axis, maxTicks: number) {
                             const pxStart =
                                 axis.position == "x"
@@ -3838,6 +3865,7 @@ export class LineChartEmbeddedWidget extends Widget {
                             axis.ticksDelta = delta;
                         }
 
+                        // 绘制标题
                         const drawTitle = (
                             x: number,
                             y: number,
@@ -3861,6 +3889,7 @@ export class LineChartEmbeddedWidget extends Widget {
 
                         const LEGEND_ICON_WIDTH = 32;
 
+                        // 测量图例宽度
                         const measLegendWidth = () => {
                             if (!showLegend) {
                                 return { legendWidth: 0, legendLineHeight: 0 };
@@ -3876,7 +3905,7 @@ export class LineChartEmbeddedWidget extends Widget {
                             let maxWidth = 0;
 
                             for (let i = 0; i < this.lines.length; i++) {
-                                chart.legendLabels.push(`Trace ${i}`);
+                                chart.legendLabels.push(`迹线 ${i}`);
 
                                 const width = eezGuiDraw.measureStr(
                                     chart.legendLabels[i],
@@ -3894,6 +3923,7 @@ export class LineChartEmbeddedWidget extends Widget {
                             };
                         };
 
+                        // 绘制图例
                         const drawLegend = (
                             x: number,
                             y: number,
@@ -3952,6 +3982,7 @@ export class LineChartEmbeddedWidget extends Widget {
                             }
                         };
 
+                        // 绘制 X 轴
                         const drawXAxis = (axis: Axis) => {
                             const from =
                                 Math.ceil(axis.min / axis.ticksDelta) *
@@ -3981,6 +4012,7 @@ export class LineChartEmbeddedWidget extends Widget {
                             }
                         };
 
+                        // 绘制 Y 轴
                         const drawYAxis = (axis: Axis) => {
                             const from =
                                 Math.ceil(axis.min / axis.ticksDelta) *
@@ -4010,6 +4042,7 @@ export class LineChartEmbeddedWidget extends Widget {
                             }
                         };
 
+                        // 绘制网格
                         const drawGrid = () => {
                             const drawVerticalGrid = (
                                 y: number,
@@ -4070,6 +4103,7 @@ export class LineChartEmbeddedWidget extends Widget {
                             );
                         };
 
+                        // 绘制线条
                         const drawLines = () => {
                             ctx.beginPath();
                             ctx.rect(
@@ -4119,6 +4153,7 @@ export class LineChartEmbeddedWidget extends Widget {
                             }
                         };
 
+                        // 图表数据对象
                         const chart: {
                             legendLabels: string[];
                             xAxis: Axis;
@@ -4496,6 +4531,7 @@ export class LineChartEmbeddedWidget extends Widget {
 registerClass("LineChartEmbeddedWidget", LineChartEmbeddedWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 仪表盘控件（Gauge）
 
 export class GaugeEmbeddedWidget extends Widget {
     min: string;
@@ -4523,7 +4559,7 @@ export class GaugeEmbeddedWidget extends Widget {
             makeDataPropertyInfo("max"),
             makeDataPropertyInfo("threshold"),
             makeDataPropertyInfo("unit"),
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             makeStylePropertyInfo("barStyle"),
             makeStylePropertyInfo("valueStyle"),
             makeStylePropertyInfo("ticksStyle"),
@@ -4575,7 +4611,7 @@ export class GaugeEmbeddedWidget extends Widget {
         let widget = this;
         let style = widget.style;
 
-        // draw border
+        // 绘制边框（弧形）
         function arcBorder(
             ctx: CanvasRenderingContext2D,
             xCenter: number,
@@ -4626,7 +4662,7 @@ export class GaugeEmbeddedWidget extends Widget {
             ctx.lineTo(xCenter - radOuter, yCenter);
         }
 
-        // draw bar
+        // 绘制进度条（弧形）
         function arcBar(
             ctx: CanvasRenderingContext2D,
             xCenter: number,
@@ -4660,6 +4696,7 @@ export class GaugeEmbeddedWidget extends Widget {
             );
         }
 
+        // 计算第一个刻度值
         function firstTick(n: number) {
             const p = Math.pow(10, Math.floor(Math.log10(n / 6)));
             let f = n / 6 / p;
@@ -4679,7 +4716,7 @@ export class GaugeEmbeddedWidget extends Widget {
             width: number,
             height: number
         ) => {
-            // min
+            // min, max, value, threshold, unit
             let min;
             let max;
             let value;
@@ -4738,7 +4775,7 @@ export class GaugeEmbeddedWidget extends Widget {
             const xCenter = w / 2;
             const yCenter = h - 8;
 
-            // draw border
+            // 绘制边框
             const radBorderOuter = (w - PADDING_HORZ) / 2;
 
             const BORDER_WIDTH = Math.round(radBorderOuter / 3);
@@ -4751,7 +4788,7 @@ export class GaugeEmbeddedWidget extends Widget {
             arcBorder(ctx, xCenter, yCenter, radBorderOuter, radBorderInner);
             ctx.stroke();
 
-            // draw bar
+            // 绘制进度条
             const radBar = (w - PADDING_HORZ) / 2 - BORDER_WIDTH / 2;
             const angle = remap(value, min, 0.0, max, 180.0);
             ctx.beginPath();
@@ -4766,7 +4803,7 @@ export class GaugeEmbeddedWidget extends Widget {
             ctx.stroke();
             ctx.restore();
 
-            // draw threshold
+            // 绘制阈值线
             const thresholdAngleDeg = remap(threshold, min, 180.0, max, 0);
             if (thresholdAngleDeg >= 0 && thresholdAngleDeg <= 180.0) {
                 const tickAngle = (thresholdAngleDeg * Math.PI) / 180;
@@ -4788,7 +4825,7 @@ export class GaugeEmbeddedWidget extends Widget {
                 ctx.stroke();
             }
 
-            // draw ticks
+            // 绘制刻度
             const ticksfont = eezGuiDraw.styleGetFont(ticksStyle);
             const ft = firstTick(max - min);
             const ticksRad = radBorderOuter + 1;
@@ -4890,7 +4927,7 @@ export class GaugeEmbeddedWidget extends Widget {
                 }
             }
 
-            // draw value
+            // 绘制数值
             const font = eezGuiDraw.styleGetFont(valueStyle);
             if (font) {
                 const valueText = unit ? `${value} ${unit}` : value.toString();
@@ -4954,6 +4991,7 @@ export class GaugeEmbeddedWidget extends Widget {
 registerClass("GaugeEmbeddedWidget", GaugeEmbeddedWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 输入控件
 
 export class InputEmbeddedWidget extends Widget {
     inputType: "text" | "number";
@@ -4984,22 +5022,24 @@ export class InputEmbeddedWidget extends Widget {
                 propertyGridGroup: specificGroup,
                 enumItems: [
                     {
-                        id: "number"
+                        id: "number",
+                        label: "数字"
                     },
                     {
-                        id: "text"
+                        id: "text",
+                        label: "文本"
                     }
                 ]
             },
             {
                 ...makeDataPropertyInfo("min"),
                 displayName: (widget: InputEmbeddedWidget) =>
-                    widget.inputType === "text" ? "Min (chars)" : "Min"
+                    widget.inputType === "text" ? "最小字符数" : "最小值"
             },
             {
                 ...makeDataPropertyInfo("max"),
                 displayName: (widget: InputEmbeddedWidget) =>
-                    widget.inputType === "text" ? "Max (chars)" : "Max"
+                    widget.inputType === "text" ? "最大字符数" : "最大值"
             },
             {
                 ...makeDataPropertyInfo("precision"),
@@ -5018,7 +5058,7 @@ export class InputEmbeddedWidget extends Widget {
                     widget.inputType != "text",
                 propertyGridGroup: specificGroup
             },
-            makeStylePropertyInfo("style", "Default style")
+            makeStylePropertyInfo("style", "默认样式")
         ],
 
         defaultValue: {
@@ -5159,7 +5199,7 @@ export class InputEmbeddedWidget extends Widget {
     }
 
     buildFlowWidgetSpecific(assets: Assets, dataBuffer: DataBuffer) {
-        // flags
+        // 标志位
         let flags = 0;
 
         const INPUT_WIDGET_TYPE_TEXT = 0x0001;
@@ -5205,6 +5245,7 @@ export class InputEmbeddedWidget extends Widget {
 registerClass("InputEmbeddedWidget", InputEmbeddedWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 滚轮控件（Roller）
 
 export class RollerWidget extends Widget {
     min: string;
@@ -5228,7 +5269,7 @@ export class RollerWidget extends Widget {
             makeDataPropertyInfo("min"),
             makeDataPropertyInfo("max"),
             makeDataPropertyInfo("text"),
-            makeStylePropertyInfo("style", "Default style"),
+            makeStylePropertyInfo("style", "默认样式"),
             makeStylePropertyInfo("selectedValueStyle"),
             makeStylePropertyInfo("unselectedValueStyle")
         ],
@@ -5390,6 +5431,7 @@ export class RollerWidget extends Widget {
 registerClass("RollerWidget", RollerWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 开关控件
 
 export class SwitchWidget extends Widget {
     static classInfo = makeDerivedClassInfo(Widget.classInfo, {
@@ -5403,7 +5445,7 @@ export class SwitchWidget extends Widget {
 
         properties: [
             makeDataPropertyInfo("data", {}, "boolean"),
-            makeStylePropertyInfo("style", "Default style")
+            makeStylePropertyInfo("style", "默认样式")
         ],
 
         defaultValue: {
@@ -5508,6 +5550,7 @@ export class SwitchWidget extends Widget {
 registerClass("SwitchWidget", SwitchWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 滑块控件
 
 export class SliderWidget extends Widget {
     min: string;
@@ -5527,7 +5570,7 @@ export class SliderWidget extends Widget {
             makeDataPropertyInfo("data", {}, "integer"),
             makeDataPropertyInfo("min"),
             makeDataPropertyInfo("max"),
-            makeStylePropertyInfo("style", "Default style")
+            makeStylePropertyInfo("style", "默认样式")
         ],
 
         defaultValue: {
@@ -5676,6 +5719,7 @@ export class SliderWidget extends Widget {
 registerClass("SliderWidget", SliderWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 下拉列表控件
 
 export class DropDownListWidget extends Widget {
     options: string;
@@ -5688,14 +5732,14 @@ export class DropDownListWidget extends Widget {
 
         componentPaletteGroupName: "!1Input",
 
-        componentPaletteLabel: "Dropdown",
+        componentPaletteLabel: "下拉列表",
 
         flowComponentId: WIDGET_TYPE_DROP_DOWN_LIST,
 
         properties: [
             makeDataPropertyInfo("data", {}, "integer"),
             makeDataPropertyInfo("options"),
-            makeStylePropertyInfo("style", "Default style")
+            makeStylePropertyInfo("style", "默认样式")
         ],
 
         defaultValue: {
@@ -5782,7 +5826,7 @@ export class DropDownListWidget extends Widget {
                             ctx,
                             options.length > 0 && typeof options[0] == "string"
                                 ? options[0]
-                                : "<no options>",
+                                : "<无选项>",
                             x,
                             y,
                             w - h + (2 * h) / 6,
@@ -5823,6 +5867,7 @@ export class DropDownListWidget extends Widget {
 registerClass("DropDownListWidget", DropDownListWidget);
 
 ////////////////////////////////////////////////////////////////////////////////
+// 二维码控件
 
 export class QRCodeWidget extends Widget {
     errorCorrection: any;
@@ -5855,28 +5900,32 @@ export class QRCodeWidget extends Widget {
 
         properties: [
             makeDataPropertyInfo("data", {
-                displayName: "Text"
+                displayName: "文本"
             }),
             {
                 name: "errorCorrection",
                 type: PropertyType.Enum,
                 enumItems: [
                     {
-                        id: "low"
+                        id: "low",
+                        label: "低"
                     },
                     {
-                        id: "medium"
+                        id: "medium",
+                        label: "中"
                     },
                     {
-                        id: "quartile"
+                        id: "quartile",
+                        label: "四分位"
                     },
                     {
-                        id: "high"
+                        id: "high",
+                        label: "高"
                     }
                 ],
                 propertyGridGroup: specificGroup
             },
-            makeStylePropertyInfo("style", "Default style")
+            makeStylePropertyInfo("style", "默认样式")
         ],
 
         defaultValue: {

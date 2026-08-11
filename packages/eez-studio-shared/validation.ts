@@ -13,18 +13,18 @@ export {
 import { isArray } from "eez-studio-shared/util";
 import { isValidPath } from "./util-electron";
 
-const VALIDATION_MESSAGE_INVALID_VALUE = "Invalid value.";
-export const VALIDATION_MESSAGE_REQUIRED = "Please fill out this field.";
+const VALIDATION_MESSAGE_INVALID_VALUE = "无效的值。";
+export const VALIDATION_MESSAGE_REQUIRED = "请填写此字段。";
 export const VALIDATION_MESSAGE_RANGE_INCLUSIVE =
-    "Please enter value between ${min} and ${max}.";
+    "请输入介于 ${min} 和 ${max} 之间的值。";
 export const VALIDATION_MESSAGE_RANGE_INCLUSIVE_WITHOUT_MAX =
-    "Please enter value greater than or equal to ${min}.";
+    "请输入大于或等于 ${min} 的值。";
 const VALIDATION_MESSAGE_RANGE_EXCLUSIVE =
-    "Please enter value between (not included) ${min} and ${max}.";
+    "请输入介于（不含）${min} 和 ${max} 之间的值。";
 const VALIDATION_MESSAGE_RANGE_EXCLUSIVE_WITHOUT_MAX =
-    "Please enter value greater than ${min}.";
-const VALIDATION_MESSAGE_NOT_UNIQUE = "This field has no unique value.";
-const VALIDATION_MESSAGE_INVALID_CHAR = 'Character "${char}" is not allowed.';
+    "请输入大于 ${min} 的值。";
+const VALIDATION_MESSAGE_NOT_UNIQUE = "此字段没有唯一值。";
+const VALIDATION_MESSAGE_INVALID_CHAR = '不允许使用字符 "${char}"。';
 
 export type Rule = (
     object: any,
@@ -171,7 +171,7 @@ export const validators = {
 
         return isValidPath(object[ruleName], false)
             ? null
-            : "Invalid file name";
+            : "无效的文件名";
     }
 };
 

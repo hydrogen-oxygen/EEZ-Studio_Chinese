@@ -345,7 +345,7 @@ function addToNewNotebook(store: IStore, items: IActivityLogEntry[]) {
             fields: [
                 {
                     name: "name",
-                    displayName: "Notebook name",
+                    displayName: "Notebook名称",
                     type: "string",
                     validators: [
                         validators.required,

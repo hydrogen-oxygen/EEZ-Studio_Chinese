@@ -51,6 +51,9 @@ import { fileExistsSync } from "eez-studio-shared/util-electron";
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * 字体编辑器组件
+ */
 export const FontEditor = observer(
     class FontEditor extends EditorComponent implements IPanel {
         static contextType = ProjectContext;
@@ -66,16 +69,19 @@ export const FontEditor = observer(
             });
         }
 
+        /** 当前正在编辑的字体对象 */
         get font() {
             return this.props.editor.object as Font;
         }
 
+        /** 获取字形的列表（重新加载 LVGL 字形） */
         get glyphs() {
             let font = this.font;
             font.reloadLvglGlyphs();
             return this.font.glyphs;
         }
 
+        /** 当前选中的字形 */
         get selectedGlyph() {
             const selectedGlyph =
                 this.context.navigationStore.selectedGlyphObject.get() as Glyph;
@@ -97,10 +103,12 @@ export const FontEditor = observer(
             this.context.navigationStore.unmountPanel(this);
         }
 
+        /** 选择字形 */
         onSelectGlyph(glyph: Glyph) {
             this.context.navigationStore.selectedGlyphObject.set(glyph);
         }
 
+        /** 浏览字形（打开选择对话框） */
         onBrowseGlyph = (glyph: Glyph) => {
             if (this.context.projectTypeTraits.isLVGL) {
                 return;
@@ -113,6 +121,7 @@ export const FontEditor = observer(
                 .catch(error => console.error(error));
         };
 
+        /** 浏览当前选中的字形 */
         onBrowseSelectedGlyph = () => {
             const glyph = this.selectedGlyph;
             if (glyph) {
@@ -120,7 +129,7 @@ export const FontEditor = observer(
             }
         };
 
-        // interface IPanel implementation
+        // 实现 IPanel 接口
         get selectedObject() {
             if (
                 this.selectedGlyph &&
@@ -153,6 +162,7 @@ export const FontEditor = observer(
             this.context.navigationStore.setSelectedPanel(this);
         };
 
+        /** 添加字形（弹出对话框） */
         onAddGlyph() {
             const projectStore = this.context;
 
@@ -170,7 +180,7 @@ export const FontEditor = observer(
                 if (
                     !fileExistsSync(projectStore.getAbsoluteFilePath(filePath))
                 ) {
-                    return "File not found";
+                    return "文件未找到";
                 }
 
                 return null;
@@ -181,24 +191,24 @@ export const FontEditor = observer(
             const addOptionEnumItems = [
                 {
                     id: "append",
-                    label: "Add single character at the end"
+                    label: "在末尾添加单个字符"
                 },
                 {
                     id: "range",
-                    label: "Add characters from range"
+                    label: "从范围添加字符"
                 }
             ];
 
             if (missingEncodings.length > 0) {
                 addOptionEnumItems.push({
                     id: "missing",
-                    label: "Add missing characters"
+                    label: "添加缺失的字符"
                 });
             }
 
             return showGenericDialog(this.context, {
                 dialogDefinition: {
-                    title: "Add Characters",
+                    title: "添加字符",
                     fields: [
                         {
                             name: "filePath",
@@ -207,16 +217,16 @@ export const FontEditor = observer(
                             options: {
                                 filters: [
                                     {
-                                        name: "Font files",
+                                        name: "字体文件",
                                         extensions: ["ttf", "otf"]
                                     },
-                                    { name: "All Files", extensions: ["*"] }
+                                    { name: "所有文件", extensions: ["*"] }
                                 ]
                             }
                         },
                         {
                             name: "size",
-                            displayName: "Font size (points)",
+                            displayName: "字体大小（点）",
                             type: "number",
                             validators: [
                                 validators.required,
@@ -236,13 +246,13 @@ export const FontEditor = observer(
                         },
                         {
                             name: "fromGlyph",
-                            displayName: "From character",
+                            displayName: "起始字符",
                             type: "number",
                             visible: isAddOptionRange
                         },
                         {
                             name: "toGlyph",
-                            displayName: "To character",
+                            displayName: "结束字符",
                             type: "number",
                             visible: isAddOptionRange
                         },
@@ -253,7 +263,7 @@ export const FontEditor = observer(
                         },
                         {
                             name: "createBlankGlyphs",
-                            displayName: "Create blank characters",
+                            displayName: "创建空白字符",
                             type: "boolean"
                         }
                     ]
@@ -358,13 +368,11 @@ export const FontEditor = observer(
 
                             if (result.values.addOption === "missing") {
                                 notification.info(
-                                    `Added ${added} character(s), not found ${
-                                        missingEncodings.length - added
-                                    } character(s)`
+                                    `添加了 ${added} 个字符，未找到 ${missingEncodings.length - added} 个字符`
                                 );
                             } else if (result.values.addOption === "range") {
                                 notification.info(
-                                    `Added ${added} character(s)`
+                                    `添加了 ${added} 个字符`
                                 );
                             }
                         })
@@ -380,21 +388,22 @@ export const FontEditor = observer(
 
                             if (errorMessage) {
                                 notification.error(
-                                    `Adding characters failed: ${errorMessage}`
+                                    `添加字符失败：${errorMessage}`
                                 );
                             } else {
-                                notification.error(`Adding characters failed!`);
+                                notification.error(`添加字符失败！`);
                             }
 
                             return false;
                         });
                 })
                 .catch(() => {
-                    // canceled
+                    // 用户取消
                     return false;
                 });
         }
 
+        /** 删除当前选中的字形 */
         onDeleteGlyph() {
             const glyph = this.selectedGlyph;
             if (glyph) {
@@ -412,15 +421,16 @@ export const FontEditor = observer(
             }
         }
 
+        /** 从图片创建阴影字形（用于特定效果） */
         onCreateShadow = async () => {
             const result = await dialog.showOpenDialog(getCurrentWindow(), {
                 properties: ["openFile"],
                 filters: [
                     {
-                        name: "Image files",
+                        name: "图像文件",
                         extensions: ["png", "jpg", "jpeg"]
                     },
-                    { name: "All Files", extensions: ["*"] }
+                    { name: "所有文件", extensions: ["*"] }
                 ]
             });
 
@@ -555,6 +565,7 @@ export const FontEditor = observer(
             }
         };
 
+        /** 键盘事件处理：复制/粘贴 */
         onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
             if (event.ctrlKey) {
                 if (event.key == "c") {
@@ -623,6 +634,9 @@ export const FontEditor = observer(
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * 字形编辑器（用于像素级编辑）
+ */
 const GlyphEditor = observer(
     class GlyphEditor extends React.Component {
         static contextType = ProjectContext;
@@ -649,12 +663,14 @@ const GlyphEditor = observer(
             });
         }
 
+        /** 当前字体 */
         get font() {
             return this.context.navigationStore.selectedFontObject.get() as
                 | Font
                 | undefined;
         }
 
+        /** 当前选中的字形 */
         get selectedGlyph() {
             const selectedGlyph =
                 this.context.navigationStore.selectedGlyphObject.get() as Glyph;
@@ -668,6 +684,7 @@ const GlyphEditor = observer(
             return selectedGlyph;
         }
 
+        /** 切换像素点（开/关） */
         togglePixel() {
             const glyph = this.selectedGlyph;
             if (glyph && this.hitTestResult) {
@@ -705,6 +722,7 @@ const GlyphEditor = observer(
             }
         }
 
+        /** 根据鼠标位置计算命中的像素 */
         selectPixel(event: any) {
             const glyph = this.selectedGlyph;
             if (glyph) {
@@ -814,12 +832,15 @@ const GlyphEditor = observer(
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * 打开“选择字符”对话框，用于浏览并替换字形
+ */
 export function browseGlyph(glyph: Glyph) {
     function is1BitPerPixel(obj: any) {
         return obj["bpp"] === 1;
     }
 
-    const title = "Select Characters";
+    const title = "选择字符";
 
     const projectStore = getProjectStore(glyph);
 
@@ -830,22 +851,22 @@ export function browseGlyph(glyph: Glyph) {
             fields: [
                 {
                     name: "filePath",
-                    displayName: "Font",
+                    displayName: "字体",
                     type: RelativeFileInput,
                     options: {
                         filters: [
                             {
-                                name: "Font files",
+                                name: "字体文件",
                                 extensions: ["ttf", "otf"]
                             },
-                            { name: "All Files", extensions: ["*"] }
+                            { name: "所有文件", extensions: ["*"] }
                         ]
                     },
                     validators: [validators.required]
                 },
                 {
                     name: "renderingEngine",
-                    displayName: "Rendering engine",
+                    displayName: "渲染引擎",
                     type: "enum",
                     enumItems: [
                         { id: "freetype", label: "FreeType" },
@@ -905,6 +926,9 @@ export function browseGlyph(glyph: Glyph) {
     });
 }
 
+/**
+ * 选择字符对话框的字段容器样式
+ */
 class SelectGlyphDialogFieldsEnclosure extends React.Component<{
     children?: React.ReactNode;
 }> {

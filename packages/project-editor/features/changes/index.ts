@@ -32,7 +32,7 @@ const feature: ProjectEditorFeature = {
     description: "Compare project with previous versions",
     author: "EEZ",
     authorLogo: "../eez-studio-ui/_images/eez_logo.png",
-    displayName: "Changes",
+    displayName: "变化",
     mandatory: false,
     key: "changes",
     type: PropertyType.Object,

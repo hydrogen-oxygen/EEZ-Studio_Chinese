@@ -20,12 +20,13 @@ import type { LVGLCode } from "project-editor/lvgl/to-lvgl-code";
 
 ////////////////////////////////////////////////////////////////////////////////
 
+// 当启用“使用开始/结束角度”时显示的提示组件
 const ShowNoteAboutUseAngle = observer(
     class ShowNoteAboutUseAngle extends React.Component<PropertyProps> {
         render() {
             return (
                 <div style={{ fontSize: 11 }}>
-                    Make the arc non-adjustable: set the opacity (in Miscellaneous style section) of the knob to 0 and make the arc non-clickable (uncheck "Clickable" flag).
+                    使弧不可调节：将旋钮的不透明度（在“杂项”样式部分中）设置为 0，并使弧不可点击（取消勾选“可点击”标志）。
                 </div>
             );
         }
@@ -182,7 +183,7 @@ export class LVGLArcWidget extends LVGLWidget {
             },
             {
                 name: "useAngle",
-                displayName: "Use start/end angle",
+                displayName: "使用开始/结束角度",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 propertyGridGroup: specificGroup
@@ -337,7 +338,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Range min must be an integer`,
+                            `范围最小值必须为整数`,
                             getChildOfObject(widget, "rangeMin")
                         )
                     );
@@ -353,7 +354,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Range max must be an integer`,
+                            `范围最大值必须为整数`,
                             getChildOfObject(widget, "rangeMax")
                         )
                     );
@@ -369,7 +370,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Value must be an integer`,
+                            `值必须为整数`,
                             getChildOfObject(widget, "value")
                         )
                     );
@@ -385,7 +386,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Bg start angle must be an integer`,
+                            `背景起始角度必须为整数`,
                             getChildOfObject(widget, "bgStartAngle")
                         )
                     );
@@ -401,7 +402,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Bg end angle must be an integer`,
+                            `背景终止角度必须为整数`,
                             getChildOfObject(widget, "bgEndAngle")
                         )
                     );
@@ -417,7 +418,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Rotation must be an integer`,
+                            `旋转角度必须为整数`,
                             getChildOfObject(widget, "rotation")
                         )
                     );
@@ -433,7 +434,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Start angle must be an integer`,
+                            `起始角度必须为整数`,
                             getChildOfObject(widget, "startAngle")
                         )
                     );
@@ -449,7 +450,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `End angle must be an integer`,
+                            `终止角度必须为整数`,
                             getChildOfObject(widget, "endAngle")
                         )
                     );
@@ -526,7 +527,7 @@ export class LVGLArcWidget extends LVGLWidget {
                         "int32_t",
                         "new_val",
                         this.rangeMin as string,
-                        "Failed to evaluate Range min in Arc widget"
+                        "Arc 控件中范围最小值表达式求值失败"
                     );
 
                     const cur_val = code.callObjectFunctionWithAssignment(
@@ -561,7 +562,7 @@ export class LVGLArcWidget extends LVGLWidget {
                         "int32_t",
                         "new_val",
                         this.rangeMax as string,
-                        "Failed to evaluate Range max in Arc widget"
+                        "Arc 控件中范围最大值表达式求值失败"
                     );
 
                     const cur_val = code.callObjectFunctionWithAssignment(
@@ -608,7 +609,7 @@ export class LVGLArcWidget extends LVGLWidget {
                         "int32_t",
                         "new_val",
                         this.value as string,
-                        "Failed to evaluate Value in Arc widget"
+                        "Arc 控件中数值表达式求值失败"
                     );
 
                     const cur_val = code.callObjectFunctionWithAssignment(
@@ -648,7 +649,7 @@ export class LVGLArcWidget extends LVGLWidget {
                                 "value",
                                 this.value as string,
                                 value,
-                                "Failed to assign Value in Arc widget"
+                                "Arc 控件中给数值属性赋值失败"
                             );
                         });
                     }
@@ -685,7 +686,7 @@ export class LVGLArcWidget extends LVGLWidget {
                         "int32_t",
                         "new_val",
                         this.startAngle as string,
-                        "Failed to evaluate Start angle in Arc widget"
+                        "Arc 控件中起始角度表达式求值失败"
                     );
 
                     const cur_val = code.callObjectFunctionWithAssignment(
@@ -727,7 +728,7 @@ export class LVGLArcWidget extends LVGLWidget {
                         "int32_t",
                         "new_val",
                         this.endAngle as string,
-                        "Failed to evaluate End angle in Arc widget"
+                        "Arc 控件中终止角度表达式求值失败"
                     );
 
                     const cur_val = code.callObjectFunctionWithAssignment(
@@ -775,7 +776,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     "int32_t",
                     "new_val",
                     this.bgStartAngle as string,
-                    "Failed to evaluate Bg start angle in Arc widget"
+                    "Arc 控件中背景起始角度表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -822,7 +823,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     "int32_t",
                     "new_val",
                     this.bgEndAngle as string,
-                    "Failed to evaluate Bg end angle in Arc widget"
+                    "Arc 控件中背景终止角度表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -861,7 +862,7 @@ export class LVGLArcWidget extends LVGLWidget {
                     "int32_t",
                     "new_val",
                     this.rotation as string,
-                    "Failed to evaluate Rotation in Arc widget"
+                    "Arc 控件中旋转角度表达式求值失败"
                 );
 
                 let cur_val;

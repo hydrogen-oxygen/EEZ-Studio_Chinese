@@ -66,7 +66,7 @@ import { homeLayoutModels } from "./home-layout-models";
 ////////////////////////////////////////////////////////////////////////////////
 
 export const COMPACT_DATABASE_MESSAGE =
-    "It is recommended to compact the database every 30 days.";
+    "建议每30天对数据库进行一次压缩优化。";
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -326,8 +326,8 @@ class SettingsController {
 
         const result = await dialog.showSaveDialog(getCurrentWindow(), {
             filters: [
-                { name: "DB files", extensions: ["db"] },
-                { name: "All Files", extensions: ["*"] }
+                { name: "数据库文件", extensions: ["db"] },
+                { name: "所有文件", extensions: ["*"] }
             ],
             defaultPath: defaultPath ?? undefined
         });
@@ -354,7 +354,7 @@ class SettingsController {
                 });
 
                 confirm(
-                    "Do you want to make this database active?",
+                    "是否将此数据库设为活动数据库？",
                     undefined,
                     () => onFinish(true),
                     () => onFinish(false)
@@ -371,8 +371,8 @@ class SettingsController {
         const result = await dialog.showOpenDialog(getCurrentWindow(), {
             properties: ["openFile"],
             filters: [
-                { name: "DB files", extensions: ["db"] },
-                { name: "All Files", extensions: ["*"] }
+                { name: "数据库文件", extensions: ["db"] },
+                { name: "所有文件", extensions: ["*"] }
             ],
             defaultPath: defaultPath ?? undefined
         });
@@ -396,7 +396,7 @@ class SettingsController {
             });
 
             confirm(
-                "Do you want to make this database active?",
+                "是否将此数据库设为活动数据库？",
                 undefined,
                 () => onFinish(true),
                 () => onFinish(false)
@@ -411,8 +411,8 @@ class SettingsController {
                 instrumentDatabases.activeDatabasePath
         ) {
             confirm(
-                "Do you want to restart the application?",
-                "Restart is required to finish activation of new database.",
+                "是否重启应用程序？",
+                "需要重启以完成新数据库的激活。",
                 this.restart
             );
         }
@@ -524,19 +524,19 @@ const CompactDatabaseDialog = observer(
             return (
                 <Dialog
                     open={true}
-                    title="Compacting Database"
+                    title="正在压缩数据库"
                     size="small"
-                    cancelButtonText="Close"
+                    cancelButtonText="关闭"
                     cancelDisabled={this.sizeAfter === undefined}
                 >
                     <table className="EezStudio_CompactDatabaseDialogTable">
                         <tbody>
                             <tr>
-                                <td>Size before</td>
+                                <td>压缩前大小</td>
                                 <td>{formatBytes(this.sizeBefore)}</td>
                             </tr>
                             <tr>
-                                <td>Size after</td>
+                                <td>压缩后大小</td>
                                 <td>
                                     {this.sizeAfter !== undefined ? (
                                         formatBytes(this.sizeAfter)
@@ -547,12 +547,12 @@ const CompactDatabaseDialog = observer(
                             </tr>
                             {this.sizeReduced !== undefined && (
                                 <tr>
-                                    <td>Size reduced by </td>
+                                    <td>减少大小 </td>
                                     <td>
                                         {formatBytes(
                                             this.sizeBefore - this.sizeAfter!
                                         )}{" "}
-                                        or {this.sizeReduced}%
+                                        即 {this.sizeReduced}%
                                     </td>
                                 </tr>
                             )}
@@ -586,7 +586,7 @@ const DatabaseListItem = observer(
                             fontWeight: database.isActive ? "bold" : "normal"
                         }}
                     >
-                        {database.isActive ? "[ACTIVE] " : ""}
+                        {database.isActive ? "[当前活动] " : ""}
                         {path.parse(database.filePath).name}
                     </td>
                 </tr>
@@ -613,7 +613,7 @@ const SelectedDatabaseDetails = observer(
                                 className="btn btn-primary btn-sm"
                                 onClick={settingsController.setAsActiveDatabase}
                             >
-                                Set as Active
+                                设为活动数据库
                             </button>
                         </div>
                     )}
@@ -623,7 +623,7 @@ const SelectedDatabaseDetails = observer(
                             htmlFor="EezStudio_ProjectEditorScrapbook_ItemDetails_Description"
                             className="form-label"
                         >
-                            Description:
+                            描述：
                         </label>
                         <textarea
                             className="form-control"
@@ -639,7 +639,7 @@ const SelectedDatabaseDetails = observer(
                     </div>
 
                     <div>
-                        <label className="form-label">Path:</label>
+                        <label className="form-label">路径：</label>
                         <div>{selectedDatabase.filePath}</div>
 
                         <button
@@ -650,7 +650,7 @@ const SelectedDatabaseDetails = observer(
                             }
                             style={{ marginTop: "5px" }}
                         >
-                            Show in Folder
+                            在文件夹中显示
                         </button>
 
                         <button
@@ -661,7 +661,7 @@ const SelectedDatabaseDetails = observer(
                             }
                             style={{ marginTop: "5px", marginLeft: "5px" }}
                         >
-                            Copy Path to Clipboard
+                            复制路径到剪贴板
                         </button>
                     </div>
 
@@ -672,15 +672,13 @@ const SelectedDatabaseDetails = observer(
                         })}
                     >
                         <div>
-                            Database size is{" "}
-                            {formatBytes(selectedDatabase.databaseSize)}.
+                            数据库大小为 {formatBytes(selectedDatabase.databaseSize)}。
                         </div>
                         <div>
-                            Database compacted{" "}
+                            数据库最后压缩于{" "}
                             {formatDateRelative(
                                 selectedDatabase.timeOfLastDatabaseCompactOperation
-                            )}
-                            .
+                            )}。
                         </div>
                         {selectedDatabase.isCompactDatabaseAdvisable && (
                             <div>{COMPACT_DATABASE_MESSAGE}</div>
@@ -691,7 +689,7 @@ const SelectedDatabaseDetails = observer(
                                 className="btn btn-secondary btn-sm"
                                 onClick={settingsController.compactDatabase}
                             >
-                                Compact Database
+                                压缩数据库
                             </button>
                         </div>
                     </div>
@@ -728,17 +726,17 @@ const DatatabaseList = observer(
                     <ToolbarHeader>
                         <IconAction
                             icon="material:add"
-                            title="Create a new database"
+                            title="创建新数据库"
                             onClick={settingsController.createNewDatabase}
                         />
                         <IconAction
                             icon={HOME_TAB_OPEN_ICON}
-                            title="Open an existing database"
+                            title="打开已有数据库"
                             onClick={settingsController.openDatabase}
                         />
                         <IconAction
                             icon="material:delete"
-                            title="Delete a database"
+                            title="删除数据库"
                             onClick={settingsController.deleteDatabase}
                             enabled={
                                 settingsController.selectedDatabase &&
@@ -859,16 +857,16 @@ const PythonSettings = observer(
                     <td>
                         <PropertyList>
                             <StaticProperty
-                                name="Default path"
+                                name="默认路径"
                                 value={
                                     this.pythonPathError
-                                        ? "Python not found"
+                                        ? "未找到 Python"
                                         : this.pythonPath
                                 }
                                 className="StaticPropertyValueWrap"
                             />
                             <BooleanProperty
-                                name={`Set custom path`}
+                                name="设置自定义路径"
                                 value={settingsController.pythonUseCustomPath}
                                 onChange={action(
                                     value =>
@@ -879,7 +877,7 @@ const PythonSettings = observer(
                             />
                             {settingsController.pythonUseCustomPath && (
                                 <AbsoluteFileInputProperty
-                                    name="Custom Python path"
+                                    name="自定义 Python 路径"
                                     value={settingsController.pythonCustomPath}
                                     onChange={action(value => {
                                         settingsController.pythonCustomPath =
@@ -944,11 +942,11 @@ const TemplateSettings = observer(
         render() {
             return (
                 <tr>
-                    <td>Project Templates</td>
+                    <td>项目模板</td>
                     <td>
                         <PropertyList>
                             <BooleanProperty
-                                name={`Use local templates folder`}
+                                name="使用本地模板文件夹"
                                 value={settingsController.useLocalTemplates}
                                 onChange={action(
                                     value =>
@@ -960,7 +958,7 @@ const TemplateSettings = observer(
                             {settingsController.useLocalTemplates && (
                                 <>
                                     <AbsoluteDirectoryInputProperty
-                                        name="Local templates path"
+                                        name="本地模板路径"
                                         value={
                                             settingsController.localTemplatesPath
                                         }
@@ -970,7 +968,7 @@ const TemplateSettings = observer(
                                         })}
                                     />
                                     <tr>
-                                        <td>Repository</td>
+                                        <td>仓库地址</td>
                                         <td>
                                             <a
                                                 href="#"
@@ -1017,12 +1015,12 @@ export const Settings = observer(
             return (
                 <div className="EezStudio_HomeSettingsBody">
                     <PropertyList>
-                        <SettingsSectionHeader title="Databases" />
+                        <SettingsSectionHeader title="数据库" />
                         <Databases />
 
-                        <SettingsSectionHeader title="Localization" />
+                        <SettingsSectionHeader title="本地化" />
                         <SelectProperty
-                            name="Locale"
+                            name="区域设置"
                             value={settingsController.locale}
                             onChange={settingsController.onLocaleChange}
                         >
@@ -1041,7 +1039,7 @@ export const Settings = observer(
                                 ))}
                         </SelectProperty>
                         <SelectProperty
-                            name="Date format"
+                            name="日期格式"
                             value={settingsController.dateFormat}
                             onChange={settingsController.onDateFormatChanged}
                         >
@@ -1055,7 +1053,7 @@ export const Settings = observer(
                             ))}
                         </SelectProperty>
                         <SelectProperty
-                            name="Time format"
+                            name="时间格式"
                             value={settingsController.timeFormat}
                             onChange={settingsController.onTimeFormatChanged}
                         >
@@ -1069,15 +1067,15 @@ export const Settings = observer(
                             ))}
                         </SelectProperty>
 
-                        <SettingsSectionHeader title="External Tools" />
+                        <SettingsSectionHeader title="外部工具" />
                         <PythonSettings />
 
-                        <SettingsSectionHeader title="Project Editor" />
+                        <SettingsSectionHeader title="项目编辑器" />
                         <TemplateSettings />
 
-                        <SettingsSectionHeader title="Appearance" />
+                        <SettingsSectionHeader title="外观" />
                         <BooleanProperty
-                            name={`Dark theme`}
+                            name="暗色主题"
                             value={settingsController.isDarkTheme}
                             onChange={settingsController.switchTheme}
                             checkboxStyleSwitch={true}
@@ -1090,7 +1088,7 @@ export const Settings = observer(
                                     className="btn btn-primary EezStudio_PulseTransition"
                                     onClick={settingsController.restart}
                                 >
-                                    Restart
+                                    重启
                                 </button>
                             </div>
                         </Header>

@@ -45,7 +45,7 @@ import {
 } from "project-editor/lvgl/style-catalog";
 
 ////////////////////////////////////////////////////////////////////////////////
-
+// 类型定义：LVGL 样式对象集合
 export type LVGLStyleObjects = {
     [part: string]: {
         [state: string]: number;
@@ -53,7 +53,7 @@ export type LVGLStyleObjects = {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-
+// 默认样式属性网格 UI 组件
 const DefaultStylePropertyGridUI = observer(
     class DefaultStylePropertyGridUI extends React.Component<PropertyProps> {
         static contextType = ProjectContext;
@@ -209,13 +209,13 @@ export class LVGLStyle extends EezObject {
                     </div>
                     {lvglStyle.redundantModifications.length > 0 && (
                         <div>
-                            {lvglStyle.redundantModifications.length} redundant
+                            {lvglStyle.redundantModifications.length} 处冗余修改
                             {lvglStyle.redundantModifications.length == 1
-                                ? " modification"
-                                : " modifications"}
+                                ? ""
+                                : ""}
                         </div>
                     )}
-                    {isDefault && <div>Default</div>}
+                    {isDefault && <div>默认</div>}
                 </div>
             );
         },
@@ -224,7 +224,7 @@ export class LVGLStyle extends EezObject {
 
             const result = await showGenericDialog({
                 dialogDefinition: {
-                    title: "New Style",
+                    title: "新建样式",
                     fields: [
                         {
                             name: "name",
@@ -331,7 +331,7 @@ export class LVGLStyle extends EezObject {
                 );
                 menuItems.push(
                     new MenuItem({
-                        label: "Remove Redundant Modifications",
+                        label: "移除冗余修改",
                         click: () => {
                             thisObject.removeRedundantModifications();
                         }
@@ -349,6 +349,7 @@ export class LVGLStyle extends EezObject {
         return undefined;
     }
 
+    // 获取冗余修改列表
     get redundantModifications() {
         function getValue(
             style: LVGLStyle,
@@ -399,6 +400,7 @@ export class LVGLStyle extends EezObject {
         return redundantModifications;
     }
 
+    // 移除冗余修改
     removeRedundantModifications() {
         ProjectEditor.getProjectStore(this).updateObject(this.definition, {
             definition: this.definition.removeModifications(
@@ -407,6 +409,7 @@ export class LVGLStyle extends EezObject {
         });
     }
 
+    // 计算完整的样式定义（包含父级样式）
     get fullDefinition() {
         let fullDefinition = toJS(this.definition.definition);
 
@@ -447,6 +450,7 @@ export class LVGLStyle extends EezObject {
         return fullDefinition;
     }
 
+    // 在运行时创建 LVGL 样式
     lvglCreateStyles(runtime: LVGLPageRuntime) {
         const lvglStyleObjects: LVGLStyleObjects = {};
 
@@ -607,7 +611,7 @@ export class LVGLStyle extends EezObject {
                                 }
                             } else if (propertyInfo.type == PropertyType.String) {
                                 if (value) {
-                                    // For anim property
+                                    // 处理动画属性
                                     let { setDelay, setRepeatDelay, setRepeatCount, delay, repeatDelay, repeatCount } = 
                                         extractAnimProperties(value);
     
@@ -641,6 +645,7 @@ export class LVGLStyle extends EezObject {
         return lvglStyleObjects;
     }
 
+    // 删除运行时样式
     lvglDeleteStyles(runtime: LVGLPageRuntime, styles: LVGLStyleObjects) {
         Object.keys(styles).forEach(part => {
             Object.keys(styles[part]).forEach(state => {
@@ -649,6 +654,7 @@ export class LVGLStyle extends EezObject {
         });
     }
 
+    // 将样式添加到 LVGL 对象
     lvglAddStyleToObject(runtime: LVGLPageRuntime, obj: number) {
         const lvglStyleObjects = runtime.styleObjMap.get(this) || {};
 
@@ -664,6 +670,7 @@ export class LVGLStyle extends EezObject {
         });
     }
 
+    // 从 LVGL 对象移除样式
     lvglRemoveStyleFromObject(runtime: LVGLPageRuntime, obj: number) {
         const lvglStyleObjects = runtime.styleObjMap.get(this) || {};
 
@@ -709,7 +716,7 @@ export class LVGLStyles extends EezObject {
     }
 
     static classInfo: ClassInfo = {
-        label: () => "Styles",
+        label: () => "样式",
         properties: [
             {
                 name: "styles",
@@ -757,6 +764,7 @@ export class LVGLStyles extends EezObject {
 
 registerClass("LVGLStyles", LVGLStyles);
 
+// 样式导航组件
 export const LVGLStylesNavigation = observer(
     class LVGLStylesNavigation extends React.Component {
         static contextType = ProjectContext;
@@ -797,6 +805,7 @@ export const LVGLStylesNavigation = observer(
     }
 );
 
+// 选中的样式编辑器（预览）
 export const LVGLSelectedStyleEditor = observer(
     class LVGLSelectedStyleEditor extends React.Component {
         static contextType = ProjectContext;
@@ -881,13 +890,14 @@ export const LVGLSelectedStyleEditor = observer(
 
 ////////////////////////////////////////////////////////////////////////////////
 
+// 项目特性定义
 const feature: ProjectEditorFeature = {
     name: "eezstudio-project-feature-lvgl-style",
     version: "0.1.0",
-    description: "Styles support for your project",
+    description: "为您的项目提供样式支持",
     author: "EEZ",
     authorLogo: "../eez-studio-ui/_images/eez_logo.png",
-    displayName: "Styles",
+    displayName: "样式",
     mandatory: true,
     key: "lvglStyles",
     type: PropertyType.Object,

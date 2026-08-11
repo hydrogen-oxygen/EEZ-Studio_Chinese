@@ -1,3 +1,4 @@
+// Checkbox.tsx
 import React from "react";
 import { observable, makeObservable } from "mobx";
 
@@ -22,7 +23,7 @@ export class LVGLCheckboxWidget extends LVGLWidget {
         enabledInComponentPalette: (projectType: ProjectType) =>
             projectType === ProjectType.LVGL,
 
-        componentPaletteGroupName: "!1Input",
+        componentPaletteGroupName: "!1输入",
 
         properties: [
             ...makeLvglExpressionProperty(
@@ -36,7 +37,7 @@ export class LVGLCheckboxWidget extends LVGLWidget {
             ),
             {
                 name: "useStaticText",
-                displayName: "Use static text",
+                displayName: "使用静态文本",
                 type: PropertyType.Boolean,
                 propertyGridGroup: specificGroup,
                 checkboxStyleSwitch: true,
@@ -65,7 +66,7 @@ export class LVGLCheckboxWidget extends LVGLWidget {
             height: 20,
             heightUnit: "content",
             clickableFlag: true,
-            text: "Checkbox",
+            text: "复选框",
             textType: "literal",
             useStaticText: true
         },

@@ -110,7 +110,7 @@ export class GlyphSource extends EezObject {
             },
             {
                 name: "size",
-                displayName: "Font size",
+                displayName: "字体大小",
                 type: PropertyType.Number,
                 formText: object => {
                     if (object && isLVGLProject(object)) {
@@ -119,8 +119,8 @@ export class GlyphSource extends EezObject {
                     return object
                         ? ProjectEditor.getProjectStore(object)
                               .projectTypeTraits.isLVGL
-                            ? "In pixels"
-                            : "In points"
+                            ? "以像素为单位"
+                            : "以磅为单位"
                         : undefined;
                 }
             },
@@ -175,7 +175,7 @@ export class Glyph extends EezObject {
                 : "";
         },
         propertiesPanelLabel: (glyph: Glyph) => {
-            return `Font character: ${Glyph.classInfo.label!(glyph)}`;
+            return `字体字符：${Glyph.classInfo.label!(glyph)}`;
         },
         properties: [
             {
@@ -359,7 +359,7 @@ export class Glyph extends EezObject {
 
         ctx.lineWidth = 0.5;
 
-        // draw vertical grid lines
+        // 绘制垂直网格线
         for (let x = 0; x <= dx; x++) {
             if (x >= xOffset && x <= xOffset + width) {
                 ctx.beginPath();
@@ -406,7 +406,7 @@ export class Glyph extends EezObject {
             }
         }
 
-        // draw horizontal grid lines
+        // 绘制水平网格线
         for (let y = 0; y <= fontHeight; y++) {
             if (y >= yOffset && y <= yOffset + height) {
                 ctx.beginPath();
@@ -453,7 +453,7 @@ export class Glyph extends EezObject {
             }
         }
 
-        // draw ascent line
+        // 绘制顶线
         ctx.beginPath();
         ctx.moveTo(0, fontAscent * GLYPH_EDITOR_PIXEL_SIZE);
         ctx.lineTo(
@@ -463,7 +463,7 @@ export class Glyph extends EezObject {
         ctx.strokeStyle = GLYPH_EDITOR_BASE_LINE_COLOR;
         ctx.stroke();
 
-        // draw pixels
+        // 绘制像素
         if (this.glyphBitmap) {
             const project = ProjectEditor.getProject(this);
 
@@ -500,7 +500,7 @@ export class Glyph extends EezObject {
             ctx.globalAlpha = 1;
         }
 
-        // draw measure lines
+        // 绘制测量线
         const MEASURE_LINE_OFFSET = 20;
         const MEASURE_LINE_ARROW_WIDTH = 12;
         const MEASURE_LINE_ARROW_HEIGHT = 6;
@@ -720,7 +720,7 @@ export class Glyph extends EezObject {
             (xOffset + width) * GLYPH_EDITOR_PIXEL_SIZE,
             (yOffset + height) * GLYPH_EDITOR_PIXEL_SIZE,
             MEASURE_LINE_OFFSET,
-            `Glyph width = ${width}px`,
+            `字形宽度 = ${width}px`,
             "below"
         );
         drawHorizontalMeasureLine(
@@ -745,7 +745,7 @@ export class Glyph extends EezObject {
             (yOffset + height) * GLYPH_EDITOR_PIXEL_SIZE,
             (xOffset + width) * GLYPH_EDITOR_PIXEL_SIZE,
             MEASURE_LINE_OFFSET,
-            `Glyph height = ${height}px`,
+            `字形高度 = ${height}px`,
             "right"
         );
         drawVerticalMeasureLine(
@@ -753,7 +753,7 @@ export class Glyph extends EezObject {
             fontAscent * GLYPH_EDITOR_PIXEL_SIZE,
             dx * GLYPH_EDITOR_PIXEL_SIZE,
             2 * MEASURE_LINE_OFFSET,
-            `Ascent = ${font.ascent}px`,
+            `顶线 = ${font.ascent}px`,
             "right"
         );
         drawVerticalMeasureLine(
@@ -761,7 +761,7 @@ export class Glyph extends EezObject {
             fontHeight * GLYPH_EDITOR_PIXEL_SIZE,
             dx * GLYPH_EDITOR_PIXEL_SIZE,
             2 * MEASURE_LINE_OFFSET,
-            `Descent = ${font.descent}px`,
+            `底线 = ${font.descent}px`,
             "right"
         );
         drawVerticalMeasureLine(
@@ -769,7 +769,7 @@ export class Glyph extends EezObject {
             fontHeight * GLYPH_EDITOR_PIXEL_SIZE,
             dx * GLYPH_EDITOR_PIXEL_SIZE,
             4 * MEASURE_LINE_OFFSET,
-            `Font height = ${font.height}px`,
+            `字体高度 = ${font.height}px`,
             "right"
         );
 
@@ -930,16 +930,16 @@ export class FontSource extends EezObject {
                 type: PropertyType.RelativeFile,
                 fileFilters: [
                     {
-                        name: "Font files",
+                        name: "字体文件",
                         extensions: ["ttf", "otf"]
                     },
-                    { name: "All Files", extensions: ["*"] }
+                    { name: "所有文件", extensions: ["*"] }
                 ],
                 readOnlyInPropertyGrid: isLVGLProject
             },
             {
                 name: "size",
-                displayName: "Font size",
+                displayName: "字体大小",
                 type: PropertyType.Number,
                 readOnlyInPropertyGrid: (fontSource: FontSource) =>
                     isLVGLProject(fontSource) &&
@@ -951,8 +951,8 @@ export class FontSource extends EezObject {
                     return object
                         ? ProjectEditor.getProjectStore(object)
                               .projectTypeTraits.isLVGL
-                            ? "In pixels"
-                            : "In points"
+                            ? "以像素为单位"
+                            : "以磅为单位"
                         : undefined;
                 }
             }
@@ -1012,7 +1012,7 @@ const EditGlyphsPropertyGridUI = observer(
                                 onEditGlyphs(this.props.objects[0] as Font)
                             }
                         >
-                            Add or Remove Characters
+                            添加或删除字符
                         </Button>
                     </div>
                 </div>
@@ -1037,22 +1037,22 @@ export class AdditionalFontSource extends EezObject {
                 type: PropertyType.RelativeFile,
                 fileFilters: [
                     {
-                        name: "Font files",
+                        name: "字体文件",
                         extensions: ["ttf", "otf", "woff"]
                     },
-                    { name: "All Files", extensions: ["*"] }
+                    { name: "所有文件", extensions: ["*"] }
                 ],
                 readOnlyInPropertyGrid: true
             },
             {
                 name: "lvglRanges",
-                displayName: "Ranges",
+                displayName: "范围",
                 type: PropertyType.String,
                 readOnlyInPropertyGrid: true
             },
             {
                 name: "lvglSymbols",
-                displayName: "Symbols",
+                displayName: "符号",
                 type: PropertyType.String,
                 readOnlyInPropertyGrid: true
             },
@@ -1076,21 +1076,21 @@ export class AdditionalFontSource extends EezObject {
 
             let result = await showGenericDialog(projectStore, {
                 dialogDefinition: {
-                    title: "New Additional Font Source",
+                    title: "新建附加字体源",
                     fields: [
                         {
                             name: "filePath",
-                            displayName: "Font file",
+                            displayName: "字体文件",
                             type: AbsoluteFileInput,
                             validators: [validators.required],
                             options: {
                                 filters: [
                                     {
-                                        name: "Font files",
+                                        name: "字体文件",
                                         extensions: ["ttf", "otf", "woff"]
                                     },
                                     {
-                                        name: "All Files",
+                                        name: "所有文件",
                                         extensions: ["*"]
                                     }
                                 ]
@@ -1104,14 +1104,14 @@ export class AdditionalFontSource extends EezObject {
                                 requiredRangesOrSymbols
                             ],
                             formText:
-                                "Ranges and/or characters to include. Example: 32-127,140,160-170,200,210-255"
+                                "要包含的范围和/或字符。示例：32-127,140,160-170,200,210-255"
                         },
                         {
                             name: "symbols",
                             type: "string",
                             validators: [requiredRangesOrSymbols],
                             formText:
-                                "List of characters to include. Example: abc01234äöüčćšđ"
+                                "要包含的字符列表。示例：abc01234äöüčćšđ"
                         }
                     ]
                 },
@@ -1145,7 +1145,7 @@ export class AdditionalFontSource extends EezObject {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        "Font file path is required",
+                        "必须填写字体文件路径",
                         additionalFontSource
                     )
                 );
@@ -1173,7 +1173,7 @@ const ExportFontFilePropertyGridUI = observer(
             const font = this.props.objects[0] as Font;
 
             const result = await dialog.showSaveDialog(getCurrentWindow(), {
-                filters: [{ name: "All Files", extensions: ["*"] }],
+                filters: [{ name: "所有文件", extensions: ["*"] }],
                 defaultPath: font.source!.filePath
             });
             let filePath = result.filePath;
@@ -1182,7 +1182,7 @@ const ExportFontFilePropertyGridUI = observer(
                 const bin = Buffer.from(font.embeddedFontFile!, "base64");
                 try {
                     await fs.promises.writeFile(filePath, bin);
-                    notification.info(`Font file exported.`);
+                    notification.info(`字体文件已导出。`);
                 } catch (error: any) {
                     notification.error(error.toString());
                 }
@@ -1202,7 +1202,7 @@ const ExportFontFilePropertyGridUI = observer(
                             size="small"
                             onClick={this.export}
                         >
-                            Export Font File
+                            导出字体文件
                         </Button>
                     </div>
                 </div>
@@ -1245,7 +1245,7 @@ const ViewGlyphsPropertyGridUI = observer(
                             size="small"
                             onClick={this.view}
                         >
-                            View Glyphs
+                            查看字形
                         </Button>
                     </div>
                 </div>
@@ -1264,11 +1264,11 @@ const ChangeBitsPerPixel = observer(
 
             const result = await showGenericDialog(projectStore, {
                 dialogDefinition: {
-                    title: "Change bits per pixel",
+                    title: "更改每像素位数",
                     fields: [
                         {
                             name: "bpp",
-                            displayName: "Bits per pixel",
+                            displayName: "每像素位数",
                             type: "enum",
                             enumItems: [1, 2, 4, 8]
                         }
@@ -1285,9 +1285,9 @@ const ChangeBitsPerPixel = observer(
                 return;
             }
 
-            // Group glyphs by their source file path and size.
-            // Glyphs with their own GlyphSource use that; others
-            // fall back to the font-level FontSource.
+            // 根据源文件路径和大小对字形进行分组。
+            // 拥有各自 GlyphSource 的字形使用自身的源；
+            // 其余字形回退到字体级别的 FontSource。
             const sourceGroups = new Map<
                 string,
                 {
@@ -1329,7 +1329,7 @@ const ChangeBitsPerPixel = observer(
                 return;
             }
 
-            // Extract glyphs from each source file
+            // 从每个源文件中提取字形
             const allNewGlyphs = new Map<
                 number,
                 {
@@ -1346,7 +1346,7 @@ const ChangeBitsPerPixel = observer(
 
             try {
                 for (const group of sourceGroups.values()) {
-                    // Build encoding ranges from sorted encodings
+                    // 由排序后的编码构建编码范围
                     const sorted = group.encodings.slice().sort(
                         (a, b) => a - b
                     );
@@ -1392,7 +1392,7 @@ const ChangeBitsPerPixel = observer(
                 }
             } catch (error) {
                 notification.error(
-                    `Failed to change bits per pixel: ${error}`
+                    `更改每像素位数失败：${error}`
                 );
                 return;
             }
@@ -1436,7 +1436,7 @@ const ChangeBitsPerPixel = observer(
                             size="small"
                             onClick={this.onModify}
                         >
-                            Change bits per pixel
+                            更改每像素位数
                         </Button>
                     </div>
                 </div>
@@ -1573,7 +1573,7 @@ export class Font extends EezObject {
             },
             {
                 name: "bpp",
-                displayName: "Bits per pixel",
+                displayName: "每像素位数",
                 type: PropertyType.Enum,
                 enumItems: [{ id: 1 }, { id: 2 }, { id: 4 }, { id: 8 }],
                 defaultValue: 1,
@@ -1648,7 +1648,7 @@ export class Font extends EezObject {
             },
             {
                 name: "alwaysBuild",
-                displayName: "Always add to the generated code",
+                displayName: "始终添加到生成的代码中",
                 type: PropertyType.Boolean,
                 disabled: isLVGLProject
             },
@@ -1667,7 +1667,7 @@ export class Font extends EezObject {
             },
             {
                 name: "lvglRanges",
-                displayName: "Ranges",
+                displayName: "范围",
                 type: PropertyType.String,
                 readOnlyInPropertyGrid: true,
                 disabled: (font: Font) =>
@@ -1676,7 +1676,7 @@ export class Font extends EezObject {
             },
             {
                 name: "lvglSymbols",
-                displayName: "Symbols",
+                displayName: "符号",
                 type: PropertyType.String,
                 readOnlyInPropertyGrid: true,
                 disabled: (font: Font) =>
@@ -1695,7 +1695,7 @@ export class Font extends EezObject {
             },
             {
                 name: "lvglAdditionalSources",
-                displayName: "Additional sources",
+                displayName: "附加源",
                 type: PropertyType.Array,
                 typeClass: AdditionalFontSource,
                 defaultValue: [],
@@ -1714,17 +1714,17 @@ export class Font extends EezObject {
             },
             {
                 name: "lvglFallbackFont",
-                displayName: "Fallback font",
+                displayName: "回退字体",
                 type: PropertyType.String,
                 disabled: (font: Font) =>
                     !isLVGLProject(font) ||
                     (isLVGLProject(font) && font.lvglUseFreeType),
                 formText: object =>
-                    "E.g. lv_font_montserrat_24 or ui_font_my_custom_font"
+                    "例如 lv_font_montserrat_24 或 ui_font_my_custom_font"
             },
             {
                 name: "lvglUseFreeType",
-                displayName: "Use FreeType for rendering",
+                displayName: "使用 FreeType 进行渲染",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 readOnlyInPropertyGrid: true,
@@ -1733,16 +1733,16 @@ export class Font extends EezObject {
             },
             {
                 name: "lvglFreeTypeRenderMode",
-                displayName: "Render Mode",
+                displayName: "渲染模式",
                 type: PropertyType.Enum,
                 enumItems: [
                     {
                         id: "BITMAP",
-                        label: "Bitmap"
+                        label: "位图"
                     },
                     {
                         id: "OUTLINE",
-                        label: "Outline"
+                        label: "轮廓"
                     }
                 ],
                 disabled: (font: Font) =>
@@ -1754,24 +1754,24 @@ export class Font extends EezObject {
             },
             {
                 name: "lvglFreeTypeStyle",
-                displayName: "Style",
+                displayName: "样式",
                 type: PropertyType.Enum,
                 enumItems: [
                     {
                         id: "NORMAL",
-                        label: "Normal"
+                        label: "常规"
                     },
                     {
                         id: "ITALIC",
-                        label: "Italic"
+                        label: "斜体"
                     },
                     {
                         id: "BOLD",
-                        label: "Bold"
+                        label: "粗体"
                     },
                     {
                         id: "BOLD_ITALIC",
-                        label: "Bold Italic"
+                        label: "粗斜体"
                     }
                 ],
                 disabled: (font: Font) =>
@@ -1779,7 +1779,7 @@ export class Font extends EezObject {
             },
             {
                 name: "lvglFreeTypeFilePath",
-                displayName: "File path",
+                displayName: "文件路径",
                 type: PropertyType.String,
                 disabled: (font: Font) =>
                     !isLVGLProject(font) || !font.lvglUseFreeType
@@ -1806,7 +1806,7 @@ export class Font extends EezObject {
             }
         ],
         propertiesPanelLabel: (font: Font) => {
-            return `Font: ${font.name}`;
+            return `字体：${font.name}`;
         },
         beforeLoadHook: (
             font: Font,
@@ -1926,7 +1926,7 @@ export class Font extends EezObject {
                     if (projectStore.projectTypeTraits.isLVGL) {
                         result = await showGenericDialog(projectStore, {
                             dialogDefinition: {
-                                title: "New Font",
+                                title: "新建字体",
                                 fields: [
                                     {
                                         name: "name",
@@ -1939,13 +1939,13 @@ export class Font extends EezObject {
                                     },
                                     {
                                         name: "filePath",
-                                        displayName: "Font file",
+                                        displayName: "字体文件",
                                         type: AbsoluteFileInput,
                                         validators: [validators.required],
                                         options: {
                                             filters: [
                                                 {
-                                                    name: "Font files",
+                                                    name: "字体文件",
                                                     extensions: [
                                                         "ttf",
                                                         "otf",
@@ -1953,7 +1953,7 @@ export class Font extends EezObject {
                                                     ]
                                                 },
                                                 {
-                                                    name: "All Files",
+                                                    name: "所有文件",
                                                     extensions: ["*"]
                                                 }
                                             ]
@@ -1961,7 +1961,7 @@ export class Font extends EezObject {
                                     },
                                     {
                                         name: "bpp",
-                                        displayName: "Bits per pixel",
+                                        displayName: "每像素位数",
                                         type: "enum",
                                         enumItems: [1, 2, 4, 8],
                                         visible: values =>
@@ -1969,7 +1969,7 @@ export class Font extends EezObject {
                                     },
                                     {
                                         name: "size",
-                                        displayName: "Font size (pixels)",
+                                        displayName: "字体大小（像素）",
                                         type: "number"
                                     },
                                     {
@@ -1980,7 +1980,7 @@ export class Font extends EezObject {
                                             requiredRangesOrSymbols
                                         ],
                                         formText:
-                                            "Ranges and/or characters to include. Example: 32-127,140,160-170,200,210-255",
+                                            "要包含的范围和/或字符。示例：32-127,140,160-170,200,210-255",
                                         visible: values =>
                                             values.useFreeType === false
                                     },
@@ -1989,32 +1989,32 @@ export class Font extends EezObject {
                                         type: "string",
                                         validators: [requiredRangesOrSymbols],
                                         formText:
-                                            "List of characters to include. Example: abc01234äöüčćšđ",
+                                            "要包含的字符列表。示例：abc01234äöüčćšđ",
                                         visible: values =>
                                             values.useFreeType === false
                                     },
                                     {
                                         name: "useFreeType",
                                         displayName:
-                                            "Use FreeType for rendering",
+                                            "使用 FreeType 进行渲染",
                                         type: "boolean",
                                         checkboxStyleSwitch: true
                                     },
                                     {
                                         name: "lvglFreeTypeRenderMode",
-                                        displayName: "Render Mode",
+                                        displayName: "渲染模式",
                                         type: "enum",
                                         enumItems: [
                                             {
                                                 id: "BITMAP",
-                                                label: "Bitmap"
+                                                label: "位图"
                                             },
                                             {
                                                 id: "OUTLINE",
-                                                label: "Outline"
+                                                label: "轮廓"
                                             }
                                         ],
-                                        // Disabled until LVGL FreeType integration is fixed
+                                        // 在 LVGL FreeType 集成修复前禁用
                                         visible: values =>
                                             false &&
                                             values.useFreeType === true &&
@@ -2024,24 +2024,24 @@ export class Font extends EezObject {
                                     },
                                     {
                                         name: "lvglFreeTypeStyle",
-                                        displayName: "Style",
+                                        displayName: "样式",
                                         type: "enum",
                                         enumItems: [
                                             {
                                                 id: "NORMAL",
-                                                label: "Normal"
+                                                label: "常规"
                                             },
                                             {
                                                 id: "ITALIC",
-                                                label: "Italic"
+                                                label: "斜体"
                                             },
                                             {
                                                 id: "BOLD",
-                                                label: "Bold"
+                                                label: "粗体"
                                             },
                                             {
                                                 id: "BOLD_ITALIC",
-                                                label: "Bold Italic"
+                                                label: "粗斜体"
                                             }
                                         ],
                                         visible: values =>
@@ -2049,7 +2049,7 @@ export class Font extends EezObject {
                                     },
                                     {
                                         name: "lvglFreeTypeFilePath",
-                                        displayName: "File path",
+                                        displayName: "文件路径",
                                         type: "string",
                                         validators: [validators.required],
                                         visible: values =>
@@ -2085,7 +2085,7 @@ export class Font extends EezObject {
                     } else {
                         result = await showGenericDialog(projectStore, {
                             dialogDefinition: {
-                                title: "New Font",
+                                title: "新建字体",
                                 fields: [
                                     {
                                         name: "name",
@@ -2097,17 +2097,17 @@ export class Font extends EezObject {
                                     },
                                     {
                                         name: "filePath",
-                                        displayName: "Font file",
+                                        displayName: "字体文件",
                                         type: AbsoluteFileInput,
                                         validators: [validators.required],
                                         options: {
                                             filters: [
                                                 {
-                                                    name: "Font files",
+                                                    name: "字体文件",
                                                     extensions: ["ttf", "otf"]
                                                 },
                                                 {
-                                                    name: "All Files",
+                                                    name: "所有文件",
                                                     extensions: ["*"]
                                                 }
                                             ]
@@ -2115,7 +2115,7 @@ export class Font extends EezObject {
                                     },
                                     {
                                         name: "renderingEngine",
-                                        displayName: "Rendering engine",
+                                        displayName: "渲染引擎",
                                         type: "enum",
                                         enumItems: [
                                             {
@@ -2130,7 +2130,7 @@ export class Font extends EezObject {
                                     },
                                     {
                                         name: "bpp",
-                                        displayName: "Bits per pixel",
+                                        displayName: "每像素位数",
                                         type: "enum",
                                         enumItems: [1, 2, 4, 8],
                                         visible: () =>
@@ -2139,7 +2139,7 @@ export class Font extends EezObject {
                                     },
                                     {
                                         name: "size",
-                                        displayName: "Font size (points)",
+                                        displayName: "字体大小（磅）",
                                         type: "number"
                                     },
                                     {
@@ -2149,25 +2149,25 @@ export class Font extends EezObject {
                                     },
                                     {
                                         name: "createGlyphs",
-                                        displayName: "Create characters",
+                                        displayName: "创建字符",
                                         type: "boolean",
                                         checkboxStyleSwitch: true
                                     },
                                     {
                                         name: "fromGlyph",
-                                        displayName: "From character",
+                                        displayName: "起始字符",
                                         type: "number",
                                         visible: isCreateGlyphs
                                     },
                                     {
                                         name: "toGlyph",
-                                        displayName: "To character",
+                                        displayName: "结束字符",
                                         type: "number",
                                         visible: isCreateGlyphs
                                     },
                                     {
                                         name: "createBlankGlyphs",
-                                        displayName: "Create blank characters",
+                                        displayName: "创建空白字符",
                                         type: "boolean",
                                         visible: isCreateGlyphs,
                                         checkboxStyleSwitch: true
@@ -2274,7 +2274,7 @@ export class Font extends EezObject {
                             );
                         }
 
-                        notification.info(`Added ${result.values.name} font.`);
+                        notification.info(`已添加 ${result.values.name} 字体。`);
 
                         return font;
                     } catch (err: any) {
@@ -2289,15 +2289,15 @@ export class Font extends EezObject {
 
                         if (errorMessage) {
                             notification.error(
-                                `Adding ${Font.name} failed: ${errorMessage}!`
+                                `添加 ${Font.name} 失败：${errorMessage}！`
                             );
                         } else {
-                            notification.error(`Adding ${Font.name} failed!`);
+                            notification.error(`添加 ${Font.name} 失败！`);
                         }
                     }
                 }
             } catch (err) {
-                // canceled
+                // 已取消
                 return undefined;
             }
         },
@@ -2364,7 +2364,7 @@ export class Font extends EezObject {
         const lvglInclude = projectStore.project.settings.build.lvglInclude;
 
         ////////////////////////////////////////
-        // build opts_string
+        // 构建 opts_string
 
         let opts_string = "";
 
@@ -2388,7 +2388,7 @@ export class Font extends EezObject {
 
         opts_string += " --format lvgl";
 
-        // Build opts_string for additional sources
+        // 为附加源构建 opts_string
         for (const additionalSource of this.lvglAdditionalSources || []) {
             if (!additionalSource.filePath) continue;
             opts_string += ` --font ${additionalSource.filePath}`;
@@ -2614,7 +2614,7 @@ export function validateRanges(object: any, ruleName: string) {
         return VALIDATION_MESSAGE_REQUIRED;
     }
 
-    return getEncodings(ranges) ? null : "Invalid range";
+    return getEncodings(ranges) ? null : "无效的范围";
 }
 
 export function requiredRangesOrSymbols(object: any, ruleName: string) {
@@ -2622,7 +2622,7 @@ export function requiredRangesOrSymbols(object: any, ruleName: string) {
     const symbols = object["symbols"];
 
     if (!ranges && !symbols) {
-        return "Either ranges or symbols are required";
+        return "必须填写范围或符号";
     }
 
     return null;
@@ -2634,7 +2634,7 @@ export function removeDuplicates(encodings: EncodingRange[], symbols: string) {
             return ranges;
         }
 
-        // Sort the ranges based on their 'from' values
+        // 根据其 'from' 值对范围进行排序
         ranges.sort((a, b) => a.from - b.from);
 
         const cleanedRanges: EncodingRange[] = [];
@@ -2644,16 +2644,16 @@ export function removeDuplicates(encodings: EncodingRange[], symbols: string) {
             const nextRange = ranges[i];
 
             if (nextRange.from <= currentRange.to) {
-                // There is an overlap, update the 'to' value of the current range
+                // 存在重叠，更新当前范围的 'to' 值
                 currentRange.to = Math.max(currentRange.to, nextRange.to);
             } else {
-                // No overlap, add the current range to the cleaned ranges
+                // 无重叠，将当前范围添加到清理后的范围中
                 cleanedRanges.push(currentRange);
                 currentRange = nextRange;
             }
         }
 
-        // Add the last remaining range to the cleaned ranges
+        // 将最后剩余的范围添加到清理后的范围中
         cleanedRanges.push(currentRange);
 
         return cleanedRanges;
@@ -2698,21 +2698,21 @@ export async function onEditGlyphs(object: Font | AdditionalFontSource) {
 
     const result = await showGenericDialog(projectStore, {
         dialogDefinition: {
-            title: "Add or Remove Characters",
+            title: "添加或删除字符",
             fields: [
                 {
                     name: "ranges",
                     type: "string",
                     validators: [validateRanges, requiredRangesOrSymbols],
                     formText:
-                        "Ranges and/or characters to include. Example: 32-127,140,160-170,200,210-255"
+                        "要包含的范围和/或字符。示例：32-127,140,160-170,200,210-255"
                 },
                 {
                     name: "symbols",
                     type: "string",
                     validators: [requiredRangesOrSymbols],
                     formText:
-                        "List of characters to include. Example: abc01234äöüčćšđ"
+                        "要包含的字符列表。示例：abc01234äöüčćšđ"
                 }
             ]
         },
@@ -2733,10 +2733,10 @@ export async function onEditGlyphs(object: Font | AdditionalFontSource) {
 const feature: ProjectEditorFeature = {
     name: "eezstudio-project-feature-font",
     version: "0.1.0",
-    description: "Fonts support for your project",
+    description: "为你的项目提供字体支持",
     author: "EEZ",
     authorLogo: "../eez-studio-ui/_images/eez_logo.png",
-    displayName: "Fonts",
+    displayName: "字体",
     mandatory: false,
     key: "fonts",
     type: PropertyType.Array,
@@ -2748,7 +2748,7 @@ const feature: ProjectEditorFeature = {
             messages.push(
                 new Message(
                     MessageType.ERROR,
-                    "Max. 255 fonts are supported",
+                    "最多支持 255 种字体",
                     object
                 )
             );

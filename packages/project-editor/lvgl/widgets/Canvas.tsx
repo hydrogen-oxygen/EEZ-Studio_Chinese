@@ -1,3 +1,4 @@
+// Canvas.tsx
 import React from "react";
 import { makeObservable } from "mobx";
 
@@ -15,7 +16,7 @@ export class LVGLCanvasWidget extends LVGLWidget {
         enabledInComponentPalette: (projectType: ProjectType) =>
             projectType === ProjectType.LVGL,
 
-        componentPaletteGroupName: "!1Visualiser",
+        componentPaletteGroupName: "!1可视化",
 
         properties: [],
 

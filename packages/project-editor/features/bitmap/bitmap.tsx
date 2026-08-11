@@ -66,7 +66,7 @@ const ExportBitmapFilePropertyGridUI = observer(
         export = async () => {
             const bitmap = this.props.objects[0] as Bitmap;
 
-            // for example: data:image/png;base64,
+            // 例如：data:image/png;base64,
             const i = bitmap.image.indexOf("/");
             const j = bitmap.image.indexOf(";");
             const k = bitmap.image.indexOf(",");
@@ -74,7 +74,7 @@ const ExportBitmapFilePropertyGridUI = observer(
             const ext = bitmap.image.substring(i + 1, j);
 
             const result = await dialog.showSaveDialog(getCurrentWindow(), {
-                filters: [{ name: "All Files", extensions: ["*"] }],
+                filters: [{ name: "所有文件", extensions: ["*"] }],
                 defaultPath: bitmap.name + "." + ext
             });
             let filePath = result.filePath;
@@ -86,7 +86,7 @@ const ExportBitmapFilePropertyGridUI = observer(
                 );
                 try {
                     await fs.promises.writeFile(filePath, bin);
-                    notification.info(`Bitmap file exported.`);
+                    notification.info(`位图文件已导出。`);
                 } catch (error: any) {
                     notification.error(error.toString());
                 }
@@ -100,7 +100,7 @@ const ExportBitmapFilePropertyGridUI = observer(
             return (
                 <div style={{ marginTop: 10 }}>
                     <Button color="primary" size="small" onClick={this.export}>
-                        Export Bitmap File
+                        导出位图文件
                     </Button>
                 </div>
             );
@@ -181,7 +181,7 @@ export class Bitmap extends EezObject {
             {
                 name: "bpp",
                 displayName: (bitmap: Bitmap) =>
-                    isLVGLProject(bitmap) ? "Color format" : "Bits per pixel",
+                    isLVGLProject(bitmap) ? "颜色格式" : "每像素位数",
                 type: PropertyType.Enum,
                 enumItems: (bitmap: Bitmap) =>
                     isLVGLProject(bitmap)
@@ -192,12 +192,12 @@ export class Bitmap extends EezObject {
             },
             {
                 name: "lvglBinaryOutputFormat",
-                displayName: (bitmap: Bitmap) => "Binary output format",
+                displayName: (bitmap: Bitmap) => "二进制输出格式",
                 type: PropertyType.Enum,
                 enumItems: [
                     { id: 0, label: "RGB332" },
                     { id: 1, label: "RGB565" },
-                    { id: 2, label: "RGB565 Swap" },
+                    { id: 2, label: "RGB565 交换" },
                     { id: 3, label: "RGB888" }
                 ],
                 defaultValue: 3,
@@ -217,7 +217,7 @@ export class Bitmap extends EezObject {
             },
             {
                 name: "lvglDither",
-                displayName: (bitmap: Bitmap) => "Dither image",
+                displayName: (bitmap: Bitmap) => "抖动图像",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 disabled: (bitmap: Bitmap) => {
@@ -245,7 +245,7 @@ export class Bitmap extends EezObject {
             },
             {
                 name: "alwaysBuild",
-                displayName: "Always add to the generated code",
+                displayName: "始终添加到生成的代码中",
                 type: PropertyType.Boolean,
                 disabled: object =>
                     isLVGLProject(object) || isDashboardProject(object)
@@ -265,7 +265,7 @@ export class Bitmap extends EezObject {
             }
         ],
         propertiesPanelLabel: (bitmap: Bitmap) => {
-            return `Bitmap: ${bitmap.name}`;
+            return `位图：${bitmap.name}`;
         },
         check: (bitmap: Bitmap, messages: IMessage[]) => {
             const projectStore = getProjectStore(bitmap);
@@ -277,7 +277,7 @@ export class Bitmap extends EezObject {
                         messages.push(
                             new Message(
                                 MessageType.ERROR,
-                                `Bitmap image file '${absoluteFilePath}' not found`,
+                                `位图图像文件 '${absoluteFilePath}' 未找到`,
                                 getChildOfObject(bitmap, "image")
                             )
                         );
@@ -299,7 +299,7 @@ export class Bitmap extends EezObject {
 
             const result = await showGenericDialog(projectStore, {
                 dialogDefinition: {
-                    title: "New Bitmap",
+                    title: "新建位图",
                     fields: [
                         {
                             name: "name",
@@ -318,16 +318,16 @@ export class Bitmap extends EezObject {
                         },
                         {
                             name: "imageFilePaths",
-                            displayName: "Image",
+                            displayName: "图像",
                             type: MultipleAbsoluteFileInput,
                             validators: [validators.required],
                             options: {
                                 filters: [
                                     {
-                                        name: "Image files",
+                                        name: "图像文件",
                                         extensions: ["png", "jpg", "jpeg"]
                                     },
-                                    { name: "All Files", extensions: ["*"] }
+                                    { name: "所有文件", extensions: ["*"] }
                                 ]
                             }
                         },
@@ -335,7 +335,7 @@ export class Bitmap extends EezObject {
                             ? [
                                   {
                                       name: "bpp",
-                                      displayName: "Color format",
+                                      displayName: "颜色格式",
                                       type: "enum",
                                       enumItems:
                                           getLvglBitmapColorFormats(parent)
@@ -346,7 +346,7 @@ export class Bitmap extends EezObject {
                             : [
                                   {
                                       name: "bpp",
-                                      displayName: "Bits per pixel",
+                                      displayName: "每像素位数",
                                       type: "enum",
                                       enumItems: [16, 32]
                                   } as IFieldProperties
@@ -414,7 +414,7 @@ export class Bitmap extends EezObject {
             }
         },
 
-        // MIGRATION TO LOW RES
+        // 迁移到低分辨率
         beforeLoadHook: (bitmap: Bitmap, jsWidget: Partial<Bitmap>) => {
             if ((window as any).__eezProjectMigration) {
                 const dispose = autorun(() => {
@@ -571,7 +571,7 @@ export class Bitmap extends EezObject {
 
         const isLVGL = isLVGLProject(this);
 
-        const bytesPerPixel = bpp == 32 ? 4 : bpp == 24 ? 3 : isLVGL ? 3 : 2; // for LVGL 16 bit is actually RGB565A8 (24 bit)
+        const bytesPerPixel = bpp == 32 ? 4 : bpp == 24 ? 3 : isLVGL ? 3 : 2; // 对于 LVGL 16 位实际上是 RGB565A8（24 位）
 
         let pixels = new Uint8Array(bytesPerPixel * image.width * image.height);
 
@@ -808,7 +808,7 @@ export function getBitmapData(
     };
 }
 
-// this function makes sure that bitmap is eventually loaded
+// 此函数确保位图最终被加载
 export async function getBitmapDataAsync(
     bitmap: Bitmap,
     bppOverride?: number,
@@ -837,7 +837,7 @@ export async function getBitmapDataAsync(
             };
         }
 
-        // still loading, wait for 10 ms
+        // 仍在加载，等待 10 毫秒
         await new Promise(resolve => setTimeout(resolve, 10));
     }
 }
@@ -857,10 +857,10 @@ export async function preloadAllBitmaps(projectStore: ProjectStore) {
 const feature: ProjectEditorFeature = {
     name: "eezstudio-project-feature-bitmap",
     version: "0.1.0",
-    description: "Bitmaps support for your project",
+    description: "为你的项目提供位图支持",
     author: "EEZ",
     authorLogo: "../eez-studio-ui/_images/eez_logo.png",
-    displayName: "Bitmaps",
+    displayName: "位图",
     mandatory: false,
     key: "bitmaps",
     type: PropertyType.Array,
@@ -872,7 +872,7 @@ const feature: ProjectEditorFeature = {
             messages.push(
                 new Message(
                     MessageType.ERROR,
-                    "Max. 65535 bitmaps are supported",
+                    "最多支持 65535 个位图",
                     object
                 )
             );
@@ -886,7 +886,7 @@ const feature: ProjectEditorFeature = {
             messages.push(
                 new Message(
                     MessageType.ERROR,
-                    "'Default' style is missing.",
+                    "缺少“默认”样式。",
                     object
                 )
             );

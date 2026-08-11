@@ -1,3 +1,4 @@
+// Calendar.tsx
 import React from "react";
 import { observable, makeObservable } from "mobx";
 
@@ -20,9 +21,9 @@ import type { LVGLCode } from "project-editor/lvgl/to-lvgl-code";
 ////////////////////////////////////////////////////////////////////////////////
 
 const CALENDAR_HEADER_TYPES = {
-    None: 0,
-    Arrow: 1,
-    Dropdown: 2
+    无: 0,
+    箭头: 1,
+    下拉: 2
 };
 
 export class LVGLCalendarWidget extends LVGLWidget {
@@ -36,24 +37,24 @@ export class LVGLCalendarWidget extends LVGLWidget {
         enabledInComponentPalette: (projectType: ProjectType, projectStore) =>
             projectType === ProjectType.LVGL,
 
-        componentPaletteGroupName: "!1Input",
+        componentPaletteGroupName: "!1输入",
 
         properties: [
             {
                 name: "todayYear",
-                displayName: "Year",
+                displayName: "年",
                 type: PropertyType.Number,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "todayMonth",
-                displayName: "Month",
+                displayName: "月",
                 type: PropertyType.Number,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "todayDay",
-                displayName: "Day",
+                displayName: "日",
                 type: PropertyType.Number,
                 propertyGridGroup: specificGroup
             },
@@ -90,13 +91,13 @@ export class LVGLCalendarWidget extends LVGLWidget {
             todayYear: 2022,
             todayMonth: 11,
             todayDay: 1,
-            header: "Arrow",
+            header: "箭头",
             chineseMode: false
         },
 
         beforeLoadHook: (object: LVGLCalendarWidget, jsObject: any) => {
             if (jsObject.header == undefined) {
-                jsObject.header = "Arrow";
+                jsObject.header = "箭头";
             }
             if (jsObject.chineseMode == undefined) {
                 jsObject.chineseMode = false;
@@ -127,7 +128,7 @@ export class LVGLCalendarWidget extends LVGLWidget {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `Invalid year`,
+                        `无效的年份`,
                         getChildOfObject(widget, "todayYear")
                     )
                 );
@@ -140,7 +141,7 @@ export class LVGLCalendarWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Invalid month`,
+                            `无效的月份`,
                             getChildOfObject(widget, "todayMonth")
                         )
                     );
@@ -155,7 +156,7 @@ export class LVGLCalendarWidget extends LVGLWidget {
                         messages.push(
                             new Message(
                                 MessageType.ERROR,
-                                `Invalid day`,
+                                `无效的日期`,
                                 getChildOfObject(widget, "todayDay")
                             )
                         );
@@ -191,7 +192,7 @@ export class LVGLCalendarWidget extends LVGLWidget {
     override toLVGLCode(code: LVGLCode) {
         code.createObject("lv_calendar_create");
 
-        if (this.header === "Arrow") {
+        if (this.header === "箭头") {
             if (code.isLVGLVersion(["8.4.0", "9.2.2"])) {
                 code.callObjectFunction(
                     "lv_calendar_header_arrow_create"
@@ -201,7 +202,7 @@ export class LVGLCalendarWidget extends LVGLWidget {
                     "lv_calendar_add_header_arrow"
                 );
             }
-        } else if (this.header === "Dropdown") {
+        } else if (this.header === "下拉") {
             if (code.isLVGLVersion(["8.4.0", "9.2.2"])) {
                 code.callObjectFunction(
                     "lv_calendar_header_dropdown_create"

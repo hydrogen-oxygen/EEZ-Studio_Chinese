@@ -1,3 +1,4 @@
+// layout-models.tsx
 import React from "react";
 
 import { action, computed, makeObservable } from "mobx";
@@ -68,7 +69,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static PAGES_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Pages",
+        name: "页面",
         component: "pages",
         icon: "svg:pages",
         id: LayoutModels.PAGES_TAB_ID
@@ -76,7 +77,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static WIDGETS_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "User Widgets",
+        name: "用户控件",
         component: "widgets",
         icon: "svg:user_widgets",
         id: LayoutModels.USER_WIDGETS_TAB_ID
@@ -84,7 +85,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static ACTIONS_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "User Actions",
+        name: "用户动作",
         component: "actions",
         icon: "material:code",
         id: LayoutModels.ACTIONS_TAB_ID
@@ -93,7 +94,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static STYLES_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Styles",
+        name: "样式",
         id: LayoutModels.STYLES_TAB_ID,
         component: "styles",
         icon: "material:format_color_fill"
@@ -102,7 +103,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static FONTS_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Fonts",
+        name: "字体",
         id: LayoutModels.FONTS_TAB_ID,
         component: "fonts",
         icon: "material:font_download"
@@ -111,7 +112,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static BITMAPS_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Bitmaps",
+        name: "位图",
         id: LayoutModels.BITMAPS_TAB_ID,
         component: "bitmaps",
         icon: "material:image"
@@ -120,7 +121,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static THEMES_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Themes",
+        name: "主题",
         id: LayoutModels.THEMES_TAB_ID,
         component: "themesSideView",
         icon: "svg:palette"
@@ -129,7 +130,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static TEXTS_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Texts",
+        name: "文本",
         id: LayoutModels.TEXTS_TAB_ID,
         component: "texts",
         icon: "svg:language"
@@ -147,7 +148,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static INSTRUMENT_COMMANDS_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Instrument Commands",
+        name: "仪器命令",
         id: LayoutModels.INSTRUMENT_COMMANDS_TAB_ID,
         component: "instrument-commands",
         icon: "material:navigate_next"
@@ -156,7 +157,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static EXTENSION_DEFINITIONS_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "IEXT",
+        name: "扩展定义",
         id: LayoutModels.EXTENSION_DEFINITIONS_TAB_ID,
         component: "extension-definitions",
         icon: "material:extension"
@@ -165,7 +166,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static CHANGES_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Changes",
+        name: "变更",
         id: LayoutModels.CHANGES_TAB_ID,
         component: "changes",
         icon: "svg:changes"
@@ -174,7 +175,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static BREAKPOINTS_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Breakpoints",
+        name: "断点",
         id: LayoutModels.BREAKPOINTS_TAB_ID,
         icon: "svg:breakpoints_panel",
         component: "breakpointsPanel"
@@ -183,7 +184,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static LVGL_GROUPS_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Groups",
+        name: "分组",
         id: LayoutModels.LVGL_GROUPS_TAB_ID,
         component: "lvgl-groups",
         icon: "material:view_compact"
@@ -192,7 +193,7 @@ export class LayoutModels extends AbstractLayoutModels {
     static COMPONENTS_PALETTE_TAB: FlexLayout.IJsonTabNode = {
         type: "tab",
         enableClose: false,
-        name: "Components Palette",
+        name: "组件面板",
         id: LayoutModels.COMPONENTS_PALETTE_TAB_ID,
         component: "componentsPalette",
         icon: "svg:components"
@@ -211,7 +212,7 @@ export class LayoutModels extends AbstractLayoutModels {
     rootRuntime: FlexLayout.Model;
     rootDockerSimulator: FlexLayout.Model;
 
-    // Track if docker simulator mode is active
+    // 跟踪 Docker 模拟器模式是否激活
     isDockerSimulatorMode: boolean = false;
 
     get root() {
@@ -282,28 +283,28 @@ export class LayoutModels extends AbstractLayoutModels {
                 {
                     type: "tab",
                     enableClose: false,
-                    name: "Checks",
+                    name: "检查",
                     id: LayoutModels.CHECKS_TAB_ID,
                     component: "checksMessages"
                 },
                 {
                     type: "tab",
                     enableClose: false,
-                    name: "Output",
+                    name: "输出",
                     id: LayoutModels.OUTPUT_TAB_ID,
                     component: "outputMessages"
                 },
                 {
                     type: "tab",
                     enableClose: false,
-                    name: "Search",
+                    name: "搜索",
                     id: LayoutModels.SEARCH_TAB_ID,
                     component: "search"
                 },
                 {
                     type: "tab",
                     enableClose: false,
-                    name: "References",
+                    name: "引用",
                     id: LayoutModels.REFERENCES_TAB_ID,
                     component: "references"
                 }
@@ -349,28 +350,28 @@ export class LayoutModels extends AbstractLayoutModels {
                 {
                     type: "tab",
                     enableClose: false,
-                    name: "Checks",
+                    name: "检查",
                     id: LayoutModels.CHECKS_TAB_ID,
                     component: "checksMessages"
                 },
                 {
                     type: "tab",
                     enableClose: false,
-                    name: "Output",
+                    name: "输出",
                     id: LayoutModels.OUTPUT_TAB_ID,
                     component: "outputMessages"
                 },
                 {
                     type: "tab",
                     enableClose: false,
-                    name: "Search",
+                    name: "搜索",
                     id: LayoutModels.SEARCH_TAB_ID,
                     component: "search"
                 },
                 {
                     type: "tab",
                     enableClose: false,
-                    name: "References",
+                    name: "引用",
                     id: LayoutModels.REFERENCES_TAB_ID,
                     component: "references"
                 }
@@ -420,7 +421,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Widgets Structure",
+                                                name: "控件结构",
                                                 component: "flow-structure",
                                                 icon: "svg:hierarchy"
                                             }
@@ -434,7 +435,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Variables",
+                                                name: "变量",
                                                 component: "variables",
                                                 icon: "svg:variable",
                                                 id: LayoutModels.VARIABLES_TAB_ID
@@ -462,7 +463,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Properties",
+                                                name: "属性",
                                                 id: LayoutModels.PROPERTIES_TAB_ID,
                                                 component: "propertiesPanel",
                                                 icon: "svg:properties"
@@ -542,7 +543,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Properties",
+                                                name: "属性",
                                                 id: LayoutModels.PROPERTIES_TAB_ID,
                                                 component: "propertiesPanel",
                                                 icon: "svg:properties"
@@ -586,7 +587,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Active Flows",
+                                                name: "活动流程",
                                                 icon: "svg:active_flows_panel",
                                                 component: "active-flows"
                                             }
@@ -599,7 +600,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Watch",
+                                                name: "监视",
                                                 icon: "svg:watch_panel",
                                                 component: "watch"
                                             }
@@ -627,7 +628,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Queue",
+                                                name: "队列",
                                                 icon: "svg:queue_panel",
                                                 component: "queue"
                                             },
@@ -641,7 +642,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Logs",
+                                                name: "日志",
                                                 id: LayoutModels.DEBUGGER_LOGS_TAB_ID,
                                                 icon: "svg:log",
                                                 component: "logs"
@@ -675,7 +676,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                     {
                                         type: "tab",
                                         enableClose: false,
-                                        name: "Preview",
+                                        name: "预览",
                                         id: LayoutModels.DOCKER_SIMULATOR_PREVIEW_TAB_ID,
                                         icon: "material:computer",
                                         component: "dockerSimulatorPreview"
@@ -697,7 +698,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Build Logs",
+                                                name: "构建日志",
                                                 id: LayoutModels.DOCKER_SIMULATOR_LOGS_TAB_ID,
                                                 icon: "svg:log",
                                                 component: "dockerSimulatorLogs"
@@ -715,7 +716,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Preview Logs",
+                                                name: "预览日志",
                                                 id: LayoutModels.DOCKER_SIMULATOR_PREVIEW_LOGS_TAB_ID,
                                                 icon: "svg:log",
                                                 component:
@@ -754,7 +755,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Bitmaps",
+                                                name: "位图",
                                                 component: "bitmaps"
                                             }
                                         ]
@@ -770,7 +771,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Preview",
+                                                name: "预览",
                                                 component: "preview"
                                             }
                                         ]
@@ -844,14 +845,14 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Subsystems",
+                                                name: "子系统",
                                                 id: LayoutModels.SCPI_SUBSYSTEMS_TAB_ID,
                                                 component: "subsystems"
                                             },
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Enums",
+                                                name: "枚举",
                                                 id: LayoutModels.SCPI_ENUMS_TAB_ID,
                                                 component: "enums"
                                             }
@@ -863,7 +864,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Commands",
+                                                name: "命令",
                                                 id: LayoutModels.SCPI_COMMANDS_TAB_ID,
                                                 component: "commands"
                                             }
@@ -900,7 +901,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Styles",
+                                                name: "样式",
                                                 component: "styles"
                                             }
                                         ]
@@ -916,7 +917,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Preview",
+                                                name: "预览",
                                                 component: "preview"
                                             }
                                         ]
@@ -952,7 +953,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Styles",
+                                                name: "样式",
                                                 component: "styles"
                                             }
                                         ]
@@ -968,7 +969,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Preview",
+                                                name: "预览",
                                                 component: "preview"
                                             }
                                         ]
@@ -1047,7 +1048,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Text resources",
+                                                name: "文本资源",
                                                 id: LayoutModels.TEXT_RESOURCES_TAB_ID,
                                                 component: "resources"
                                             }
@@ -1059,7 +1060,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Languages",
+                                                name: "语言",
                                                 id: LayoutModels.LANGUAGES_TAB_ID,
                                                 component: "languages"
                                             }
@@ -1071,7 +1072,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Statistics",
+                                                name: "统计",
                                                 id: LayoutModels.TEXTS_STATISTICS_TAB_ID,
                                                 component: "statistics"
                                             }
@@ -1108,7 +1109,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Groups",
+                                                name: "分组",
                                                 component: "groups"
                                             }
                                         ]
@@ -1124,7 +1125,7 @@ export class LayoutModels extends AbstractLayoutModels {
                                             {
                                                 type: "tab",
                                                 enableClose: false,
-                                                name: "Group Widgets",
+                                                name: "分组控件",
                                                 component: "order"
                                             }
                                         ]

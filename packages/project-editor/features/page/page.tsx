@@ -232,7 +232,7 @@ export const GeometryProperties = observer(
                         updateObject={this.props.updateObject}
                     />
 
-                    <div title="Width">W</div>
+                    <div title="Width">宽</div>
                     <Property
                         propertyInfo={
                             findPropertyByNameInClassInfo(
@@ -245,7 +245,7 @@ export const GeometryProperties = observer(
                         updateObject={this.props.updateObject}
                     />
 
-                    <div title="Height">H</div>
+                    <div title="Height">高</div>
                     <Property
                         propertyInfo={
                             findPropertyByNameInClassInfo(
@@ -386,7 +386,7 @@ export class Page extends Flow {
                             return null;
                         }
 
-                        return "Not an unique name";
+                        return "名称不唯一";
                     };
                 },
                 propertyGridGroup: generalGroup
@@ -396,7 +396,7 @@ export class Page extends Flow {
                 type: PropertyType.String,
                 propertyGridGroup: generalGroup,
                 computed: true,
-                formText: `This identifier will be used in the generated source code in the "Objects" struct. It is different from the "Name" above because in the source code we are following "lowercase with underscore" naming convention.`,
+                formText: `此标识符将用于生成的源代码中的"Objects"结构体。它与上面的"名称"不同，因为在源代码中我们遵循"小写加下划线"命名约定。`,
                 disabled: (object: Page) => object.codeIdentifier == undefined
             },
             {
@@ -406,7 +406,7 @@ export class Page extends Flow {
             },
             {
                 name: "dataContextOverrides",
-                displayName: "Data context",
+                displayName: "数据上下文",
                 type: PropertyType.JSON,
                 propertyGridGroup: generalGroup,
                 disabled: (object: Page) => isLVGLProject(object) || isEezGuiLiteProject(object)
@@ -499,7 +499,7 @@ export class Page extends Flow {
             },
             {
                 name: "deleteOnScreenUnload",
-                displayName: "Delete on unload",
+                displayName: "卸载时删除",
                 type: PropertyType.Boolean,
                 propertyGridGroup: generalGroup,
                 checkboxStyleSwitch: true,
@@ -530,7 +530,7 @@ export class Page extends Flow {
             return label;
         },
         beforeLoadHook: (page: Page, jsObject: any, project: Project) => {
-            // MIGRATION TO LOW RES
+            // 迁移至低分辨率
             if ((window as any).__eezProjectMigration) {
                 jsObject.left = Math.floor(
                     (jsObject.left * __eezProjectMigration.displayTargetWidth) /
@@ -586,7 +586,7 @@ export class Page extends Flow {
                 delete jsObject.isUsedAsCustomWidget;
             }
 
-            // migrate old LVGL project so that all root widgets are childs of the single LVGLScreenWidget
+            // 迁移旧的 LVGL 项目，使所有根控件成为单个 LVGLScreenWidget 的子控件
             if (
                 !jsObject.isUsedAsUserWidget &&
                 project.projectTypeTraits.isLVGL
@@ -606,14 +606,14 @@ export class Page extends Flow {
                     }
                 }
 
-                // is migration required?
+                // 是否需要迁移？
                 if (
                     !(
                         widgets.length == 1 &&
                         widgets[0].type == "LVGLScreenWidget"
                     )
                 ) {
-                    // do migration
+                    // 执行迁移
                     jsObject.components = [
                         ...actions,
                         {
@@ -656,8 +656,8 @@ export class Page extends Flow {
                 dialogDefinition: {
                     title:
                         parent == project.userPages
-                            ? "New Page"
-                            : "New User Widget",
+                            ? "新建页面"
+                            : "新建用户控件",
                     fields: [
                         {
                             name: "name",
@@ -668,7 +668,7 @@ export class Page extends Flow {
                                 validators.unique(
                                     {},
                                     project.pages,
-                                    "Page or User Widget with this name already exists"
+                                    "同名页面或用户控件已存在"
                                 )
                             ]
                         }
@@ -759,7 +759,7 @@ export class Page extends Flow {
                     messages.push(
                         new Message(
                             MessageType.WARNING,
-                            `Width (${page.width}) is different from display width (${projectStore.project.settings.general.displayWidth})`,
+                            `宽度 (${page.width}) 与显示宽度 (${projectStore.project.settings.general.displayWidth}) 不同`,
                             getChildOfObject(page, "width")
                         )
                     );
@@ -772,7 +772,7 @@ export class Page extends Flow {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Width must be between 1 and ${MAX_WIDTH}`,
+                            `宽度必须在 1 到 ${MAX_WIDTH} 之间`,
                             getChildOfObject(page, "width")
                         )
                     );
@@ -789,7 +789,7 @@ export class Page extends Flow {
                     messages.push(
                         new Message(
                             MessageType.WARNING,
-                            `Height (${page.height}) is different from display height (${projectStore.project.settings.general.displayHeight})`,
+                            `高度 (${page.height}) 与显示高度 (${projectStore.project.settings.general.displayHeight}) 不同`,
                             getChildOfObject(page, "height")
                         )
                     );
@@ -799,7 +799,7 @@ export class Page extends Flow {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Height must be between 1 and ${MAX_HEIGHT}`,
+                            `高度必须在 1 到 ${MAX_HEIGHT} 之间`,
                             getChildOfObject(page, "height")
                         )
                     );
@@ -976,7 +976,7 @@ export class Page extends Flow {
             <>
                 {!flowContext.frontFace && (
                     <>
-                        {/* Render component groups first (behind components) */}
+                        {/* 先渲染组件组（位于组件后面） */}
                         {this.componentGroups.map(group => (
                             <ComponentGroupRenderer
                                 key={getId(group)}
@@ -1123,8 +1123,8 @@ export class Page extends Flow {
             !flowContext.document.findObjectById(getId(this)) &&
             !flowContext.projectStore.runtime;
         if (isUserWidgetWidgetPage) {
-            // this is UserWidgetWidget page, forbid interaction with the content
-            // and do not draw background (it is drawn by UserWidgetWidget)
+            // 这是 UserWidgetWidget 页面，禁止与内容交互
+            // 并且不绘制背景（由 UserWidgetWidget 绘制）
             style.pointerEvents = "none";
         } else {
             const pageStyle = findStyle(
@@ -1148,7 +1148,7 @@ export class Page extends Flow {
     }
 
     buildFlowWidgetSpecific(assets: Assets, dataBuffer: DataBuffer) {
-        // widgets
+        // 控件
         const widgets = assets.projectStore.projectTypeTraits.isDashboard
             ? []
             : (this.components.filter(
@@ -1159,7 +1159,7 @@ export class Page extends Flow {
             buildWidget(widget, assets, dataBuffer)
         );
 
-        // flags
+        // 标志
         let flags = 0;
 
         const CLOSE_PAGE_IF_TOUCHED_OUTSIDE_FLAG = 1 << 1;
@@ -1183,17 +1183,17 @@ export class Page extends Flow {
 
         dataBuffer.writeUint16(flags);
 
-        // overlay
+        // 覆盖层
         dataBuffer.writeInt16(0);
 
-        // layout
+        // 布局
         const CONTAINER_WIDGET_LAYOUT_STATIC = 0;
 
         let layout = CONTAINER_WIDGET_LAYOUT_STATIC;
 
         dataBuffer.writeUint16(layout);
 
-        // reserved1
+        // 保留1
         dataBuffer.writeUint16(0);
     }
 
@@ -1374,10 +1374,10 @@ registerClass("Page", Page);
 const feature: ProjectEditorFeature = {
     name: "eezstudio-project-feature-page",
     version: "0.1.0",
-    description: "Pages support for your project",
+    description: "为您的项目提供页面支持",
     author: "EEZ",
     authorLogo: "../eez-studio-ui/_images/eez_logo.png",
-    displayName: "Pages",
+    displayName: "页面",
     mandatory: true,
     key: "userPages",
     type: PropertyType.Array,

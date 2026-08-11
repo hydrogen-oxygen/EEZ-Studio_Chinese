@@ -1,3 +1,4 @@
+// ButtonMatrix.tsx
 import React from "react";
 import { makeObservable, observable } from "mobx";
 
@@ -63,56 +64,56 @@ class LVGLMatrixButton extends EezObject {
             },
             {
                 name: "ctrlHidden",
-                displayName: "HIDDEN",
+                displayName: "隐藏",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 hideInPropertyGrid: (button: LVGLMatrixButton) => button.newLine
             },
             {
                 name: "ctrlNoRepeat",
-                displayName: "NO_REPEAT",
+                displayName: "不重复",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 hideInPropertyGrid: (button: LVGLMatrixButton) => button.newLine
             },
             {
                 name: "ctrlDisabled",
-                displayName: "DISABLED",
+                displayName: "禁用",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 hideInPropertyGrid: (button: LVGLMatrixButton) => button.newLine
             },
             {
                 name: "ctrlCheckable",
-                displayName: "CHECKABLE",
+                displayName: "可选中",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 hideInPropertyGrid: (button: LVGLMatrixButton) => button.newLine
             },
             {
                 name: "ctrlChecked",
-                displayName: "CHECKED",
+                displayName: "已选中",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 hideInPropertyGrid: (button: LVGLMatrixButton) => button.newLine
             },
             {
                 name: "ctrlClickTrig",
-                displayName: "CLICK_TRIG",
+                displayName: "点击触发",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 hideInPropertyGrid: (button: LVGLMatrixButton) => button.newLine
             },
             {
                 name: "ctrlPopover",
-                displayName: "POPOVER",
+                displayName: "弹出",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 hideInPropertyGrid: (button: LVGLMatrixButton) => button.newLine
             },
             {
                 name: "ctrlRecolor",
-                displayName: "RECOLOR",
+                displayName: "重着色",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 hideInPropertyGrid: (button: LVGLMatrixButton) =>
@@ -122,14 +123,14 @@ class LVGLMatrixButton extends EezObject {
             },
             {
                 name: "ctrlCustom1",
-                displayName: "CUSTOM_1",
+                displayName: "自定义1",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 hideInPropertyGrid: (button: LVGLMatrixButton) => button.newLine
             },
             {
                 name: "ctrlCustom2",
-                displayName: "CUSTOM_2",
+                displayName: "自定义2",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 hideInPropertyGrid: (button: LVGLMatrixButton) => button.newLine
@@ -139,7 +140,7 @@ class LVGLMatrixButton extends EezObject {
         listLabel: (button: LVGLMatrixButton, collapsed: boolean) => {
             if (button.newLine) {
                 if (collapsed) {
-                    return "New line";
+                    return "新行";
                 } else {
                     return "";
                 }
@@ -172,7 +173,7 @@ class LVGLMatrixButton extends EezObject {
         },
 
         defaultValue: {
-            text: "Btn",
+            text: "按钮",
             width: 1
         },
 
@@ -186,7 +187,7 @@ class LVGLMatrixButton extends EezObject {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `The width must be in the range of 1..7`,
+                            `宽度必须在 1..7 范围内`,
                             getChildOfObject(button, "width")
                         )
                     );
@@ -221,7 +222,7 @@ export class LVGLButtonMatrixWidget extends LVGLWidget {
         enabledInComponentPalette: (projectType: ProjectType) =>
             projectType === ProjectType.LVGL,
 
-        componentPaletteGroupName: "!1Basic",
+        componentPaletteGroupName: "!1基本",
 
         properties: [
             {
@@ -300,7 +301,7 @@ export class LVGLButtonMatrixWidget extends LVGLWidget {
 
         const buttons = this.buttons ?? [];
 
-        // buttons map
+        // 按钮映射
         let mapArray;
         let mapArg;
         if (code.lvglBuild) {
@@ -343,7 +344,7 @@ export class LVGLButtonMatrixWidget extends LVGLWidget {
             mapArg = mapBuffer;
         }
 
-        // buttons ctrl_map
+        // 按钮 ctrl_map
         let ctrlMapArg;
         if (code.lvglBuild) {
             const textButtons = buttons.filter(button => !button.newLine);
@@ -380,25 +381,7 @@ export class LVGLButtonMatrixWidget extends LVGLWidget {
 
                 textButtons.forEach(button => {
                     build.line(
-                        `${
-                            button.width < 1
-                                ? 1
-                                : button.width > 7
-                                ? 7
-                                : button.width
-                        }${button.ctrlHidden ? prefix + "HIDDEN" : ""}${
-                            button.ctrlNoRepeat ? prefix + "NO_REPEAT" : ""
-                        }${button.ctrlDisabled ? prefix + "DISABLED" : ""}${
-                            button.ctrlCheckable ? prefix + "CHECKABLE" : ""
-                        }${button.ctrlChecked ? prefix + "CHECKED" : ""}${
-                            button.ctrlClickTrig ? prefix + "CLICK_TRIG" : ""
-                        }${button.ctrlPopover ? prefix + "POPOVER" : ""}${
-                            !code.isV9 && button.ctrlRecolor
-                                ? prefix + "RECOLOR"
-                                : ""
-                        }${button.ctrlCustom1 ? prefix + "CUSTOM_1" : ""}${
-                            button.ctrlCustom2 ? prefix + "CUSTOM_2" : ""
-                        },`
+                        `${button.width < 1 ? 1 : button.width > 7 ? 7 : button.width}${button.ctrlHidden ? prefix + "HIDDEN" : ""}${button.ctrlNoRepeat ? prefix + "NO_REPEAT" : ""}${button.ctrlDisabled ? prefix + "DISABLED" : ""}${button.ctrlCheckable ? prefix + "CHECKABLE" : ""}${button.ctrlChecked ? prefix + "CHECKED" : ""}${button.ctrlClickTrig ? prefix + "CLICK_TRIG" : ""}${button.ctrlPopover ? prefix + "POPOVER" : ""}${!code.isV9 && button.ctrlRecolor ? prefix + "RECOLOR" : ""}${button.ctrlCustom1 ? prefix + "CUSTOM_1" : ""}${button.ctrlCustom2 ? prefix + "CUSTOM_2" : ""},`
                     );
                 });
 

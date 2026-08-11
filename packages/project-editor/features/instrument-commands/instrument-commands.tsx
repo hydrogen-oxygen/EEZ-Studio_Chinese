@@ -125,7 +125,7 @@ const feature: ProjectEditorFeature = {
     description: "This feature adds support for instrument commands definition",
     author: "EEZ",
     authorLogo: "../eez-studio-ui/_images/eez_logo.png",
-    displayName: "Instrument Commands",
+    displayName: "仪器命令",
     mandatory: false,
     key: "instrumentCommands",
     type: PropertyType.Object,

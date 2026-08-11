@@ -1,3 +1,4 @@
+// Colorwheel.tsx
 import React from "react";
 import { observable, makeObservable } from "mobx";
 
@@ -26,7 +27,7 @@ export class LVGLColorwheelWidget extends LVGLWidget {
             (!projectStore ||
                 projectStore.project.settings.general.lvglVersion.startsWith("8.")),
 
-        componentPaletteGroupName: "!1Input",
+        componentPaletteGroupName: "!1输入",
 
         properties: [
             {

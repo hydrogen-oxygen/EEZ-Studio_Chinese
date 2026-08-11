@@ -1,3 +1,4 @@
+// Base.tsx
 import React from "react";
 import { observable, makeObservable, runInAction, computed, toJS } from "mobx";
 import { observer } from "mobx-react";
@@ -97,25 +98,25 @@ import { FIT_HEIGHT_TO_CONTENT_ICON, FIT_WIDTH_TO_CONTENT_ICON, PERCENT_ICON, PX
 
 const generalGroup: IPropertyGridGroupDefinition = {
     id: "lvgl-general",
-    title: "General",
+    title: "常规",
     position: 0
 };
 
 export const flagsGroup: IPropertyGridGroupDefinition = {
     id: "lvgl-flags",
-    title: "Flags",
+    title: "标志",
     position: 4
 };
 
 const styleGroup: IPropertyGridGroupDefinition = {
     id: "lvgl-style",
-    title: "Style",
+    title: "样式",
     position: 3
 };
 
 export const statesGroup: IPropertyGridGroupDefinition = {
     id: "lvgl-states",
-    title: "States",
+    title: "状态",
     position: 4
 };
 
@@ -629,18 +630,18 @@ export class LVGLWidget extends Widget {
         properties: [
             {
                 name: "identifier",
-                displayName: "Name",
+                displayName: "名称",
                 type: PropertyType.String,
                 isOptional: true,
                 propertyGridGroup: generalGroup,
-                disabled: object => object instanceof LVGLScreenWidget // LVGLScreenWidget is using Page name as identifier
+                disabled: object => object instanceof LVGLScreenWidget // LVGLScreenWidget 使用页面名称作为标识符
             },
             {
                 name: "codeIdentifier",
                 type: PropertyType.String,
                 propertyGridGroup: generalGroup,
                 computed: true,
-                formText: `This identifier will be used in the generated source code in the "Objects" struct. It is different from the "Name" above because in the source code we are following "lowercase with underscore" naming convention.`,
+                formText: `此标识符将用于生成的源代码中的“Objects”结构体。它与上面的“名称”不同，因为在源代码中我们遵循“小写加下划线”命名约定。`,
                 disabled: (object: LVGLWidget) => object.codeIdentifier == undefined
             },
             {
@@ -648,15 +649,15 @@ export class LVGLWidget extends Widget {
                 type: PropertyType.Number,
                 propertyGridGroup: geometryGroup,
                 readOnlyInPropertyGrid: isGeometryControlledByParent,
-                disabled: object => object instanceof LVGLScreenWidget, // LVGLScreenWidget is using left from the Page
+                disabled: object => object instanceof LVGLScreenWidget, // LVGLScreenWidget 从页面获取 left
                 hideInPropertyGrid: true
             },
             {
                 name: "leftUnit",
                 type: PropertyType.Enum,
                 enumItems: [
-                    { id: "px", label: "Pixels", icon: PX_ICON },
-                    { id: "%", label: "Percent", icon: PERCENT_ICON }
+                    { id: "px", label: "像素", icon: PX_ICON },
+                    { id: "%", label: "百分比", icon: PERCENT_ICON }
                 ],
                 enumDisallowUndefined: true,
                 propertyGridGroup: geometryGroup,
@@ -668,15 +669,15 @@ export class LVGLWidget extends Widget {
                 type: PropertyType.Number,
                 propertyGridGroup: geometryGroup,
                 readOnlyInPropertyGrid: isGeometryControlledByParent,
-                disabled: object => object instanceof LVGLScreenWidget, // LVGLScreenWidget is using top from the Page
+                disabled: object => object instanceof LVGLScreenWidget,
                 hideInPropertyGrid: true
             },
             {
                 name: "topUnit",
                 type: PropertyType.Enum,
                 enumItems: [
-                    { id: "px", label: "Pixels", icon: PX_ICON },
-                    { id: "%", label: "Percent", icon: PERCENT_ICON }
+                    { id: "px", label: "像素", icon: PX_ICON },
+                    { id: "%", label: "百分比", icon: PERCENT_ICON }
                 ],
                 enumDisallowUndefined: true,
                 propertyGridGroup: geometryGroup,
@@ -688,16 +689,16 @@ export class LVGLWidget extends Widget {
                 type: PropertyType.Number,
                 propertyGridGroup: geometryGroup,
                 readOnlyInPropertyGrid: isGeometryControlledByParent,
-                disabled: object => object instanceof LVGLScreenWidget, // LVGLScreenWidget is using width from the Page
+                disabled: object => object instanceof LVGLScreenWidget,
                 hideInPropertyGrid: true
             },
             {
                 name: "widthUnit",
                 type: PropertyType.Enum,
                 enumItems: [
-                    { id: "px", label: "Pixels", icon: PX_ICON },
-                    { id: "%", label: "Percent", icon: PERCENT_ICON },
-                    { id: "content", label: "Content", icon: FIT_WIDTH_TO_CONTENT_ICON }
+                    { id: "px", label: "像素", icon: PX_ICON },
+                    { id: "%", label: "百分比", icon: PERCENT_ICON },
+                    { id: "content", label: "内容", icon: FIT_WIDTH_TO_CONTENT_ICON }
                 ],
                 enumDisallowUndefined: true,
                 propertyGridGroup: geometryGroup,
@@ -709,16 +710,16 @@ export class LVGLWidget extends Widget {
                 type: PropertyType.Number,
                 propertyGridGroup: geometryGroup,
                 readOnlyInPropertyGrid: isGeometryControlledByParent,
-                disabled: object => object instanceof LVGLScreenWidget, // LVGLScreenWidget is using height from the Page
+                disabled: object => object instanceof LVGLScreenWidget,
                 hideInPropertyGrid: true
             },
             {
                 name: "heightUnit",
                 type: PropertyType.Enum,
                 enumItems: [
-                    { id: "px", label: "Pixels", icon: PX_ICON },
-                    { id: "%", label: "Percent", icon: PERCENT_ICON },
-                    { id: "content", label: "Content", icon: FIT_HEIGHT_TO_CONTENT_ICON }
+                    { id: "px", label: "像素", icon: PX_ICON },
+                    { id: "%", label: "百分比", icon: PERCENT_ICON },
+                    { id: "content", label: "内容", icon: FIT_HEIGHT_TO_CONTENT_ICON }
                 ],
                 enumDisallowUndefined: true,
                 propertyGridGroup: geometryGroup,
@@ -732,11 +733,11 @@ export class LVGLWidget extends Widget {
                 computed: true,
                 propertyGridRowComponent: GeometryProperties,
                 skipSearch: true,
-                disabled: object => object instanceof LVGLScreenWidget, // LVGLScreenWidget is using height from the Page
+                disabled: object => object instanceof LVGLScreenWidget,
             },
             {
                 name: "absolutePosition",
-                displayName: "Absolute pos.",
+                displayName: "绝对位置",
                 type: PropertyType.String,
                 propertyGridGroup: geometryGroup,
                 computed: true,
@@ -751,12 +752,12 @@ export class LVGLWidget extends Widget {
                 hideInPropertyGrid: true
             },
             ...makeLvglExpressionProperty("hiddenFlag", "boolean", "input", ["literal", "expression"], {
-                displayName: "Hidden",
+                displayName: "隐藏",
                 propertyGridGroup: flagsGroup,
                 disabled: (widget: LVGLWidget) => !flagEnabledInWidget(widget, "HIDDEN")
             }),
             ...makeLvglExpressionProperty("clickableFlag", "boolean", "input", ["literal", "expression"], {
-                displayName: "Clickable",
+                displayName: "可点击",
                 propertyGridGroup: flagsGroup,
                 disabled: (widget: LVGLWidget) => !flagEnabledInWidget(widget, "CLICKABLE")
             }),
@@ -770,24 +771,24 @@ export class LVGLWidget extends Widget {
             },
             {
                 name: "flagScrollbarMode",
-                displayName: "Scrollbar mode",
+                displayName: "滚动条模式",
                 type: PropertyType.Enum,
                 enumItems: [
                     {
                         id: "off",
-                        label: "OFF"
+                        label: "关闭"
                     },
                     {
                         id: "on",
-                        label: "ON"
+                        label: "开启"
                     },
                     {
                         id: "active",
-                        label: "ACTIVE"
+                        label: "活动"
                     },
                     {
                         id: "auto",
-                        label: "AUTO"
+                        label: "自动"
                     }
                 ],
                 enumDisallowUndefined: false,
@@ -795,40 +796,40 @@ export class LVGLWidget extends Widget {
             },
             {
                 name: "flagScrollDirection",
-                displayName: "Scroll direction",
+                displayName: "滚动方向",
                 type: PropertyType.Enum,
                 enumItems: [
                     {
                         id: "none",
-                        label: "NONE"
+                        label: "无"
                     },
                     {
                         id: "top",
-                        label: "TOP"
+                        label: "上"
                     },
                     {
                         id: "left",
-                        label: "LEFT"
+                        label: "左"
                     },
                     {
                         id: "bottom",
-                        label: "BOTTOM"
+                        label: "下"
                     },
                     {
                         id: "right",
-                        label: "RIGHT"
+                        label: "右"
                     },
                     {
                         id: "hor",
-                        label: "HOR"
+                        label: "水平"
                     },
                     {
                         id: "ver",
-                        label: "VER"
+                        label: "垂直"
                     },
                     {
                         id: "all",
-                        label: "ALL"
+                        label: "全部"
                     }
                 ],
                 enumDisallowUndefined: false,
@@ -836,24 +837,24 @@ export class LVGLWidget extends Widget {
             },
             {
                 name: "scrollSnapX",
-                displayName: "Scroll snap X",
+                displayName: "滚动吸附 X",
                 type: PropertyType.Enum,
                 enumItems: [
                     {
                         id: "none",
-                        label: "NONE"
+                        label: "无"
                     },
                     {
                         id: "start",
-                        label: "START"
+                        label: "起始"
                     },
                     {
                         id: "end",
-                        label: "END"
+                        label: "结束"
                     },
                     {
                         id: "center",
-                        label: "CENTER"
+                        label: "居中"
                     }
                 ],
                 enumDisallowUndefined: false,
@@ -861,35 +862,35 @@ export class LVGLWidget extends Widget {
             },
             {
                 name: "scrollSnapY",
-                displayName: "Scroll snap Y",
+                displayName: "滚动吸附 Y",
                 type: PropertyType.Enum,
                 enumItems: [
                     {
                         id: "none",
-                        label: "NONE"
+                        label: "无"
                     },
                     {
                         id: "start",
-                        label: "START"
+                        label: "起始"
                     },
                     {
                         id: "end",
-                        label: "END"
+                        label: "结束"
                     },
                     {
                         id: "center",
-                        label: "CENTER"
+                        label: "居中"
                     }
                 ],
                 enumDisallowUndefined: false,
                 propertyGridGroup: flagsGroup
             },
             ...makeLvglExpressionProperty("checkedState", "boolean", "assignable", ["literal", "expression"], {
-                displayName: "Checked",
+                displayName: "已选中",
                 propertyGridGroup: statesGroup
             }),
             ...makeLvglExpressionProperty("disabledState", "boolean", "input", ["literal", "expression"], {
-                displayName: "Disabled",
+                displayName: "禁用",
                 propertyGridGroup: statesGroup
             }),
             {
@@ -922,7 +923,7 @@ export class LVGLWidget extends Widget {
                         if (widget.localStyles.hasModifications) {
                             menuItems.push(
                                 new MenuItem({
-                                    label: "Reset All Modifications",
+                                    label: "重置所有修改",
                                     click: () => {
                                         widget.localStyles.resetAllModifications();
                                     }
@@ -931,13 +932,13 @@ export class LVGLWidget extends Widget {
 
                             menuItems.push(
                                 new MenuItem({
-                                    label: "Create New Style",
+                                    label: "创建新样式",
                                     click: async () => {
                                         const projectStore = getProjectStore(widget);
 
                                         const result = await showGenericDialog({
                                             dialogDefinition: {
-                                                title: "New Style",
+                                                title: "新样式",
                                                 fields: [
                                                     {
                                                         name: "name",
@@ -1002,7 +1003,7 @@ export class LVGLWidget extends Widget {
                             if (widget.useStyle) {
                                 menuItems.push(
                                     new MenuItem({
-                                        label: "Update Style",
+                                        label: "更新样式",
                                         click: async () => {
                                             const projectStore = getProjectStore(widget);
 
@@ -1061,7 +1062,7 @@ export class LVGLWidget extends Widget {
         ],
 
         beforeLoadHook: (widget: LVGLWidget, jsWidget: Partial<LVGLWidget>, project: Project) => {
-            // MIGRATION TO LOW RES
+            // 迁移至低分辨率
             if ((window as any).__eezProjectMigration) {
                 jsWidget.left = Math.floor(
                     (jsWidget.left! * __eezProjectMigration.displayTargetWidth) /
@@ -1094,7 +1095,7 @@ export class LVGLWidget extends Widget {
                 jsWidget.heightUnit = "px";
             }
 
-            // migrate states
+            // 迁移状态
             if ((jsWidget as any).states != undefined) {
                 const states = (jsWidget as any).states.split("|") as (keyof typeof LVGL_STATE_CODES)[];
 
@@ -1118,7 +1119,7 @@ export class LVGLWidget extends Widget {
                 }
             });
 
-            // migrate flags
+            // 迁移标志
             if ((jsWidget as any).flags != undefined) {
                 const flags = (jsWidget as any).flags.split("|") as (keyof typeof LVGL_FLAG_CODES)[];
 
@@ -1144,11 +1145,7 @@ export class LVGLWidget extends Widget {
                 if (lvgl.oldInitFlags && lvgl.oldDefaultFlags) {
                     if ((jsWidget as any).flags == lvgl.oldInitFlags) {
                         (jsWidget as any).flags = lvgl.defaultFlags;
-                        //console.log("migrate flags", jsWidget.type);
-                        //console.log("\tOld flags unchanged");
                     } else {
-                        //const beforeFlags = (jsWidget as any).flags;
-
                         const defaultFlagsArr = lvgl.defaultFlags.split("|");
                         const oldDefaultFlagsArr = lvgl.oldDefaultFlags.split("|");
 
@@ -1170,14 +1167,6 @@ export class LVGLWidget extends Widget {
                                 }
                             }
                         }
-
-                        //const afterFlags = (jsWidget as any).flags;
-
-                        // if (beforeFlags != afterFlags) {
-                        //     console.log("migrate flags", jsWidget.type);
-                        //     console.log("\tBefore:" + beforeFlags);
-                        //     console.log("\tAfter :" + afterFlags);
-                        // }
                     }
                 }
 
@@ -1264,7 +1253,7 @@ export class LVGLWidget extends Widget {
 
                 if (lvglIdentifier && lvglIdentifier.widgets.length > 1) {
                     messages.push(
-                        new Message(MessageType.ERROR, `Duplicate identifier`, getChildOfObject(widget, "identifier"))
+                        new Message(MessageType.ERROR, `重复的标识符`, getChildOfObject(widget, "identifier"))
                     );
                 }
             }
@@ -1277,7 +1266,7 @@ export class LVGLWidget extends Widget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Style "${widget.useStyle}" is not for this widget type`,
+                            `样式“${widget.useStyle}”不适用于此控件类型`,
                             getChildOfObject(widget, "useStyle")
                         )
                     );
@@ -1537,17 +1526,17 @@ export class LVGLWidget extends Widget {
 
         this.toLVGLCodeCommon(code);
 
-        // groups
+        // 组
         if (this.group) {
             runtime.registerGroupWidget(this.group, this.groupIndex, obj);
         }
 
-        // timeline
+        // 时间线
         for (const keyframe of this.timeline) {
             keyframe.lvglCreate(runtime, obj, runtime.lvglCreateContext.flowState);
         }
 
-        // children
+        // 子控件
         this.children.map((widget: LVGLWidget) => widget.lvglCreate(runtime, obj));
 
         if (runtime.isEditor) {
@@ -1591,7 +1580,7 @@ export class LVGLWidget extends Widget {
 
         this.toLVGLCodeCommon(code);
 
-        // children
+        // 子控件
         if (this.children.length > 0) {
             build.blockStart("{");
             build.line("lv_obj_t *parent_obj = obj;");
@@ -1629,17 +1618,17 @@ export class LVGLWidget extends Widget {
     ////////////////////////////////////////////////////////////////////////////////
 
     toLVGLCode(code: LVGLCode) {
-        console.error("UNEXPECTED!");
+        console.error("意外！");
     }
 
     toLVGLCodeCommon(code: LVGLCode) {
-        // event handlers
+        // 事件处理器
         this.eventHandlersToLVGLCode(code);
-        // add/clear flags
+        // 添加/清除标志
         this.flagsToCode(code);
-        // add/clear states
+        // 添加/清除状态
         this.statesToCode(code);
-        // styles
+        // 样式
         this.stylesToCode(code);
         //
         code.endWidget();
@@ -1663,7 +1652,7 @@ export class LVGLWidget extends Widget {
                         "checkedState",
                         this.checkedState as string,
                         value,
-                        "Failed to assign Checked state"
+                        "给已选中状态属性赋值失败"
                     );
                 });
             });
@@ -1682,7 +1671,7 @@ export class LVGLWidget extends Widget {
                             let componentIndex;
                             let outputIndex;
 
-                            // build specific
+                            // 构建特定
                             if (code.lvglBuild) {
                                 componentIndex = code.lvglBuild.assets.getComponentIndex(this);
                                 outputIndex = code.lvglBuild.assets.getComponentOutputIndex(
@@ -1722,7 +1711,7 @@ export class LVGLWidget extends Widget {
                             const action = findAction(code.project, eventHandler.action);
                             if (action) {
                                 if (action.implementationType == "native" || !code.hasFlowSupport) {
-                                    // build specific
+                                    // 构建特定
                                     if (code.lvglBuild) {
                                         if (code.lvglBuild && code.hasFlowSupport) {
                                             code.lvglBuild.line(`e->user_data = (void *)${eventHandler.userData};`);
@@ -1848,7 +1837,7 @@ export class LVGLWidget extends Widget {
                     "bool",
                     "new_val",
                     this.hiddenFlag as string,
-                    "Failed to evaluate Hidden flag"
+                    "隐藏标志表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -1879,7 +1868,7 @@ export class LVGLWidget extends Widget {
                     "bool",
                     "new_val",
                     this.clickableFlag as string,
-                    "Failed to evaluate Clickable flag"
+                    "可点击标志表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -1947,7 +1936,7 @@ export class LVGLWidget extends Widget {
                     "bool",
                     "new_val",
                     this.checkedState as string,
-                    "Failed to evaluate Checked state"
+                    "已选中状态表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -1978,7 +1967,7 @@ export class LVGLWidget extends Widget {
                     "bool",
                     "new_val",
                     this.disabledState as string,
-                    "Failed to evaluate Disabled state"
+                    "禁用状态表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -2030,7 +2019,7 @@ export class LVGLWidget extends Widget {
     ////////////////////////////////////////////////////////////////////////////////
 
     get childrenToRender() {
-        // do not render Tab's that are not visible
+        // 不渲染不可见的 Tab
         return this.children.filter(child => {
             if (child instanceof ProjectEditor.LVGLTabWidgetClass) {
                 if (child.tabview && child.tabIndex != child.tabview.selectedTabIndex) {

@@ -138,7 +138,7 @@ export function showDialog(dialog: JSX.Element, opts?: IDialogOptions) {
         document.body.appendChild(element);
     }
 
-    // Unmount dialog if the element is removed from the DOM
+    // 如果元素已从 DOM 中移除，则卸载对话框
     const intervalID = setInterval(() => {
         let parentElement = element.parentElement;
         while (parentElement) {
@@ -236,7 +236,7 @@ export const Dialog = observer(
                     onClick: this.onCancel,
                     disabled: this.disableButtons,
                     style: { marginLeft: "auto" },
-                    text: this.props.cancelButtonText || "Cancel"
+                    text: this.props.cancelButtonText || "取消"
                 });
             }
 
@@ -252,7 +252,7 @@ export const Dialog = observer(
                             ? !this.props.okEnabled()
                             : false),
                     style: {},
-                    text: this.props.okButtonText || "OK"
+                    text: this.props.okButtonText || "确定"
                 });
             }
 
@@ -516,7 +516,7 @@ export const BootstrapDialog = observer(
                                             type="button"
                                             className="btn-close float-right"
                                             disabled={props.disableButtons}
-                                            aria-label="Close"
+                                            aria-label="关闭"
                                             onClick={props.onCancel}
                                         ></button>
                                     )}

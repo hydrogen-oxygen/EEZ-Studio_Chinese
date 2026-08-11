@@ -5,7 +5,7 @@ function mnemonicLabel(label: string): string {
     const os = require("os");
 
     if (os.platform() != "win32") {
-        return label.replace(/\(&&\w\)|&&/g, ""); // no mnemonic support on mac/linux
+        return label.replace(/\(&&\w\)|&&/g, ""); // mac/linux 上不支持助记符
     }
 
     return label.replace(/&&/g, "&");
@@ -23,20 +23,20 @@ export async function confirmSave({
     cancelCallback: () => void;
 }) {
     enum ConfirmResult {
-        SAVE,
-        DONT_SAVE,
-        CANCEL
+        SAVE,      // 保存
+        DONT_SAVE, // 不保存
+        CANCEL     // 取消
     }
 
     const saveButton = {
-        label: mnemonicLabel("&&Save"),
+        label: mnemonicLabel("&&保存"),
         result: ConfirmResult.SAVE
     };
     const dontSaveButton = {
-        label: mnemonicLabel("Do&&n't Save"),
+        label: mnemonicLabel("不&&保存"),
         result: ConfirmResult.DONT_SAVE
     };
-    const cancelButton = { label: "Cancel", result: ConfirmResult.CANCEL };
+    const cancelButton = { label: "取消", result: ConfirmResult.CANCEL };
 
     const os = require("os");
 
@@ -52,9 +52,9 @@ export async function confirmSave({
     let opts: Electron.MessageBoxOptions = {
         type: "warning",
         title: "EEZ Studio",
-        message: "Do you want to save changes?",
+        message: "是否要保存更改？",
         detail:
-            description + "Your changes will be lost if you don't save them.",
+            description + "如果不保存，你的更改将会丢失。",
         noLink: true,
         buttons: buttons.map(b => b.label),
         cancelId: buttons.indexOf(cancelButton)
@@ -112,24 +112,24 @@ function getReservedKeybindings() {
         reservedKeybindings = ipcRenderer
             .sendSync("getReservedKeybindings")
             .concat([
-                "Insert",
-                "Delete",
-                "Home",
-                "End",
-                "Pageup",
-                "Pagedown",
-                "Scrolllock",
-                "Pause",
-                "Arrowleft",
-                "Arrowright",
-                "Arrowup",
-                "Arrowdown",
-                "Backspace",
-                "Tab",
-                "Ctrl+C",
-                "Ctrl+V"
+                "Insert",       // 插入
+                "Delete",       // 删除
+                "Home",         // 首页
+                "End",          // 结尾
+                "Pageup",       // 上一页
+                "Pagedown",     // 下一页
+                "Scrolllock",   // 滚动锁定
+                "Pause",        // 暂停
+                "Arrowleft",    // 左箭头
+                "Arrowright",   // 右箭头
+                "Arrowup",      // 上箭头
+                "Arrowdown",    // 下箭头
+                "Backspace",    // 退格
+                "Tab",          // 制表
+                "Ctrl+C",       // 复制
+                "Ctrl+V"        // 粘贴
             ]);
-        console.log("Reserved keybindings", reservedKeybindings);
+        console.log("保留的按键绑定", reservedKeybindings);
     }
     return reservedKeybindings!;
 }

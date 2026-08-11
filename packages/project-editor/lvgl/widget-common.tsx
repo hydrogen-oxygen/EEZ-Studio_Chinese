@@ -169,7 +169,7 @@ export function checkWidgetTypeLvglVersion(
         messages.push(
             new Message(
                 MessageType.ERROR,
-                `This widget type is not supported in LVGL ${projectStore.project.settings.general.lvglVersion}`,
+                `此控件类型在 LVGL ${projectStore.project.settings.general.lvglVersion} 中不受支持`,
                 widget
             )
         );

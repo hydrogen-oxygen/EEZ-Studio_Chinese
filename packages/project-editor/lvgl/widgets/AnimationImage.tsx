@@ -43,7 +43,7 @@ class LVGLAnimationImage extends EezObject {
             collapsed
                 ? animationImage.image
                     ? animationImage.image
-                    : "Image not set"
+                    : "未设置图像"
                 : "",
 
         defaultValue: {},
@@ -99,7 +99,7 @@ class LVGLAnimationImage extends EezObject {
             if (parentObject.length == 0) {
                 fields.push({
                     name: "numImages",
-                    displayName: "No. of images",
+                    displayName: "图像数量",
                     type: "integer"
                 });
             }
@@ -188,7 +188,7 @@ export class LVGLAnimationImageWidget extends LVGLWidget {
             },
             {
                 name: "repeat",
-                displayName: "Repeat count",
+                displayName: "重复次数",
                 type: PropertyType.Number,
                 propertyGridGroup: specificGroup,
                 hideInPropertyGrid: (widget: LVGLAnimationImageWidget) =>

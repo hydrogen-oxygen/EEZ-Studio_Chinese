@@ -14,6 +14,12 @@ import type { IEezObject } from "./object";
 
 import { isArray } from "eez-studio-shared/util";
 
+/**
+ * 显示确认对话框，用户点击“是”时执行回调。
+ * @param message 主要提示信息
+ * @param detail 详细说明（可选）
+ * @param callback 确认后的回调函数
+ */
 export async function confirm(
     message: string,
     detail: string | undefined,
@@ -21,11 +27,11 @@ export async function confirm(
 ) {
     const result = await dialog.showMessageBox(getCurrentWindow(), {
         type: "question",
-        title: "Project Editor - EEZ Studio",
+        title: "项目编辑器 - EEZ Studio",
         message: message,
         detail: detail,
         noLink: true,
-        buttons: ["Yes", "No"],
+        buttons: ["是", "否"],
         cancelId: 1
     });
     const buttonIndex = result.response;
@@ -34,18 +40,29 @@ export async function confirm(
     }
 }
 
+/**
+ * 显示信息提示对话框，仅含“确定”按钮。
+ * @param message 主要提示信息
+ * @param detail 详细说明（可选）
+ */
 export function info(message: string, detail?: string) {
     return dialog.showMessageBox(getCurrentWindow(), {
         type: "info",
-        title: "Project Editor - EEZ Studio",
+        title: "项目编辑器 - EEZ Studio",
         message: message,
         detail: detail,
         noLink: true,
-        buttons: ["OK"],
+        buttons: ["确定"],
         cancelId: 1
     });
 }
 
+/**
+ * 显示通用对话框（基于 GenericDialog 组件）。
+ * @param projectStore 项目存储实例
+ * @param conf 配置项
+ * @returns 返回用户输入结果的 Promise
+ */
 export function showGenericDialog(
     projectStore: ProjectStore,
     conf: {
@@ -94,6 +111,11 @@ export function showGenericDialog(
     });
 }
 
+/**
+ * 粘贴操作完成后的处理：对每个新对象调用其类定义的 onAfterPaste 方法。
+ * @param newObjectOrObjects 新粘贴的对象或对象数组
+ * @param fromObjectOrObjects 原始来源对象或对象数组
+ */
 export function onAfterPaste(
     newObjectOrObjects: IEezObject | IEezObject[],
     fromObjectOrObjects: IEezObject | IEezObject[]
@@ -120,8 +142,14 @@ export function onAfterPaste(
     });
 }
 
+/** 剪贴板项文件前缀标识 */
 export const SCRAPBOOK_ITEM_FILE_PREFIX = "scrapbook://";
 
+/**
+ * 检查字符串是否为有效 URL（支持 http/https 或 scrapbook 协议）。
+ * @param s 待检查的字符串
+ * @returns 是否为有效 URL
+ */
 export function isValidUrl(s: string) {
     if (s.startsWith(SCRAPBOOK_ITEM_FILE_PREFIX)) {
         return true;

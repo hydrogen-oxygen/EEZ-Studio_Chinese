@@ -1,3 +1,4 @@
+// Meter.tsx
 import React from "react";
 import { observable, makeObservable } from "mobx";
 
@@ -78,7 +79,7 @@ export class LVGLMeterIndicator extends EezObject {
         properties: [
             {
                 name: "identifier",
-                displayName: "Name",
+                displayName: "名称",
                 type: PropertyType.String,
                 isOptional: true
             },
@@ -86,7 +87,7 @@ export class LVGLMeterIndicator extends EezObject {
                 name: "codeIdentifier",
                 type: PropertyType.String,
                 computed: true,
-                formText: `This identifier will be used in the generated source code. It is different from the "Name" above because in the source code we are following "lowercase with underscore" naming convention.`,
+                formText: `此标识符将用于生成的源代码。它与上面的"名称"不同，因为在源代码中我们遵循"小写加下划线"命名约定。`,
                 disabled: (object: LVGLWidget) => object.codeIdentifier == undefined
             },            
             {
@@ -105,11 +106,11 @@ export class LVGLMeterIndicator extends EezObject {
 
             const result = await showGenericDialog({
                 dialogDefinition: {
-                    title: "New LVGL Action",
+                    title: "新建 LVGL 指示器",
                     fields: [
                         {
                             name: "type",
-                            displayName: "Indicator type",
+                            displayName: "指示器类型",
                             type: "enum",
                             enumItems: Object.keys(
                                 LVGL_METER_INDICATOR_TYPES
@@ -117,8 +118,12 @@ export class LVGLMeterIndicator extends EezObject {
                                 id,
                                 label:
                                     id == "NEEDLE_IMG"
-                                        ? "Needle image"
-                                        : humanize(id)
+                                        ? "指针图像"
+                                        : id == "NEEDLE_LINE"
+                                        ? "指针线段"
+                                        : id == "SCALE_LINES"
+                                        ? "刻度线"
+                                        : "弧形"
                             }))
                         }
                     ]
@@ -235,16 +240,16 @@ export class LVGLMeterIndicator extends EezObject {
 
                 build.blockStart(`if (${indicatorObj}) {`);
             } else {
-                // we already have indicatorObj for the Simulator
+                // 模拟器中已有 indicatorObj
             }
 
             const new_val = code.evalIntegerProperty(
                 "int32_t",
                 "new_val",
                 (this as any)[propName],
-                `Failed to evaluate ${humanize(propName)} in ${getComponentName(
+                `在 ${getComponentName(
                     widget.type
-                )} widget`
+                )} 控件中计算 ${humanize(propName)} 失败`
             );
 
             let cur_val;
@@ -329,7 +334,7 @@ export class LVGLMeterIndicatorNeedleImg extends LVGLMeterIndicator {
         listLabel: (
             indicator: LVGLMeterIndicatorNeedleImg,
             collapsed: boolean
-        ) => "Needle image",
+        ) => "指针图像",
 
         defaultValue: {
             pivotX: 0,
@@ -365,7 +370,7 @@ export class LVGLMeterIndicatorNeedleImg extends LVGLMeterIndicator {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Invalid expression: ${err}`,
+                            `无效表达式: ${err}`,
                             getChildOfObject(indicator, "value")
                         )
                     );
@@ -459,7 +464,7 @@ export class LVGLMeterIndicatorNeedleLine extends LVGLMeterIndicator {
         listLabel: (
             indicator: LVGLMeterIndicatorNeedleLine,
             collapsed: boolean
-        ) => "Needle line",
+        ) => "指针线段",
 
         defaultValue: {
             width: 3,
@@ -485,7 +490,7 @@ export class LVGLMeterIndicatorNeedleLine extends LVGLMeterIndicator {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Invalid expression: ${err}`,
+                            `无效表达式: ${err}`,
                             getChildOfObject(indicator, "value")
                         )
                     );
@@ -497,7 +502,7 @@ export class LVGLMeterIndicatorNeedleLine extends LVGLMeterIndicator {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `invalid color`,
+                        `无效颜色`,
                         getChildOfObject(indicator, "color")
                     )
                 );
@@ -644,7 +649,7 @@ export class LVGLMeterIndicatorScaleLines extends LVGLMeterIndicator {
         listLabel: (
             indicator: LVGLMeterIndicatorScaleLines,
             collapsed: boolean
-        ) => "Scale lines",
+        ) => "刻度线",
 
         defaultValue: {
             colorStart: "#000000",
@@ -673,7 +678,7 @@ export class LVGLMeterIndicatorScaleLines extends LVGLMeterIndicator {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Invalid expression: ${err}`,
+                            `无效表达式: ${err}`,
                             getChildOfObject(indicator, "startValue")
                         )
                     );
@@ -692,7 +697,7 @@ export class LVGLMeterIndicatorScaleLines extends LVGLMeterIndicator {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Invalid expression: ${err}`,
+                            `无效表达式: ${err}`,
                             getChildOfObject(indicator, "endValue")
                         )
                     );
@@ -705,7 +710,7 @@ export class LVGLMeterIndicatorScaleLines extends LVGLMeterIndicator {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `invalid color`,
+                        `无效颜色`,
                         getChildOfObject(indicator, "colorStart")
                     )
                 );
@@ -715,7 +720,7 @@ export class LVGLMeterIndicatorScaleLines extends LVGLMeterIndicator {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `invalid color`,
+                        `无效颜色`,
                         getChildOfObject(indicator, "colorEnd")
                     )
                 );
@@ -888,7 +893,7 @@ export class LVGLMeterIndicatorArc extends LVGLMeterIndicator {
         ],
 
         listLabel: (indicator: LVGLMeterIndicatorArc, collapsed: boolean) =>
-            "Arc",
+            "弧形",
 
         defaultValue: {
             width: 2,
@@ -913,7 +918,7 @@ export class LVGLMeterIndicatorArc extends LVGLMeterIndicator {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Invalid expression: ${err}`,
+                            `无效表达式: ${err}`,
                             getChildOfObject(indicator, "startValue")
                         )
                     );
@@ -932,7 +937,7 @@ export class LVGLMeterIndicatorArc extends LVGLMeterIndicator {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Invalid expression: ${err}`,
+                            `无效表达式: ${err}`,
                             getChildOfObject(indicator, "endValue")
                         )
                     );
@@ -944,7 +949,7 @@ export class LVGLMeterIndicatorArc extends LVGLMeterIndicator {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `invalid color`,
+                        `无效颜色`,
                         getChildOfObject(indicator, "color")
                     )
                 );
@@ -1070,7 +1075,7 @@ class LVGLMeterScale extends EezObject {
         properties: [
             {
                 name: "identifier",
-                displayName: "Name",
+                displayName: "名称",
                 type: PropertyType.String,
                 isOptional: true
             },
@@ -1078,7 +1083,7 @@ class LVGLMeterScale extends EezObject {
                 name: "codeIdentifier",
                 type: PropertyType.String,
                 computed: true,
-                formText: `This identifier will be used in the generated source code. It is different from the "Name" above because in the source code we are following "lowercase with underscore" naming convention.`,
+                formText: `此标识符将用于生成的源代码。它与上面的"名称"不同，因为在源代码中我们遵循"小写加下划线"命名约定。`,
                 disabled: (object: LVGLWidget) => object.codeIdentifier == undefined
             },            
 
@@ -1094,12 +1099,12 @@ class LVGLMeterScale extends EezObject {
 
             {
                 name: "nthMajor",
-                displayName: "Major tick distance",
+                displayName: "主刻度间距",
                 type: PropertyType.Number
             },
             {
                 name: "majorTickWidth",
-                displayName: "Major tick line width",
+                displayName: "主刻度线宽度",
                 type: PropertyType.Number
             },
             { name: "majorTickLength", type: PropertyType.Number },
@@ -1108,7 +1113,7 @@ class LVGLMeterScale extends EezObject {
             makeExpressionProperty(
                 {
                     name: "label",
-                    displayName: "Major tick label",
+                    displayName: "主刻度标签",
                     type: PropertyType.MultilineText,
                     disabled: object =>
                         !ProjectEditor.getProject(object).projectTypeTraits
@@ -1118,7 +1123,7 @@ class LVGLMeterScale extends EezObject {
             ),
             {
                 name: "labelGap",
-                displayName: "Major Tick label gap",
+                displayName: "主刻度标签间隙",
                 type: PropertyType.Number
             },
 
@@ -1132,7 +1137,7 @@ class LVGLMeterScale extends EezObject {
             }
         ],
 
-        listLabel: (scale: LVGLMeterScale, collapsed: boolean) => "Scale",
+        listLabel: (scale: LVGLMeterScale, collapsed: boolean) => "刻度",
 
         defaultValue: {
             minorTickCount: 41,
@@ -1178,7 +1183,7 @@ class LVGLMeterScale extends EezObject {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Invalid expression: ${err}`,
+                            `无效表达式: ${err}`,
                             getChildOfObject(scale, "label")
                         )
                     );
@@ -1191,7 +1196,7 @@ class LVGLMeterScale extends EezObject {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `invalid color`,
+                        `无效颜色`,
                         getChildOfObject(scale, "minorTickColor")
                     )
                 );
@@ -1201,7 +1206,7 @@ class LVGLMeterScale extends EezObject {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `invalid color`,
+                        `无效颜色`,
                         getChildOfObject(scale, "majorTickColor")
                     )
                 );
@@ -1263,7 +1268,7 @@ export class LVGLMeterWidget extends LVGLWidget {
                     "8."
                 )),
 
-        componentPaletteGroupName: "!1Visualiser",
+        componentPaletteGroupName: "!1可视化",
 
         properties: [
             {
@@ -1378,7 +1383,7 @@ export class LVGLMeterWidget extends LVGLWidget {
 
     override toLVGLCode(code: LVGLCode) {
         if (code.isV9) {
-            // Meter widget doesn't exist in LVGL version 9.x
+            // Meter 控件在 LVGL 9.x 中不存在
             code.createObject("lv_obj_create");
             return;
         }
@@ -1534,7 +1539,7 @@ export class LVGLMeterWidget extends LVGLWidget {
                             );
 
                         build.line(
-                            `temp = evalTextProperty(flowState, ${componentIndex}, ${propertyIndex}, "Failed to evalute scale label in Meter widget");`
+                            `temp = evalTextProperty(flowState, ${componentIndex}, ${propertyIndex}, "在 Meter 控件中计算刻度标签失败");`
                         );
 
                         code.if("temp", () => {

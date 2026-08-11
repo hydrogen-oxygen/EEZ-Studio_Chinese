@@ -98,6 +98,7 @@ export type LVGLPropertyInfo = PropertyInfo & {
 
 export class PropertyValueHolder extends EezObject {
     [propertyName: string]: any;
+
     constructor(
         public projectStore: ProjectStore,
         propertyName: string,
@@ -175,7 +176,7 @@ function makeEnumPropertyInfo(
 ////////////////////////////////////////////////////////////////////////////////
 
 //
-// POSITION AND SIZE
+// 位置和大小
 //
 
 const width_property_info: LVGLPropertyInfo = {
@@ -184,8 +185,8 @@ const width_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_WIDTH,
         description:
-            "Sets the width of object. Pixel, percentage and LV_SIZE_CONTENT values can be used. Percentage values are relative to the width of the parent's content area.",
-        defaultValue: "Widget dependent",
+            "设置对象的宽度。可以使用像素、百分比和 LV_SIZE_CONTENT 值。百分比值相对于父对象内容区域的宽度。",
+        defaultValue: "Widget dependent", // 取决于部件
         inherited: false,
         layout: true,
         extDraw: false
@@ -198,8 +199,8 @@ const height_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_HEIGHT,
         description:
-            "Sets the height of object. Pixel, percentage and LV_SIZE_CONTENT can be used. Percentage values are relative to the height of the parent's content area.",
-        defaultValue: "Widget dependent",
+            "设置对象的高度。可以使用像素、百分比和 LV_SIZE_CONTENT。百分比值相对于父对象内容区域的高度。",
+        defaultValue: "Widget dependent", // 取决于部件
         inherited: false,
         layout: true,
         extDraw: false
@@ -208,12 +209,12 @@ const height_property_info: LVGLPropertyInfo = {
 
 const min_width_property_info: LVGLPropertyInfo = {
     name: "min_width",
-    displayName: "Min. width",
+    displayName: "最小宽度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_MIN_WIDTH,
         description:
-            "Sets a minimal width. Pixel and percentage values can be used. Percentage values are relative to the width of the parent's content area.",
+            "设置最小宽度。可以使用像素和百分比值。百分比值相对于父对象内容区域的宽度。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -223,12 +224,12 @@ const min_width_property_info: LVGLPropertyInfo = {
 
 const max_width_property_info: LVGLPropertyInfo = {
     name: "max_width",
-    displayName: "Max. width",
+    displayName: "最大宽度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_MAX_WIDTH,
         description:
-            "Sets a maximal width. Pixel and percentage values can be used. Percentage values are relative to the width of the parent's content area.",
+            "设置最大宽度。可以使用像素和百分比值。百分比值相对于父对象内容区域的宽度。",
         defaultValue: "LV_COORD_MAX",
         inherited: false,
         layout: true,
@@ -238,12 +239,12 @@ const max_width_property_info: LVGLPropertyInfo = {
 
 const min_height_property_info: LVGLPropertyInfo = {
     name: "min_height",
-    displayName: "Min. height",
+    displayName: "最小高度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_MIN_HEIGHT,
         description:
-            "Sets a minimal height. Pixel and percentage values can be used. Percentage values are relative to the width of the parent's content area.",
+            "设置最小高度。可以使用像素和百分比值。百分比值相对于父对象内容区域的宽度。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -252,12 +253,12 @@ const min_height_property_info: LVGLPropertyInfo = {
 };
 const max_height_property_info: LVGLPropertyInfo = {
     name: "max_height",
-    displayName: "Max. height",
+    displayName: "最大高度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_MAX_HEIGHT,
         description:
-            "Sets a maximal height. Pixel and percentage values can be used. Percentage values are relative to the height of the parent's content area.",
+            "设置最大高度。可以使用像素和百分比值。百分比值相对于父对象内容区域的高度。",
         defaultValue: "LV_COORD_MAX",
         inherited: false,
         layout: true,
@@ -266,7 +267,7 @@ const max_height_property_info: LVGLPropertyInfo = {
 };
 const length_property_info: LVGLPropertyInfo = {
     name: "length",
-    displayName: "Length",
+    displayName: "长度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_LENGTH,
@@ -284,7 +285,7 @@ const x_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_X,
         description:
-            "Set the X coordinate of the object considering the set align. Pixel and percentage values can be used. Percentage values are relative to the width of the parent's content area.",
+            "根据所设置的对齐方式设置对象的 X 坐标。可以使用像素和百分比值。百分比值相对于父对象内容区域的宽度。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -298,7 +299,7 @@ const y_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_Y,
         description:
-            "Set the Y coordinate of the object considering the set align. Pixel and percentage values can be used. Percentage values are relative to the height of the parent's content area.",
+            "根据所设置的对齐方式设置对象的 Y 坐标。可以使用像素和百分比值。百分比值相对于父对象内容区域的高度。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -308,40 +309,40 @@ const y_property_info: LVGLPropertyInfo = {
 
 const align_property_info = makeEnumPropertyInfo(
     "align",
-    "Align",
+    "对齐方式",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_ALIGN,
         description:
-            "Set the alignment which tells from which point of the parent the X and Y coordinates should be interpreted. The possible values are: LV_ALIGN_DEFAULT, LV_ALIGN_TOP_LEFT/MID/RIGHT, LV_ALIGN_BOTTOM_LEFT/MID/RIGHT, LV_ALIGN_LEFT/RIGHT_MID, LV_ALIGN_CENTER. LV_ALIGN_DEFAULT means LV_ALIGN_TOP_LEFT with LTR base direction and LV_ALIGN_TOP_RIGHT with RTL base direction.",
+            "设置对齐方式，它指明 X 和 Y 坐标应相对于父对象的哪个点进行解释。可能的值有：LV_ALIGN_DEFAULT、LV_ALIGN_TOP_LEFT/MID/RIGHT、LV_ALIGN_BOTTOM_LEFT/MID/RIGHT、LV_ALIGN_LEFT/RIGHT_MID、LV_ALIGN_CENTER。LV_ALIGN_DEFAULT 表示在 LTR 基础方向下为 LV_ALIGN_TOP_LEFT，在 RTL 基础方向下为 LV_ALIGN_TOP_RIGHT。",
         defaultValue: "LV_ALIGN_DEFAULT",
         inherited: false,
         layout: true,
         extDraw: false
     },
     [
-        "DEFAULT",
-        "TOP_LEFT",
-        "TOP_MID",
-        "TOP_RIGHT",
-        "BOTTOM_LEFT",
-        "BOTTOM_MID",
-        "BOTTOM_RIGHT",
-        "LEFT_MID",
-        "RIGHT_MID",
-        "CENTER",
+        "DEFAULT",       // 默认
+        "TOP_LEFT",      // 左上
+        "TOP_MID",       // 上中
+        "TOP_RIGHT",     // 右上
+        "BOTTOM_LEFT",   // 左下
+        "BOTTOM_MID",    // 下中
+        "BOTTOM_RIGHT",  // 右下
+        "LEFT_MID",      // 左中
+        "RIGHT_MID",     // 右中
+        "CENTER",        // 居中
 
-        "OUT_TOP_LEFT",
-        "OUT_TOP_MID",
-        "OUT_TOP_RIGHT",
-        "OUT_BOTTOM_LEFT",
-        "OUT_BOTTOM_MID",
-        "OUT_BOTTOM_RIGHT",
-        "OUT_LEFT_TOP",
-        "OUT_LEFT_MID",
-        "OUT_LEFT_BOTTOM",
-        "OUT_RIGHT_TOP",
-        "OUT_RIGHT_MID",
-        "OUT_RIGHT_BOTTOM"
+        "OUT_TOP_LEFT",      // 外部左上
+        "OUT_TOP_MID",       // 外部上中
+        "OUT_TOP_RIGHT",     // 外部右上
+        "OUT_BOTTOM_LEFT",   // 外部左下
+        "OUT_BOTTOM_MID",    // 外部下中
+        "OUT_BOTTOM_RIGHT",  // 外部右下
+        "OUT_LEFT_TOP",      // 外部左顶
+        "OUT_LEFT_MID",      // 外部左中
+        "OUT_LEFT_BOTTOM",   // 外部左底
+        "OUT_RIGHT_TOP",     // 外部右顶
+        "OUT_RIGHT_MID",     // 外部右中
+        "OUT_RIGHT_BOTTOM"   // 外部右底
     ],
     "LV_ALIGN_"
 );
@@ -352,7 +353,7 @@ const transform_width_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_WIDTH,
         description:
-            "Make the object wider on both sides with this value. Pixel and percentage (with lv_pct(x)) values can be used. Percentage values are relative to the object's width.",
+            "使用此值在两侧加宽对象。可以使用像素和百分比（使用 lv_pct(x)）值。百分比值相对于对象的宽度。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -366,7 +367,7 @@ const transform_height_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_HEIGHT,
         description:
-            "Make the object higher on both sides with this value. Pixel and percentage (with lv_pct(x)) values can be used. Percentage values are relative to the object's height.",
+            "使用此值在两侧加高对象。可以使用像素和百分比（使用 lv_pct(x)）值。百分比值相对于对象的高度。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -376,12 +377,12 @@ const transform_height_property_info: LVGLPropertyInfo = {
 
 const translate_x_property_info: LVGLPropertyInfo = {
     name: "translate_x",
-    displayName: "Translate X",
+    displayName: "X 平移",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSLATE_X,
         description:
-            "Move the object with this value in X direction. Applied after layouts, aligns and other positioning. Pixel and percentage (with lv_pct(x)) values can be used. Percentage values are relative to the object's width.",
+            "在 X 方向上以此值移动对象。在布局、对齐和其他定位之后应用。可以使用像素和百分比（使用 lv_pct(x)）值。百分比值相对于对象的宽度。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -391,12 +392,12 @@ const translate_x_property_info: LVGLPropertyInfo = {
 
 const translate_y_property_info: LVGLPropertyInfo = {
     name: "translate_y",
-    displayName: "Translate Y",
+    displayName: "Y 平移",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSLATE_Y,
         description:
-            "Move the object with this value in Y direction. Applied after layouts, aligns and other positioning. Pixel and percentage (with lv_pct(x)) values can be used. Percentage values are relative to the object's height.",
+            "在 Y 方向上以此值移动对象。在布局、对齐和其他定位之后应用。可以使用像素和百分比（使用 lv_pct(x)）值。百分比值相对于对象的高度。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -410,7 +411,7 @@ export const transform_zoom_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_ZOOM,
         description:
-            "Zoom an objects. The value 256 (or LV_IMG_ZOOM_NONE) means normal size, 128 half size, 512 double size, and so on",
+            "缩放对象。值 256（或 LV_IMG_ZOOM_NONE）表示正常大小，128 表示一半大小，512 表示两倍大小，依此类推。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -420,12 +421,12 @@ export const transform_zoom_property_info: LVGLPropertyInfo = {
 
 export const transform_scale_x_property_info: LVGLPropertyInfo = {
     name: "transform_scale_x",
-    displayName: "Transform scale X",
+    displayName: "变换缩放 X",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_SCALE_X,
         description:
-            "Zoom an object horizontally. The value 256 (or LV_IMG_ZOOM_NONE) means normal size, 128 half size, 512 double size, and so on",
+            "水平缩放对象。值 256（或 LV_IMG_ZOOM_NONE）表示正常大小，128 表示一半大小，512 表示两倍大小，依此类推。",
         defaultValue: "1",
         inherited: false,
         layout: true,
@@ -435,12 +436,12 @@ export const transform_scale_x_property_info: LVGLPropertyInfo = {
 
 export const transform_scale_y_property_info: LVGLPropertyInfo = {
     name: "transform_scale_y",
-    displayName: "Transform scale Y",
+    displayName: "变换缩放 Y",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_SCALE_Y,
         description:
-            "Zoom an object vertically. The value 256 (or LV_IMG_ZOOM_NONE) means normal size, 128 half size, 512 double size, and so on",
+            "垂直缩放对象。值 256（或 LV_IMG_ZOOM_NONE）表示正常大小，128 表示一半大小，512 表示两倍大小，依此类推。",
         defaultValue: "1",
         inherited: false,
         layout: true,
@@ -454,7 +455,7 @@ export const transform_angle_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_ANGLE,
         description:
-            "Rotate an objects. The value is interpreted in 0.1 degree units. E.g. 450 means 45 deg.",
+            "旋转对象。该值以 0.1 度为单位进行解释。例如 450 表示 45 度。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -468,7 +469,7 @@ export const transform_rotation_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_ROTATION,
         description:
-            "Rotate an objects. The value is interpreted in 0.1 degree units. E.g. 450 means 45 deg.",
+            "旋转对象。该值以 0.1 度为单位进行解释。例如 450 表示 45 度。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -478,12 +479,12 @@ export const transform_rotation_property_info: LVGLPropertyInfo = {
 
 const transform_pivot_x_property_info: LVGLPropertyInfo = {
     name: "transform_pivot_x",
-    displayName: "Transform pivot X",
+    displayName: "变换枢轴 X",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_PIVOT_X,
         description:
-            "Set the pivot point's X coordinate for transformations. Relative to the object's top left corner'",
+            "为变换设置枢轴点的 X 坐标。相对于对象的左上角。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -492,12 +493,12 @@ const transform_pivot_x_property_info: LVGLPropertyInfo = {
 };
 const transform_pivot_y_property_info: LVGLPropertyInfo = {
     name: "transform_pivot_y",
-    displayName: "Transform pivot Y",
+    displayName: "变换枢轴 Y",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_PIVOT_Y,
         description:
-            "Set the pivot point's Y coordinate for transformations. Relative to the object's top left corner'",
+            "为变换设置枢轴点的 Y 坐标。相对于对象的左上角。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -507,7 +508,7 @@ const transform_pivot_y_property_info: LVGLPropertyInfo = {
 
 const transform_skew_x_property_info: LVGLPropertyInfo = {
     name: "transform_skew_x",
-    displayName: "Transform skew X",
+    displayName: "变换倾斜 X",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_SKEW_X,
@@ -520,7 +521,7 @@ const transform_skew_x_property_info: LVGLPropertyInfo = {
 };
 const transform_skew_y_property_info: LVGLPropertyInfo = {
     name: "transform_skew_y",
-    displayName: "Transform skew Y",
+    displayName: "变换倾斜 Y",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSFORM_SKEW_Y,
@@ -533,126 +534,126 @@ const transform_skew_y_property_info: LVGLPropertyInfo = {
 };
 
 //
-// LAYOUT
+// 布局
 //
 
 const layout_property_info = makeEnumPropertyInfo(
     "layout",
-    "Layout",
+    "布局",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_LAYOUT,
         description:
-            "Set the layout if the object. The children will be repositioned and resized according to the policies set for the layout. For the possible values see the documentation of the layouts.",
+            "设置对象的布局。子对象将根据为布局设置的策略进行重新定位和调整大小。可能的值请参阅布局文档。",
         defaultValue: "LV_FLEX_FLOW_ROW",
         inherited: false,
         layout: true,
         extDraw: false
     },
     {
-        NONE: LV_LAYOUT_NONE, // No layout
-        FLEX: LV_LAYOUT_FLEX, // Use flex layout
-        GRID: LV_LAYOUT_GRID // Use grid layout
+        NONE: LV_LAYOUT_NONE,  // 无布局
+        FLEX: LV_LAYOUT_FLEX,  // 使用弹性布局
+        GRID: LV_LAYOUT_GRID   // 使用网格布局
     },
     "LV_LAYOUT_"
 );
 
 const flex_flow_property_info = makeEnumPropertyInfo(
     "flex_flow",
-    "Flex flow",
+    "弹性流向",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_FLEX_FLOW,
-        description: "Determines a type of Flex layout used",
+        description: "确定所使用的弹性布局类型。",
         defaultValue: "LV_FLEX_FLOW_ROW",
         inherited: false,
         layout: true,
         extDraw: false
     },
     {
-        ROW: LV_FLEX_FLOW_ROW, // Place the children in a row without wrapping
-        COLUMN: LV_FLEX_FLOW_COLUMN, // Place the children in a column without wrapping
-        ROW_WRAP: LV_FLEX_FLOW_ROW_WRAP, // Place the children in a row with wrapping
-        ROW_REVERSE: LV_FLEX_FLOW_ROW_REVERSE, // Place the children in a column with wrapping
-        ROW_WRAP_REVERSE: LV_FLEX_FLOW_ROW_WRAP_REVERSE, // Place the children in a row without wrapping but in reversed order
-        COLUMN_WRAP: LV_FLEX_FLOW_COLUMN_WRAP, // Place the children in a column without wrapping but in reversed order
-        COLUMN_REVERSE: LV_FLEX_FLOW_COLUMN_REVERSE, // Place the children in a row with wrapping but in reversed order
-        COLUMN_WRAP_REVERSE: LV_FLEX_FLOW_COLUMN_WRAP_REVERSE // Place the children in a column with wrapping but in reversed order
+        ROW: LV_FLEX_FLOW_ROW,                    // 将子对象排列成一行且不换行
+        COLUMN: LV_FLEX_FLOW_COLUMN,              // 将子对象排列成一列且不换行
+        ROW_WRAP: LV_FLEX_FLOW_ROW_WRAP,          // 将子对象排列成一行并允许换行
+        ROW_REVERSE: LV_FLEX_FLOW_ROW_REVERSE,    // 将子对象排列成一列并允许换行
+        ROW_WRAP_REVERSE: LV_FLEX_FLOW_ROW_WRAP_REVERSE, // 将子对象排列成一行且不换行但顺序反转
+        COLUMN_WRAP: LV_FLEX_FLOW_COLUMN_WRAP,    // 将子对象排列成一列且不换行但顺序反转
+        COLUMN_REVERSE: LV_FLEX_FLOW_COLUMN_REVERSE, // 将子对象排列成一行并允许换行但顺序反转
+        COLUMN_WRAP_REVERSE: LV_FLEX_FLOW_COLUMN_WRAP_REVERSE // 将子对象排列成一列并允许换行但顺序反转
     },
     "LV_FLEX_FLOW_"
 );
 
 const flex_main_place_property_info = makeEnumPropertyInfo(
     "flex_main_place",
-    "Flex main place",
+    "弹性主轴位置",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_FLEX_MAIN_PLACE,
         description:
-            "Determines how to distribute the items in their track on the main axis.",
+            "确定如何在主轴上的轨道中分配项目。",
         defaultValue: "LV_FLEX_ALIGN_START",
         inherited: false,
         layout: true,
         extDraw: false
     },
     {
-        START: LV_FLEX_ALIGN_START, // means left on a horizontally and top vertically (default)
-        END: LV_FLEX_ALIGN_END, // means right on a horizontally and bottom vertically
-        CENTER: LV_FLEX_ALIGN_CENTER, // simply center
-        SPACE_EVENLY: LV_FLEX_ALIGN_SPACE_EVENLY, // items are distributed so that the spacing between any two items (and the space to the edges) is equal. Does not apply to track_cross_place.
-        SPACE_AROUND: LV_FLEX_ALIGN_SPACE_AROUND, // items are evenly distributed in the track with equal space around them. Note that visually the spaces aren't equal, since all the items have equal space on both sides. The first item will have one unit of space against the container edge, but two units of space between the next item because that next item has its own spacing that applies. Not applies to track_cross_place.
-        SPACE_BETWEEN: LV_FLEX_ALIGN_SPACE_BETWEEN // items are evenly distributed in the track: first item is on the start line, last item on the end line. Not applies to track_cross_place.
+        START: LV_FLEX_ALIGN_START,       // 水平方向为左、垂直方向为顶（默认）
+        END: LV_FLEX_ALIGN_END,           // 水平方向为右、垂直方向为底
+        CENTER: LV_FLEX_ALIGN_CENTER,     // 简单居中
+        SPACE_EVENLY: LV_FLEX_ALIGN_SPACE_EVENLY, // 项目分布使得任意两个项目之间（以及与边缘）的间距相等。不适用于 track_cross_place。
+        SPACE_AROUND: LV_FLEX_ALIGN_SPACE_AROUND, // 项目在轨道中均匀分布，周围间距相等。请注意，视觉上间距并不相等，因为所有项目两侧的空间相同。第一个项目与容器边缘之间有一个单位的空间，但与下一个项目之间有两个单位的空间，因为下一个项目自身也有对应的间距。不适用于 track_cross_place。
+        SPACE_BETWEEN: LV_FLEX_ALIGN_SPACE_BETWEEN // 项目在轨道中均匀分布：第一个项目在起始线上，最后一个项目在结束线上。不适用于 track_cross_place。
     },
     "LV_FLEX_ALIGN_"
 );
 
 const flex_cross_place_property_info = makeEnumPropertyInfo(
     "flex_cross_place",
-    "Flex cross place",
+    "弹性交叉位置",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_FLEX_CROSS_PLACE,
         description:
-            "Determines how to distribute the items in their track on the cross axis.",
+            "确定如何在交叉轴上的轨道中分配项目。",
         defaultValue: "LV_FLEX_ALIGN_START",
         inherited: false,
         layout: true,
         extDraw: false
     },
     {
-        START: LV_FLEX_ALIGN_START, // means left on a horizontally and top vertically (default)
-        END: LV_FLEX_ALIGN_END, // means right on a horizontally and bottom vertically
-        CENTER: LV_FLEX_ALIGN_CENTER // simply center
+        START: LV_FLEX_ALIGN_START,   // 水平方向为左、垂直方向为顶（默认）
+        END: LV_FLEX_ALIGN_END,       // 水平方向为右、垂直方向为底
+        CENTER: LV_FLEX_ALIGN_CENTER  // 简单居中
     },
     "LV_FLEX_ALIGN_"
 );
 
 const flex_track_place_property_info = makeEnumPropertyInfo(
     "flex_track_place",
-    "Flex track place",
+    "弹性轨道位置",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_FLEX_TRACK_PLACE,
-        description: "Determines how to distribute the tracks",
+        description: "确定如何分配轨道。",
         defaultValue: "LV_FLEX_ALIGN_START",
         inherited: false,
         layout: true,
         extDraw: false
     },
     {
-        START: LV_FLEX_ALIGN_START, // means left on a horizontally and top vertically (default)
-        END: LV_FLEX_ALIGN_END, // means right on a horizontally and bottom vertically
-        CENTER: LV_FLEX_ALIGN_CENTER, // simply center
-        SPACE_EVENLY: LV_FLEX_ALIGN_SPACE_EVENLY, // items are distributed so that the spacing between any two items (and the space to the edges) is equal. Does not apply to track_cross_place.
-        SPACE_AROUND: LV_FLEX_ALIGN_SPACE_AROUND, // items are evenly distributed in the track with equal space around them. Note that visually the spaces aren't equal, since all the items have equal space on both sides. The first item will have one unit of space against the container edge, but two units of space between the next item because that next item has its own spacing that applies. Not applies to track_cross_place.
-        SPACE_BETWEEN: LV_FLEX_ALIGN_SPACE_BETWEEN // items are evenly distributed in the track: first item is on the start line, last item on the end line. Not applies to track_cross_place.
+        START: LV_FLEX_ALIGN_START,       // 水平方向为左、垂直方向为顶（默认）
+        END: LV_FLEX_ALIGN_END,           // 水平方向为右、垂直方向为底
+        CENTER: LV_FLEX_ALIGN_CENTER,     // 简单居中
+        SPACE_EVENLY: LV_FLEX_ALIGN_SPACE_EVENLY, // 项目分布使得任意两个项目之间（以及与边缘）的间距相等。不适用于 track_cross_place。
+        SPACE_AROUND: LV_FLEX_ALIGN_SPACE_AROUND, // 项目在轨道中均匀分布，周围间距相等。请注意，视觉上间距并不相等，因为所有项目两侧的空间相同。第一个项目与容器边缘之间有一个单位的空间，但与下一个项目之间有两个单位的空间，因为下一个项目自身也有对应的间距。不适用于 track_cross_place。
+        SPACE_BETWEEN: LV_FLEX_ALIGN_SPACE_BETWEEN // 项目在轨道中均匀分布：第一个项目在起始线上，最后一个项目在结束线上。不适用于 track_cross_place。
     },
     "LV_FLEX_ALIGN_"
 );
 
 const flex_grow_property_info: LVGLPropertyInfo = {
     name: "flex_grow",
-    displayName: "Flex grow",
+    displayName: "弹性增长",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_FLEX_GROW,
         description:
-            "Flex grow can be used to make one or more children fill the available space on the track. When more children have grow parameters, the available space will be distributed proportionally to the grow values.",
+            "弹性增长可用于让一个或多个子对象填满轨道上的可用空间。当多个子对象设置了增长参数时，可用空间将按增长值成比例分配。",
         defaultValue: "1",
         inherited: false,
         layout: true,
@@ -662,46 +663,46 @@ const flex_grow_property_info: LVGLPropertyInfo = {
 
 const grid_column_align_property_info: LVGLPropertyInfo = makeEnumPropertyInfo(
     "grid_column_align",
-    "Grid column align",
+    "网格列对齐",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_GRID_COLUMN_ALIGN,
-        description: "Defines how to distribute the columns.",
+        description: "定义如何分配列。",
         defaultValue: "1",
         inherited: false,
         layout: true,
         extDraw: false
     },
     {
-        START: LV_GRID_ALIGN_START,
-        CENTER: LV_GRID_ALIGN_CENTER,
-        END: LV_GRID_ALIGN_END,
-        STRETCH: LV_GRID_ALIGN_STRETCH,
-        SPACE_EVENLY: LV_GRID_ALIGN_SPACE_EVENLY,
-        SPACE_AROUND: LV_GRID_ALIGN_SPACE_AROUND,
-        SPACE_BETWEEN: LV_GRID_ALIGN_SPACE_BETWEEN
+        START: LV_GRID_ALIGN_START,       // 起始
+        CENTER: LV_GRID_ALIGN_CENTER,     // 居中
+        END: LV_GRID_ALIGN_END,           // 结束
+        STRETCH: LV_GRID_ALIGN_STRETCH,   // 拉伸
+        SPACE_EVENLY: LV_GRID_ALIGN_SPACE_EVENLY, // 均匀分布
+        SPACE_AROUND: LV_GRID_ALIGN_SPACE_AROUND, // 周围分布
+        SPACE_BETWEEN: LV_GRID_ALIGN_SPACE_BETWEEN // 之间分布
     },
     "LV_GRID_ALIGN_"
 );
 
 const grid_row_align_property_info: LVGLPropertyInfo = makeEnumPropertyInfo(
     "grid_row_align",
-    "Grid row align",
+    "网格行对齐",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_GRID_ROW_ALIGN,
-        description: "Defines how to distribute the columns.",
+        description: "定义如何分配列。",
         defaultValue: "1",
         inherited: false,
         layout: true,
         extDraw: false
     },
     {
-        START: LV_GRID_ALIGN_START,
-        CENTER: LV_GRID_ALIGN_CENTER,
-        END: LV_GRID_ALIGN_END,
-        STRETCH: LV_GRID_ALIGN_STRETCH,
-        SPACE_EVENLY: LV_GRID_ALIGN_SPACE_EVENLY,
-        SPACE_AROUND: LV_GRID_ALIGN_SPACE_AROUND,
-        SPACE_BETWEEN: LV_GRID_ALIGN_SPACE_BETWEEN
+        START: LV_GRID_ALIGN_START,       // 起始
+        CENTER: LV_GRID_ALIGN_CENTER,     // 居中
+        END: LV_GRID_ALIGN_END,           // 结束
+        STRETCH: LV_GRID_ALIGN_STRETCH,   // 拉伸
+        SPACE_EVENLY: LV_GRID_ALIGN_SPACE_EVENLY, // 均匀分布
+        SPACE_AROUND: LV_GRID_ALIGN_SPACE_AROUND, // 周围分布
+        SPACE_BETWEEN: LV_GRID_ALIGN_SPACE_BETWEEN // 之间分布
     },
     "LV_GRID_ALIGN_"
 );
@@ -794,13 +795,13 @@ function dscArrayIsInt16(projectStore: ProjectStore) {
 
 export const grid_row_dsc_array_property_info: LVGLPropertyInfo = {
     name: "grid_row_dsc_array",
-    displayName: "Grid row descriptor",
+    displayName: "网格行描述符",
     type: PropertyType.NumberArrayAsString,
-    formText: "Defines the size of grid rows as a comma or space-separated list of values. Options: fixed value in pixels (e.g. 50), FR(x) (e.g. FR(1), FR(2), etc.) or CONTENT.",
+    formText: "将网格行大小定义为以逗号或空格分隔的值列表。选项：固定像素值（例如 50）、FR(x)（例如 FR(1)、FR(2) 等）或 CONTENT。",
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_GRID_ROW_DSC_ARRAY,
         description:
-            "An array to describe the rows of the grid. Should be LV_GRID_TEMPLATE_LAST terminated.",
+            "用于描述网格行的数组。应以 LV_GRID_TEMPLATE_LAST 结尾。",
         defaultValue: "1",
         inherited: false,
         layout: true,
@@ -814,13 +815,13 @@ export const grid_row_dsc_array_property_info: LVGLPropertyInfo = {
 
 export const grid_column_dsc_array_property_info: LVGLPropertyInfo = {
     name: "grid_column_dsc_array",
-    displayName: "Grid column descriptor",
+    displayName: "网格列描述符",
     type: PropertyType.NumberArrayAsString,
-    formText: "Defines the size of grid columns as a comma or space-separated list of values. Options: fixed value in pixels (e.g. 50), FR(x) (e.g. FR(1), FR(2), etc.) or CONTENT. ",
+    formText: "将网格列大小定义为以逗号或空格分隔的值列表。选项：固定像素值（例如 50）、FR(x)（例如 FR(1)、FR(2) 等）或 CONTENT。",
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_GRID_COLUMN_DSC_ARRAY,
         description:
-            "An array to describe the columns of the grid. Should be LV_GRID_TEMPLATE_LAST terminated.",
+            "用于描述网格列的数组。应以 LV_GRID_TEMPLATE_LAST 结尾。",
         defaultValue: "1",
         inherited: false,
         layout: true,
@@ -834,11 +835,11 @@ export const grid_column_dsc_array_property_info: LVGLPropertyInfo = {
 
 export const grid_cell_column_pos_property_info: LVGLPropertyInfo = {
     name: "grid_cell_column_pos",
-    displayName: "Grid cell column pos",
+    displayName: "网格单元列位置",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_GRID_CELL_COLUMN_POS,
-        description: "Set the column in which the object should be placed.",
+        description: "设置对象应放置的列。",
         defaultValue: "1",
         inherited: false,
         layout: true,
@@ -848,12 +849,12 @@ export const grid_cell_column_pos_property_info: LVGLPropertyInfo = {
 
 export const grid_cell_column_span_property_info: LVGLPropertyInfo = {
     name: "grid_cell_column_span",
-    displayName: "Grid cell column span",
+    displayName: "网格单元列跨度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_GRID_CELL_COLUMN_SPAN,
         description:
-            "Set how many columns the object should span. Needs to be >= 1.",
+            "设置对象应跨越多少列。必须 >= 1。",
         defaultValue: "1",
         inherited: false,
         layout: true,
@@ -863,34 +864,34 @@ export const grid_cell_column_span_property_info: LVGLPropertyInfo = {
 
 const grid_cell_x_align_property_info: LVGLPropertyInfo = makeEnumPropertyInfo(
     "grid_cell_x_align",
-    "Grid cell X align",
+    "网格单元 X 对齐",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_GRID_CELL_X_ALIGN,
-        description: "Set how to align the object horizontally.",
+        description: "设置如何水平对齐对象。",
         defaultValue: "1",
         inherited: false,
         layout: true,
         extDraw: false
     },
     {
-        START: LV_GRID_ALIGN_START,
-        CENTER: LV_GRID_ALIGN_CENTER,
-        END: LV_GRID_ALIGN_END,
-        STRETCH: LV_GRID_ALIGN_STRETCH,
-        SPACE_EVENLY: LV_GRID_ALIGN_SPACE_EVENLY,
-        SPACE_AROUND: LV_GRID_ALIGN_SPACE_AROUND,
-        SPACE_BETWEEN: LV_GRID_ALIGN_SPACE_BETWEEN
+        START: LV_GRID_ALIGN_START,       // 起始
+        CENTER: LV_GRID_ALIGN_CENTER,     // 居中
+        END: LV_GRID_ALIGN_END,           // 结束
+        STRETCH: LV_GRID_ALIGN_STRETCH,   // 拉伸
+        SPACE_EVENLY: LV_GRID_ALIGN_SPACE_EVENLY, // 均匀分布
+        SPACE_AROUND: LV_GRID_ALIGN_SPACE_AROUND, // 周围分布
+        SPACE_BETWEEN: LV_GRID_ALIGN_SPACE_BETWEEN // 之间分布
     },
     "LV_GRID_ALIGN_"
 );
 
 export const grid_cell_row_pos_property_info: LVGLPropertyInfo = {
     name: "grid_cell_row_pos",
-    displayName: "Grid cell row pos",
+    displayName: "网格单元行位置",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_GRID_CELL_ROW_POS,
-        description: "Set the row in which the object should be placed.",
+        description: "设置对象应放置的行。",
         defaultValue: "1",
         inherited: false,
         layout: true,
@@ -900,12 +901,12 @@ export const grid_cell_row_pos_property_info: LVGLPropertyInfo = {
 
 export const grid_cell_row_span_property_info: LVGLPropertyInfo = {
     name: "grid_cell_row_span",
-    displayName: "Grid cell row span",
+    displayName: "网格单元行跨度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_GRID_CELL_ROW_SPAN,
         description:
-            "Set how many rows the object should span. Needs to be >= 1",
+            "设置对象应跨越多少行。必须 >= 1。",
         defaultValue: "1",
         inherited: false,
         layout: true,
@@ -915,39 +916,39 @@ export const grid_cell_row_span_property_info: LVGLPropertyInfo = {
 
 const grid_cell_y_align_property_info: LVGLPropertyInfo = makeEnumPropertyInfo(
     "grid_cell_y_align",
-    "Grid cell Y align",
+    "网格单元 Y 对齐",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_GRID_CELL_Y_ALIGN,
-        description: "Set how to align the object vertically.",
+        description: "设置如何垂直对齐对象。",
         defaultValue: "1",
         inherited: false,
         layout: true,
         extDraw: false
     },
     {
-        START: LV_GRID_ALIGN_START,
-        CENTER: LV_GRID_ALIGN_CENTER,
-        END: LV_GRID_ALIGN_END,
-        STRETCH: LV_GRID_ALIGN_STRETCH,
-        SPACE_EVENLY: LV_GRID_ALIGN_SPACE_EVENLY,
-        SPACE_AROUND: LV_GRID_ALIGN_SPACE_AROUND,
-        SPACE_BETWEEN: LV_GRID_ALIGN_SPACE_BETWEEN
+        START: LV_GRID_ALIGN_START,       // 起始
+        CENTER: LV_GRID_ALIGN_CENTER,     // 居中
+        END: LV_GRID_ALIGN_END,           // 结束
+        STRETCH: LV_GRID_ALIGN_STRETCH,   // 拉伸
+        SPACE_EVENLY: LV_GRID_ALIGN_SPACE_EVENLY, // 均匀分布
+        SPACE_AROUND: LV_GRID_ALIGN_SPACE_AROUND, // 周围分布
+        SPACE_BETWEEN: LV_GRID_ALIGN_SPACE_BETWEEN // 之间分布
     },
     "LV_GRID_ALIGN_"
 );
 
 //
-// PADDING
+// 内边距
 //
 
 export const pad_top_property_info: LVGLPropertyInfo = {
     name: "pad_top",
-    displayName: "Pad Top",
+    displayName: "顶部内边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_PAD_TOP,
         description:
-            "Sets the padding on the top. It makes the content area smaller in this direction.",
+            "设置顶部内边距。它会在该方向缩小内容区域。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -956,12 +957,12 @@ export const pad_top_property_info: LVGLPropertyInfo = {
 };
 export const pad_bottom_property_info: LVGLPropertyInfo = {
     name: "pad_bottom",
-    displayName: "Pad Bottom",
+    displayName: "底部内边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_PAD_BOTTOM,
         description:
-            "Sets the padding on the bottom. It makes the content area smaller in this direction.",
+            "设置底部内边距。它会在该方向缩小内容区域。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -970,12 +971,12 @@ export const pad_bottom_property_info: LVGLPropertyInfo = {
 };
 export const pad_left_property_info: LVGLPropertyInfo = {
     name: "pad_left",
-    displayName: "Pad Left",
+    displayName: "左侧内边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_PAD_LEFT,
         description:
-            "Sets the padding on the left. It makes the content area smaller in this direction.",
+            "设置左侧内边距。它会在该方向缩小内容区域。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -984,12 +985,12 @@ export const pad_left_property_info: LVGLPropertyInfo = {
 };
 export const pad_right_property_info: LVGLPropertyInfo = {
     name: "pad_right",
-    displayName: "Pad Right",
+    displayName: "右侧内边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_PAD_RIGHT,
         description:
-            "Sets the padding on the right. It makes the content area smaller in this direction.",
+            "设置右侧内边距。它会在该方向缩小内容区域。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -998,11 +999,11 @@ export const pad_right_property_info: LVGLPropertyInfo = {
 };
 const pad_radial_property_info: LVGLPropertyInfo = {
     name: "pad_radial",
-    displayName: "Pad Radial",
+    displayName: "径向内边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_PAD_RADIAL,
-        description: "Pad text labels away from the scale ticks.",
+        description: "使文本标签远离刻度线的内边距。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1011,11 +1012,11 @@ const pad_radial_property_info: LVGLPropertyInfo = {
 };
 const pad_row_property_info: LVGLPropertyInfo = {
     name: "pad_row",
-    displayName: "Pad Row",
+    displayName: "行内边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_PAD_ROW,
-        description: "Sets the padding between the rows. Used by the layouts.",
+        description: "设置行之间的内边距。由布局使用。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -1024,12 +1025,12 @@ const pad_row_property_info: LVGLPropertyInfo = {
 };
 const pad_column_property_info: LVGLPropertyInfo = {
     name: "pad_column",
-    displayName: "Pad Column",
+    displayName: "列内边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_PAD_COLUMN,
         description:
-            "Sets the padding between the columns. Used by the layouts.",
+            "设置列之间的内边距。由布局使用。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -1038,16 +1039,16 @@ const pad_column_property_info: LVGLPropertyInfo = {
 };
 
 //
-// MARGIN
+// 外边距
 //
 const margin_top_property_info: LVGLPropertyInfo = {
     name: "margin_top",
-    displayName: "Margin Top",
+    displayName: "顶部外边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_MARGIN_TOP,
         description:
-            "Sets the margin on the top. The object will keep this space from its siblings in layouts.",
+            "设置顶部外边距。在布局中，对象将与其兄弟对象保持该间距。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -1056,12 +1057,12 @@ const margin_top_property_info: LVGLPropertyInfo = {
 };
 const margin_bottom_property_info: LVGLPropertyInfo = {
     name: "margin_bottom",
-    displayName: "Margin Bottom",
+    displayName: "底部外边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_MARGIN_BOTTOM,
         description:
-            "Sets the margin on the bottom. The object will keep this space from its siblings in layouts.",
+            "设置底部外边距。在布局中，对象将与其兄弟对象保持该间距。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -1070,12 +1071,12 @@ const margin_bottom_property_info: LVGLPropertyInfo = {
 };
 const margin_left_property_info: LVGLPropertyInfo = {
     name: "margin_left",
-    displayName: "Margin Left",
+    displayName: "左侧外边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_MARGIN_LEFT,
         description:
-            "Sets the margin on the left. The object will keep this space from its siblings in layouts.",
+            "设置左侧外边距。在布局中，对象将与其兄弟对象保持该间距。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -1084,12 +1085,12 @@ const margin_left_property_info: LVGLPropertyInfo = {
 };
 const margin_right_property_info: LVGLPropertyInfo = {
     name: "margin_right",
-    displayName: "Margin Right",
+    displayName: "右侧外边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_MARGIN_RIGHT,
         description:
-            "Sets the margin on the right. The object will keep this space from its siblings in layouts.",
+            "设置右侧外边距。在布局中，对象将与其兄弟对象保持该间距。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -1098,16 +1099,16 @@ const margin_right_property_info: LVGLPropertyInfo = {
 };
 
 //
-// BACKGROUND
+// 背景
 //
 
 const bg_color_property_info: LVGLPropertyInfo = {
     name: "bg_color",
-    displayName: "Bg Color",
+    displayName: "背景颜色",
     type: PropertyType.ThemedColor,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_COLOR,
-        description: "Set the background color of the object.",
+        description: "设置对象的背景颜色。",
         defaultValue: "0xffffff",
         inherited: false,
         layout: false,
@@ -1116,12 +1117,12 @@ const bg_color_property_info: LVGLPropertyInfo = {
 };
 export const bg_opa_property_info: LVGLPropertyInfo = {
     name: "bg_opa",
-    displayName: "Bg Opacity",
+    displayName: "背景不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_OPA,
         description:
-            "Set the opacity of the background. Value 0, LV_OPA_0 or LV_OPA_TRANSP means fully transparent, 255, LV_OPA_100 or LV_OPA_COVER means fully covering, other values or LV_OPA_10, LV_OPA_20, etc means semi transparency.",
+            "设置背景的不透明度。值 0、LV_OPA_0 或 LV_OPA_TRANSP 表示完全透明，255、LV_OPA_100 或 LV_OPA_COVER 表示完全覆盖，其他值或 LV_OPA_10、LV_OPA_20 等表示半透明。",
         defaultValue: "LV_OPA_TRANSP",
         inherited: false,
         layout: false,
@@ -1130,12 +1131,12 @@ export const bg_opa_property_info: LVGLPropertyInfo = {
 };
 const bg_grad_color_property_info: LVGLPropertyInfo = {
     name: "bg_grad_color",
-    displayName: "Bg Grad. color",
+    displayName: "背景渐变颜色",
     type: PropertyType.ThemedColor,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_GRAD_COLOR,
         description:
-            "Set the gradient color of the background. Used only if grad_dir is not LV_GRAD_DIR_NONE",
+            "设置背景的渐变颜色。仅当 grad_dir 不为 LV_GRAD_DIR_NONE 时使用。",
         defaultValue: "0x000000",
         inherited: false,
         layout: false,
@@ -1144,31 +1145,31 @@ const bg_grad_color_property_info: LVGLPropertyInfo = {
 };
 const bg_grad_dir_property_info = makeEnumPropertyInfo(
     "bg_grad_dir",
-    "Bg Grad. Direction",
+    "背景渐变方向",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_GRAD_DIR,
         description:
-            "Set the direction of the gradient of the background. The possible values are LV_GRAD_DIR_NONE/HOR/VER.",
+            "设置背景渐变的方向。可能的值有 LV_GRAD_DIR_NONE/HOR/VER。",
         defaultValue: "LV_GRAD_DIR_NONE",
         inherited: false,
         layout: false,
         extDraw: false
     },
     [
-        "NONE", // No gradient (the `grad_color` property is ignored)
-        "VER", // Vertical (top to bottom) gradient
-        "HOR" // Horizontal (left to right) gradient
+        "NONE", // 无渐变（`grad_color` 属性被忽略）
+        "VER",  // 垂直（从上到下）渐变
+        "HOR"   // 水平（从左到右）渐变
     ],
     "LV_GRAD_DIR_"
 );
 const bg_main_stop_property_info: LVGLPropertyInfo = {
     name: "bg_main_stop",
-    displayName: "Bg Main Stop",
+    displayName: "背景主渐变起点",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_MAIN_STOP,
         description:
-            "Set the point from which the background color should start for gradients. 0 means to top/left side, 255 the bottom/right side, 128 the center, and so on",
+            "设置背景颜色应从哪个点开始用于渐变。0 表示顶部/左侧，255 表示底部/右侧，128 表示中心，依此类推。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1177,12 +1178,12 @@ const bg_main_stop_property_info: LVGLPropertyInfo = {
 };
 const bg_grad_stop_property_info: LVGLPropertyInfo = {
     name: "bg_grad_stop",
-    displayName: "Bg Gradient Stop",
+    displayName: "背景渐变停止点",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_GRAD_STOP,
         description:
-            "Set the point from which the background's gradient color should start. 0 means to top/left side, 255 the bottom/right side, 128 the center, and so on",
+            "设置背景渐变颜色应从哪个点开始。0 表示顶部/左侧，255 表示底部/右侧，128 表示中心，依此类推。",
         defaultValue: "255",
         inherited: false,
         layout: false,
@@ -1219,7 +1220,7 @@ const bg_grad_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_GRAD,
         description:
-            "Set the gradient definition. The pointed instance must exist while the object is alive. NULL to disable. It wraps BG_GRAD_COLOR, BG_GRAD_DIR, BG_MAIN_STOP and BG_GRAD_STOP into one descriptor and allows creating gradients with more colors too.",
+            "设置渐变定义。所指向的实例在对象存续期间必须存在。NULL 表示禁用。它将 BG_GRAD_COLOR、BG_GRAD_DIR、BG_MAIN_STOP 和 BG_GRAD_STOP 合并为一个描述符，也允许创建更多颜色的渐变。",
         defaultValue: "NULL",
         inherited: false,
         layout: false,
@@ -1228,32 +1229,32 @@ const bg_grad_property_info: LVGLPropertyInfo = {
 };
 const bg_dither_mode_property_info = makeEnumPropertyInfo(
     "bg_dither_mode",
-    "Bg Dither mode",
+    "背景抖动模式",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_DITHER_MODE,
         description:
-            "Set the dithering mode of the gradient of the background. The possible values are LV_DITHER_NONE/ORDERED/ERR_DIFF.",
+            "设置背景渐变的抖动模式。可能的值有 LV_DITHER_NONE/ORDERED/ERR_DIFF。",
         defaultValue: "LV_DITHER_NONE",
         inherited: false,
         layout: false,
         extDraw: false
     },
     [
-        "NONE", // No dithering, colors are just quantized to the output resolution
-        "ORDERED", // Ordered dithering. Faster to compute and use less memory but lower quality
-        "ERR_DIFF" // Error diffusion mode. Slower to compute and use more memory but give highest dither quality
+        "NONE",     // 无抖动，颜色仅量化到输出分辨率
+        "ORDERED",  // 有序抖动。计算更快、占用内存更少，但质量较低
+        "ERR_DIFF"  // 误差扩散模式。计算更慢、占用内存更多，但抖动质量最高
     ],
     "LV_DITHER_"
 );
 const bg_img_src_property_info: LVGLPropertyInfo = {
     name: "bg_img_src",
-    displayName: "Bg Image Source",
+    displayName: "背景图像源",
     type: PropertyType.ObjectReference,
     referencedObjectCollectionPath: "bitmaps",
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_IMG_SRC,
         description:
-            "Set a background image. Can be a pointer to lv_img_dsc_t, a path to a file or an LV_SYMBOL_...",
+            "设置背景图像。可以是指向 lv_img_dsc_t 的指针、文件路径或 LV_SYMBOL_...。",
         defaultValue: "NULL",
         inherited: false,
         layout: false,
@@ -1262,12 +1263,12 @@ const bg_img_src_property_info: LVGLPropertyInfo = {
 };
 const bg_img_opa_property_info: LVGLPropertyInfo = {
     name: "bg_img_opa",
-    displayName: "Bg Image Opacity",
+    displayName: "背景图像不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_IMG_OPA,
         description:
-            "Set the opacity of the background image. Value 0, LV_OPA_0 or LV_OPA_TRANSP means fully transparent, 255, LV_OPA_100 or LV_OPA_COVER means fully covering, other values or LV_OPA_10, LV_OPA_20, etc means semi transparency.",
+            "设置背景图像的不透明度。值 0、LV_OPA_0 或 LV_OPA_TRANSP 表示完全透明，255、LV_OPA_100 或 LV_OPA_COVER 表示完全覆盖，其他值或 LV_OPA_10、LV_OPA_20 等表示半透明。",
         defaultValue: "LV_OPA_COVER",
         inherited: false,
         layout: false,
@@ -1276,11 +1277,11 @@ const bg_img_opa_property_info: LVGLPropertyInfo = {
 };
 const bg_img_recolor_property_info: LVGLPropertyInfo = {
     name: "bg_img_recolor",
-    displayName: "Bg Image Recolor",
+    displayName: "背景图像重着色",
     type: PropertyType.ThemedColor,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_IMG_RECOLOR,
-        description: "Set a color to mix to the background image.",
+        description: "设置一种要与背景图像混合的颜色。",
         defaultValue: "0x000000",
         inherited: false,
         layout: false,
@@ -1289,12 +1290,12 @@ const bg_img_recolor_property_info: LVGLPropertyInfo = {
 };
 const bg_img_recolor_opa_property_info: LVGLPropertyInfo = {
     name: "bg_img_recolor_opa",
-    displayName: "Bg Image Recolor Opa.",
+    displayName: "背景图像重着色不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_IMG_RECOLOR_OPA,
         description:
-            "Set the intensity of background image recoloring. Value 0, LV_OPA_0 or LV_OPA_TRANSP means no mixing, 255, LV_OPA_100 or LV_OPA_COVER means full recoloring, other values or LV_OPA_10, LV_OPA_20, etc are interpreted proportionally.",
+            "设置背景图像重着色的强度。值 0、LV_OPA_0 或 LV_OPA_TRANSP 表示不混合，255、LV_OPA_100 或 LV_OPA_COVER 表示完全重着色，其他值或 LV_OPA_10、LV_OPA_20 等按比例解释。",
         defaultValue: "LV_OPA_TRANSP",
         inherited: false,
         layout: false,
@@ -1303,13 +1304,13 @@ const bg_img_recolor_opa_property_info: LVGLPropertyInfo = {
 };
 const bg_img_tiled_property_info: LVGLPropertyInfo = {
     name: "bg_img_tiled",
-    displayName: "Bg Image Tiled",
+    displayName: "背景图像平铺",
     type: PropertyType.Boolean,
     checkboxStyleSwitch: true,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BG_IMG_TILED,
         description:
-            "If enabled the background image will be tiled. The possible values are true or false.",
+            "如果启用，背景图像将平铺显示。可能的值是 true 或 false。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1318,16 +1319,16 @@ const bg_img_tiled_property_info: LVGLPropertyInfo = {
 };
 
 //
-// BORDER
+// 边框
 //
 
 const border_color_property_info: LVGLPropertyInfo = {
     name: "border_color",
-    displayName: "Border Color",
+    displayName: "边框颜色",
     type: PropertyType.ThemedColor,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BORDER_COLOR,
-        description: "Set the color of the border",
+        description: "设置边框的颜色。",
         defaultValue: "0x000000",
         inherited: false,
         layout: false,
@@ -1336,12 +1337,12 @@ const border_color_property_info: LVGLPropertyInfo = {
 };
 const border_opa_property_info: LVGLPropertyInfo = {
     name: "border_opa",
-    displayName: "Border Opacity",
+    displayName: "边框不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BORDER_OPA,
         description:
-            "Set the opacity of the border. Value 0, LV_OPA_0 or LV_OPA_TRANSP means fully transparent, 255, LV_OPA_100 or LV_OPA_COVER means fully covering, other values or LV_OPA_10, LV_OPA_20, etc means semi transparency.",
+            "设置边框的不透明度。值 0、LV_OPA_0 或 LV_OPA_TRANSP 表示完全透明，255、LV_OPA_100 或 LV_OPA_COVER 表示完全覆盖，其他值或 LV_OPA_10、LV_OPA_20 等表示半透明。",
         defaultValue: "LV_OPA_COVER",
         inherited: false,
         layout: false,
@@ -1350,12 +1351,12 @@ const border_opa_property_info: LVGLPropertyInfo = {
 };
 export const border_width_property_info: LVGLPropertyInfo = {
     name: "border_width",
-    displayName: "Border Width",
+    displayName: "边框宽度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BORDER_WIDTH,
         description:
-            "Set hte width of the border. Only pixel values can be used.",
+            "设置边框的宽度。只能使用像素值。",
         defaultValue: "0",
         inherited: false,
         layout: true,
@@ -1546,11 +1547,11 @@ const BorderSide = observer(
 
 const border_side_property_info = makeEnumPropertyInfo(
     "border_side",
-    "Border Side",
+    "边框边",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BORDER_SIDE,
         description:
-            "Set only which side(s) the border should be drawn. The possible values are LV_BORDER_SIDE_NONE/TOP/BOTTOM/LEFT/RIGHT/INTERNAL. OR-ed values can be used as well, e.g. LV_BORDER_SIDE_TOP | LV_BORDER_SIDE_LEFT.",
+            "设置应仅在哪一侧绘制边框。可能的值有 LV_BORDER_SIDE_NONE/TOP/BOTTOM/LEFT/RIGHT/INTERNAL。也可以使用按位或组合的值，例如 LV_BORDER_SIDE_TOP | LV_BORDER_SIDE_LEFT。",
         defaultValue: "LV_BORDER_SIDE_NONE",
         inherited: false,
         layout: false,
@@ -1558,15 +1559,15 @@ const border_side_property_info = makeEnumPropertyInfo(
 
         valueRead: (value: number) => {
             if (value == 0x00) {
-                return "NONE";
+                return "NONE"; // 无
             }
 
             if (value == 0x0f) {
-                return "FULL";
+                return "FULL"; // 全部
             }
 
             if (value == 0x10) {
-                return "INTERNAL";
+                return "INTERNAL"; // 内部
             }
 
             let propertyValue = "";
@@ -1661,13 +1662,13 @@ const border_side_property_info = makeEnumPropertyInfo(
         }
     },
     {
-        NONE: 0x00,
-        BOTTOM: 0x01,
-        TOP: 0x02,
-        LEFT: 0x04,
-        RIGHT: 0x08,
-        FULL: 0x0f,
-        INTERNAL: 0x10 // FOR matrix-like objects (e.g. Button matrix)
+        NONE: 0x00,      // 无
+        BOTTOM: 0x01,    // 底部
+        TOP: 0x02,       // 顶部
+        LEFT: 0x04,      // 左侧
+        RIGHT: 0x08,     // 右侧
+        FULL: 0x0f,      // 全部
+        INTERNAL: 0x10   // 用于矩阵类对象（例如按钮矩阵）
     },
     "LV_BORDER_SIDE_",
     BorderSide
@@ -1675,13 +1676,13 @@ const border_side_property_info = makeEnumPropertyInfo(
 
 const border_post_property_info: LVGLPropertyInfo = {
     name: "border_post",
-    displayName: "Border Post",
+    displayName: "边框后置",
     type: PropertyType.Boolean,
     checkboxStyleSwitch: true,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BORDER_POST,
         description:
-            "Sets whether the border should be drawn before or after the children are drawn. true: after children, false: before children",
+            "设置边框是在子对象绘制之前还是之后绘制。true：在子对象之后，false：在子对象之前。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1690,16 +1691,16 @@ const border_post_property_info: LVGLPropertyInfo = {
 };
 
 //
-// OUTLINE
+// 外轮廓
 //
 
 const outline_width_property_info: LVGLPropertyInfo = {
     name: "outline_width",
-    displayName: "Outline Width",
+    displayName: "外轮廓宽度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_OUTLINE_WIDTH,
-        description: "Set the width of the outline in pixels.",
+        description: "设置外轮廓的宽度（以像素为单位）。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1708,11 +1709,11 @@ const outline_width_property_info: LVGLPropertyInfo = {
 };
 const outline_color_property_info: LVGLPropertyInfo = {
     name: "outline_color",
-    displayName: "Outline Color",
+    displayName: "外轮廓颜色",
     type: PropertyType.ThemedColor,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_OUTLINE_COLOR,
-        description: "Set the color of the outline.",
+        description: "设置外轮廓的颜色。",
         defaultValue: "0x000000",
         inherited: false,
         layout: false,
@@ -1721,12 +1722,12 @@ const outline_color_property_info: LVGLPropertyInfo = {
 };
 const outline_opa_property_info: LVGLPropertyInfo = {
     name: "outline_opa",
-    displayName: "Outline Opacity",
+    displayName: "外轮廓不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_OUTLINE_OPA,
         description:
-            "Set the opacity of the outline. Value 0, LV_OPA_0 or LV_OPA_TRANSP means fully transparent, 255, LV_OPA_100 or LV_OPA_COVER means fully covering, other values or LV_OPA_10, LV_OPA_20, etc means semi transparency.",
+            "设置外轮廓的不透明度。值 0、LV_OPA_0 或 LV_OPA_TRANSP 表示完全透明，255、LV_OPA_100 或 LV_OPA_COVER 表示完全覆盖，其他值或 LV_OPA_10、LV_OPA_20 等表示半透明。",
         defaultValue: "LV_OPA_COVER",
         inherited: false,
         layout: false,
@@ -1735,12 +1736,12 @@ const outline_opa_property_info: LVGLPropertyInfo = {
 };
 const outline_pad_property_info: LVGLPropertyInfo = {
     name: "outline_pad",
-    displayName: "Outline Padding",
+    displayName: "外轮廓内边距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_OUTLINE_PAD,
         description:
-            "Set the padding of the outline, i.e. the gap between object and the outline.",
+            "设置外轮廓的内边距，即对象与外轮廓之间的间隙。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1749,17 +1750,17 @@ const outline_pad_property_info: LVGLPropertyInfo = {
 };
 
 //
-// SHADOW
+// 阴影
 //
 
 const shadow_width_property_info: LVGLPropertyInfo = {
     name: "shadow_width",
-    displayName: "Shadow Width",
+    displayName: "阴影宽度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_SHADOW_WIDTH,
         description:
-            "Set the width of the shadow in pixels. The value should be >= 0.",
+            "设置阴影的宽度（以像素为单位）。该值应 >= 0。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1768,11 +1769,11 @@ const shadow_width_property_info: LVGLPropertyInfo = {
 };
 const shadow_ofs_x_property_info: LVGLPropertyInfo = {
     name: "shadow_ofs_x",
-    displayName: "Shadow X Offset",
+    displayName: "阴影 X 偏移",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_SHADOW_OFS_X,
-        description: "Set an offset on the shadow in pixels in X direction.",
+        description: "在 X 方向上为阴影设置以像素为单位的偏移。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1781,11 +1782,11 @@ const shadow_ofs_x_property_info: LVGLPropertyInfo = {
 };
 const shadow_ofs_y_property_info: LVGLPropertyInfo = {
     name: "shadow_ofs_y",
-    displayName: "Shadow Y Offset",
+    displayName: "阴影 Y 偏移",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_SHADOW_OFS_Y,
-        description: "Set an offset on the shadow in pixels in Y direction.",
+        description: "在 Y 方向上为阴影设置以像素为单位的偏移。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1794,12 +1795,12 @@ const shadow_ofs_y_property_info: LVGLPropertyInfo = {
 };
 const shadow_spread_property_info: LVGLPropertyInfo = {
     name: "shadow_spread",
-    displayName: "Shadow Spread",
+    displayName: "阴影扩散",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_SHADOW_SPREAD,
         description:
-            "Make the shadow calculation to use a larger or smaller rectangle as base. The value can be in pixel to make the area larger/smaller",
+            "让阴影计算使用更大或更小的矩形作为基准。该值可以用像素表示以增大/缩小区域。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1808,11 +1809,11 @@ const shadow_spread_property_info: LVGLPropertyInfo = {
 };
 const shadow_color_property_info: LVGLPropertyInfo = {
     name: "shadow_color",
-    displayName: "Shadow Color",
+    displayName: "阴影颜色",
     type: PropertyType.ThemedColor,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_SHADOW_COLOR,
-        description: "Set the color of the shadow",
+        description: "设置阴影的颜色。",
         defaultValue: "0x000000",
         inherited: false,
         layout: false,
@@ -1821,12 +1822,12 @@ const shadow_color_property_info: LVGLPropertyInfo = {
 };
 const shadow_opa_property_info: LVGLPropertyInfo = {
     name: "shadow_opa",
-    displayName: "Shadow Opacity",
+    displayName: "阴影不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_SHADOW_OPA,
         description:
-            "Set the opacity of the shadow. Value 0, LV_OPA_0 or LV_OPA_TRANSP means fully transparent, 255, LV_OPA_100 or LV_OPA_COVER means fully covering, other values or LV_OPA_10, LV_OPA_20, etc means semi transparency.",
+            "设置阴影的不透明度。值 0、LV_OPA_0 或 LV_OPA_TRANSP 表示完全透明，255、LV_OPA_100 或 LV_OPA_COVER 表示完全覆盖，其他值或 LV_OPA_10、LV_OPA_20 等表示半透明。",
         defaultValue: "LV_OPA_COVER",
         inherited: false,
         layout: false,
@@ -1835,17 +1836,17 @@ const shadow_opa_property_info: LVGLPropertyInfo = {
 };
 
 //
-// IMAGE
+// 图像
 //
 
 const img_opa_property_info: LVGLPropertyInfo = {
     name: "img_opa",
-    displayName: "Image Opacity",
+    displayName: "图像不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_IMG_OPA,
         description:
-            "Set the opacity of an image. Value 0, LV_OPA_0 or LV_OPA_TRANSP means fully transparent, 255, LV_OPA_100 or LV_OPA_COVER means fully covering, other values or LV_OPA_10, LV_OPA_20, etc means semi transparency.",
+            "设置图像的不透明度。值 0、LV_OPA_0 或 LV_OPA_TRANSP 表示完全透明，255、LV_OPA_100 或 LV_OPA_COVER 表示完全覆盖，其他值或 LV_OPA_10、LV_OPA_20 等表示半透明。",
         defaultValue: "LV_OPA_COVER",
         inherited: false,
         layout: false,
@@ -1854,11 +1855,11 @@ const img_opa_property_info: LVGLPropertyInfo = {
 };
 const img_recolor_property_info: LVGLPropertyInfo = {
     name: "img_recolor",
-    displayName: "Image Recolor",
+    displayName: "图像重着色",
     type: PropertyType.ThemedColor,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_IMG_RECOLOR,
-        description: "Set color to mix to the image.",
+        description: "设置要与图像混合的颜色。",
         defaultValue: "0x000000",
         inherited: false,
         layout: false,
@@ -1867,12 +1868,12 @@ const img_recolor_property_info: LVGLPropertyInfo = {
 };
 const img_recolor_opa_property_info: LVGLPropertyInfo = {
     name: "img_recolor_opa",
-    displayName: "Image Recolor Opa.",
+    displayName: "图像重着色不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_IMG_RECOLOR_OPA,
         description:
-            "Set the intensity of the color mixing. Value 0, LV_OPA_0 or LV_OPA_TRANSP means fully transparent, 255, LV_OPA_100 or LV_OPA_COVER means fully covering, other values or LV_OPA_10, LV_OPA_20, etc means semi transparency.",
+            "设置颜色混合的强度。值 0、LV_OPA_0 或 LV_OPA_TRANSP 表示完全透明，255、LV_OPA_100 或 LV_OPA_COVER 表示完全覆盖，其他值或 LV_OPA_10、LV_OPA_20 等表示半透明。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1881,16 +1882,16 @@ const img_recolor_opa_property_info: LVGLPropertyInfo = {
 };
 
 //
-// LINE
+// 线条
 //
 
 const line_width_property_info: LVGLPropertyInfo = {
     name: "line_width",
-    displayName: "Line Width",
+    displayName: "线条宽度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_LINE_WIDTH,
-        description: "Set the width of the lines in pixel.",
+        description: "设置线条的宽度（以像素为单位）。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1899,12 +1900,12 @@ const line_width_property_info: LVGLPropertyInfo = {
 };
 const line_dash_width_property_info: LVGLPropertyInfo = {
     name: "line_dash_width",
-    displayName: "Line Dash Width",
+    displayName: "线条虚线宽度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_LINE_DASH_WIDTH,
         description:
-            "Set the width of dashes in pixel. Note that dash works only on horizontal and vertical lines",
+            "设置虚线段的宽度（以像素为单位）。请注意，虚线仅适用于水平和垂直线。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1913,12 +1914,12 @@ const line_dash_width_property_info: LVGLPropertyInfo = {
 };
 const line_dash_gap_property_info: LVGLPropertyInfo = {
     name: "line_dash_gap",
-    displayName: "Line Dash Gap",
+    displayName: "线条虚线间隙",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_LINE_DASH_GAP,
         description:
-            "Set the gap between dashes in pixel. Note that dash works only on horizontal and vertical lines",
+            "设置虚线段之间的间隙（以像素为单位）。请注意，虚线仅适用于水平和垂直线。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1927,13 +1928,13 @@ const line_dash_gap_property_info: LVGLPropertyInfo = {
 };
 const line_rounded_property_info: LVGLPropertyInfo = {
     name: "line_rounded",
-    displayName: "Line Rounded",
+    displayName: "线条圆角",
     type: PropertyType.Boolean,
     checkboxStyleSwitch: true,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_LINE_ROUNDED,
         description:
-            "Make the end points of the lines rounded. true: rounded, false: perpendicular line ending",
+            "使线条的端点变为圆角。true：圆角，false：垂直的线条端点。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1942,11 +1943,11 @@ const line_rounded_property_info: LVGLPropertyInfo = {
 };
 const line_color_property_info: LVGLPropertyInfo = {
     name: "line_color",
-    displayName: "Line Color",
+    displayName: "线条颜色",
     type: PropertyType.ThemedColor,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_LINE_COLOR,
-        description: "Set the color fo the lines.",
+        description: "设置线条的颜色。",
         defaultValue: "0x000000",
         inherited: false,
         layout: false,
@@ -1955,11 +1956,11 @@ const line_color_property_info: LVGLPropertyInfo = {
 };
 const line_opa_property_info: LVGLPropertyInfo = {
     name: "line_opa",
-    displayName: "Line Opacity",
+    displayName: "线条不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_LINE_OPA,
-        description: "Set the opacity of the lines.",
+        description: "设置线条的不透明度。",
         defaultValue: "LV_OPA_COVER",
         inherited: false,
         layout: false,
@@ -1968,16 +1969,16 @@ const line_opa_property_info: LVGLPropertyInfo = {
 };
 
 //
-// ARC
+// 圆弧
 //
 
 const arc_width_property_info: LVGLPropertyInfo = {
     name: "arc_width",
-    displayName: "Arc Width",
+    displayName: "圆弧宽度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_ARC_WIDTH,
-        description: "Set the width (thickness) of the arcs in pixel.",
+        description: "设置圆弧的宽度（粗细）（以像素为单位）。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -1986,13 +1987,13 @@ const arc_width_property_info: LVGLPropertyInfo = {
 };
 const arc_rounded_property_info: LVGLPropertyInfo = {
     name: "arc_rounded",
-    displayName: "Arc Rounded",
+    displayName: "圆弧圆角",
     type: PropertyType.Boolean,
     checkboxStyleSwitch: true,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_ARC_ROUNDED,
         description:
-            "Make the end points of the arcs rounded. true: rounded, false: perpendicular line ending",
+            "使圆弧的端点变为圆角。true：圆角，false：垂直的端点。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -2001,11 +2002,11 @@ const arc_rounded_property_info: LVGLPropertyInfo = {
 };
 const arc_color_property_info: LVGLPropertyInfo = {
     name: "arc_color",
-    displayName: "Arc Color",
+    displayName: "圆弧颜色",
     type: PropertyType.ThemedColor,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_ARC_COLOR,
-        description: "Set the color of the arc.",
+        description: "设置圆弧的颜色。",
         defaultValue: "0x000000",
         inherited: false,
         layout: false,
@@ -2014,11 +2015,11 @@ const arc_color_property_info: LVGLPropertyInfo = {
 };
 const arc_opa_property_info: LVGLPropertyInfo = {
     name: "arc_opa",
-    displayName: "Arc Opacity",
+    displayName: "圆弧不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_ARC_OPA,
-        description: "Set the opacity of the arcs.",
+        description: "设置圆弧的不透明度。",
         defaultValue: "LV_OPA_COVER",
         inherited: false,
         layout: false,
@@ -2027,13 +2028,13 @@ const arc_opa_property_info: LVGLPropertyInfo = {
 };
 const arc_img_src_property_info: LVGLPropertyInfo = {
     name: "arc_img_src",
-    displayName: "Arc Image Source",
+    displayName: "圆弧图像源",
     type: PropertyType.ObjectReference,
     referencedObjectCollectionPath: "bitmaps",
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_ARC_IMG_SRC,
         description:
-            "Set an image from which the arc will be masked out. It's useful to display complex effects on the arcs. Can be a pointer to lv_img_dsc_t or a path to a file",
+            "设置一个用于将圆弧遮罩出来的图像。它对于在圆弧上显示复杂效果很有用。可以是指向 lv_img_dsc_t 的指针或文件路径。",
         defaultValue: "NULL",
         inherited: false,
         layout: false,
@@ -2042,16 +2043,16 @@ const arc_img_src_property_info: LVGLPropertyInfo = {
 };
 
 //
-// TEXT
+// 文本
 //
 
 const text_color_property_info: LVGLPropertyInfo = {
     name: "text_color",
-    displayName: "Text Color",
+    displayName: "文本颜色",
     type: PropertyType.ThemedColor,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TEXT_COLOR,
-        description: "Sets the color of the text.",
+        description: "设置文本的颜色。",
         defaultValue: "0x000000",
         inherited: true,
         layout: false,
@@ -2060,12 +2061,12 @@ const text_color_property_info: LVGLPropertyInfo = {
 };
 const text_opa_property_info: LVGLPropertyInfo = {
     name: "text_opa",
-    displayName: "Text Opacity",
+    displayName: "文本不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TEXT_OPA,
         description:
-            "Set the opacity of the text. Value 0, LV_OPA_0 or LV_OPA_TRANSP means fully transparent, 255, LV_OPA_100 or LV_OPA_COVER means fully covering, other values or LV_OPA_10, LV_OPA_20, etc means semi transparency.",
+            "设置文本的不透明度。值 0、LV_OPA_0 或 LV_OPA_TRANSP 表示完全透明，255、LV_OPA_100 或 LV_OPA_COVER 表示完全覆盖，其他值或 LV_OPA_10、LV_OPA_20 等表示半透明。",
         defaultValue: "LV_OPA_COVER",
         inherited: true,
         layout: false,
@@ -2074,7 +2075,7 @@ const text_opa_property_info: LVGLPropertyInfo = {
 };
 export const text_font_property_info: LVGLPropertyInfo = {
     name: "text_font",
-    displayName: "Text Font",
+    displayName: "文本字体",
     type: PropertyType.Enum,
     referencedObjectCollectionPath: "fonts",
     enumItems: (propertyValueHolder: PropertyValueHolder) => {
@@ -2092,7 +2093,7 @@ export const text_font_property_info: LVGLPropertyInfo = {
     },
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TEXT_FONT,
-        description: "Set the font of the text (a pointer lv_font_t *).",
+        description: "设置文本的字体（一个 lv_font_t * 指针）。",
         defaultValue: "LV_FONT_DEFAULT",
         inherited: true,
         layout: true,
@@ -2101,11 +2102,11 @@ export const text_font_property_info: LVGLPropertyInfo = {
 };
 const text_letter_space_property_info: LVGLPropertyInfo = {
     name: "text_letter_space",
-    displayName: "Text Letter Space",
+    displayName: "文本字符间距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TEXT_LETTER_SPACE,
-        description: "Set the letter space in pixels",
+        description: "设置以像素为单位的字符间距。",
         defaultValue: "0",
         inherited: true,
         layout: true,
@@ -2114,11 +2115,11 @@ const text_letter_space_property_info: LVGLPropertyInfo = {
 };
 const text_line_space_property_info: LVGLPropertyInfo = {
     name: "text_line_space",
-    displayName: "Text Line Space",
+    displayName: "文本行间距",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TEXT_LINE_SPACE,
-        description: "Set the line space in pixels.",
+        description: "设置以像素为单位的行间距。",
         defaultValue: "0",
         inherited: true,
         layout: true,
@@ -2289,11 +2290,11 @@ const TextDecorationSide = observer(
 
 const text_decor_property_info = makeEnumPropertyInfo(
     "text_decor",
-    "Text Decoration",
+    "文本装饰",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TEXT_DECOR,
         description:
-            "Set decoration for the text. The possible values are LV_TEXT_DECOR_NONE/UNDERLINE/STRIKETHROUGH. OR-ed values can be used as well.",
+            "为文本设置装饰。可能的值有 LV_TEXT_DECOR_NONE/UNDERLINE/STRIKETHROUGH。也可以使用按位或组合的值。",
         defaultValue: "LV_TEXT_DECOR_NONE",
         inherited: true,
         layout: false,
@@ -2301,7 +2302,7 @@ const text_decor_property_info = makeEnumPropertyInfo(
 
         valueRead: (value: number) => {
             if (value == 0x00) {
-                return "NONE";
+                return "NONE"; // 无
             }
 
             let propertyValue = "";
@@ -2355,39 +2356,39 @@ const text_decor_property_info = makeEnumPropertyInfo(
             return build;
         }
     },
-    ["NONE", "UNDERLINE", "STRIKETHROUGH"],
+    ["NONE", "UNDERLINE", "STRIKETHROUGH"], // 无、下划线、删除线
     "LV_TEXT_DECOR_",
     TextDecorationSide
 );
 
 const text_align_property_info = makeEnumPropertyInfo(
     "text_align",
-    "Text Align",
+    "文本对齐",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TEXT_ALIGN,
         description:
-            "Set how to align the lines of the text. Note that it doesn't align the object itself, only the lines inside the object. The possible values are LV_TEXT_ALIGN_LEFT/CENTER/RIGHT/AUTO. LV_TEXT_ALIGN_AUTO detect the text base direction and uses left or right alignment accordingly",
+            "设置如何对齐文本的各行。请注意，它不改变对象本身的对齐方式，仅改变对象内部各行的对齐方式。可能的值有 LV_TEXT_ALIGN_LEFT/CENTER/RIGHT/AUTO。LV_TEXT_ALIGN_AUTO 检测文本的基础方向并相应地使用左对齐或右对齐。",
         defaultValue: "LV_TEXT_ALIGN_AUTO",
         inherited: true,
         layout: true,
         extDraw: false
     },
-    ["AUTO", "LEFT", "CENTER", "RIGHT"],
+    ["AUTO", "LEFT", "CENTER", "RIGHT"], // 自动、左、居中、右
     "LV_TEXT_ALIGN_"
 );
 
 //
-// MISCELLANEOUS
+// 其他
 //
 
 export const radius_property_info: LVGLPropertyInfo = {
     name: "radius",
-    displayName: "Radius",
+    displayName: "圆角半径",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_RADIUS,
         description:
-            "Set the radius on every corner. The value is interpreted in pixel (>= 0) or LV_RADIUS_CIRCLE for max. radius",
+            "设置每个角的圆角半径。该值以像素（>= 0）或 LV_RADIUS_CIRCLE（表示最大半径）进行解释。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -2397,12 +2398,12 @@ export const radius_property_info: LVGLPropertyInfo = {
 
 const radial_offset_property_info: LVGLPropertyInfo = {
     name: "radial_offset",
-    displayName: "Radial Offset",
+    displayName: "径向偏移",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_RADIAL_OFFSET,
         description:
-            "Move start point of object (e.g. scale tick) radially",
+            "沿径向移动对象的起点（例如刻度线的起点）。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -2412,13 +2413,13 @@ const radial_offset_property_info: LVGLPropertyInfo = {
 
 const clip_corner_property_info: LVGLPropertyInfo = {
     name: "clip_corner",
-    displayName: "Clip corner",
+    displayName: "裁剪圆角",
     type: PropertyType.Boolean,
     checkboxStyleSwitch: true,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_CLIP_CORNER,
         description:
-            "Enable to clip the overflowed content on the rounded corner. Can be true or false.",
+            "启用后在圆角处裁剪溢出的内容。可以是 true 或 false。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -2427,12 +2428,12 @@ const clip_corner_property_info: LVGLPropertyInfo = {
 };
 export const opa_property_info: LVGLPropertyInfo = {
     name: "opa",
-    displayName: "Opacity",
+    displayName: "不透明度",
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_OPA,
         description:
-            "Scale down all opacity values of the object by this factor. Value 0, LV_OPA_0 or LV_OPA_TRANSP means fully transparent, 255, LV_OPA_100 or LV_OPA_COVER means fully covering, other values or LV_OPA_10, LV_OPA_20, etc means semi transparency.",
+            "按此因子降低对象所有不透明度值。值 0、LV_OPA_0 或 LV_OPA_TRANSP 表示完全透明，255、LV_OPA_100 或 LV_OPA_COVER 表示完全覆盖，其他值或 LV_OPA_10、LV_OPA_20 等表示半透明。",
         defaultValue: "LV_OPA_COVER",
         inherited: true,
         layout: false,
@@ -2444,7 +2445,7 @@ const color_filter_dsc_property_info: LVGLPropertyInfo = {
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_COLOR_FILTER_DSC,
-        description: "Mix a color to all colors of the object.",
+        description: "将一种颜色混合到对象的所有颜色中。",
         defaultValue: "NULL",
         inherited: false,
         layout: false,
@@ -2456,7 +2457,7 @@ const color_filter_opa_property_info: LVGLPropertyInfo = {
     type: PropertyType.Number,
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_COLOR_FILTER_OPA,
-        description: "The intensity of mixing of color filter.",
+        description: "颜色过滤器混合的强度。",
         defaultValue: "LV_OPA_TRANSP",
         inherited: false,
         layout: false,
@@ -2466,11 +2467,11 @@ const color_filter_opa_property_info: LVGLPropertyInfo = {
 const anim_property_info: LVGLPropertyInfo = {
     name: "anim",
     type: PropertyType.String,
-    formText: "e.g., delay=1000, repeat_delay=1000, repeat_count=3 (any order, all optional, repeat_count=-1 for infinite)",
+    formText: "例如，delay=1000, repeat_delay=1000, repeat_count=3（任意顺序，全部可选，repeat_count=-1 表示无限循环）",
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_ANIM,
         description:
-            "The animation template for the object's animation. Should be a pointer to lv_anim_t. The animation parameters are widget specific, e.g. animation time could be the E.g. blink time of the cursor on the text area or scroll time of a roller. See the widgets' documentation to learn more.",
+            "对象动画的动画模板。应是指向 lv_anim_t 的指针。动画参数与部件相关，例如动画时间可以是文本区域光标闪烁时间或滚轮的滚动时间。请参阅部件文档以了解更多信息。",
         defaultValue: "NULL",
         inherited: false,
         layout: false,
@@ -2483,7 +2484,7 @@ const anim_time_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_ANIM_TIME,
         description:
-            "The animation time in milliseconds. Its meaning is widget specific. E.g. blink time of the cursor on the text area or scroll time of a roller. See the widgets' documentation to learn more.",
+            "以毫秒为单位的动画时间。其含义与部件相关。例如文本区域光标闪烁时间或滚轮的滚动时间。请参阅部件文档以了解更多信息。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -2508,7 +2509,7 @@ const anim_speed_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_ANIM_SPEED,
         description:
-            "The animation speed in pixel/sec. Its meaning is widget specific. E.g. scroll speed of label. See the widgets' documentation to learn more.",
+            "以像素/秒为单位的动画速度。其含义与部件相关。例如标签的滚动速度。请参阅部件文档以了解更多信息。",
         defaultValue: "0",
         inherited: false,
         layout: false,
@@ -2521,7 +2522,7 @@ const transition_property_info: LVGLPropertyInfo = {
     lvglStyleProp: {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_TRANSITION,
         description:
-            "An initialized lv_style_transition_dsc_t to describe a transition.",
+            "用于描述过渡的已初始化的 lv_style_transition_dsc_t。",
         defaultValue: "NULL",
         inherited: false,
         layout: false,
@@ -2530,38 +2531,38 @@ const transition_property_info: LVGLPropertyInfo = {
 };
 const blend_mode_property_info = makeEnumPropertyInfo(
     "blend_mode",
-    "Blend mode",
+    "混合模式",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BLEND_MODE,
         description:
-            "Describes how to blend the colors to the background. The possible values are LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE/MULTIPLY",
+            "描述如何将颜色混合到背景上。可能的值有 LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE/MULTIPLY。",
         defaultValue: "LV_BLEND_MODE_NORMAL",
         inherited: false,
         layout: false,
         extDraw: false
     },
     [
-        "NORMAL", // Simply mix according to the opacity value
-        "ADDITIVE", // Add the respective color channels
-        "SUBTRACTIVE", // Subtract the foreground from the background
-        "MULTIPLY", // Multiply the foreground and background
-        "REPLACE" // Replace background with foreground in the area
+        "NORMAL",      // 仅根据不透明度值进行简单混合
+        "ADDITIVE",    // 相加相应的颜色通道
+        "SUBTRACTIVE", // 从背景中减去前景
+        "MULTIPLY",    // 相乘前景和背景
+        "REPLACE"      // 在该区域用前景替换背景
     ],
     "LV_BLEND_MODE_"
 );
 const base_dir_property_info = makeEnumPropertyInfo(
     "base_dir",
-    "Base direction",
+    "基础方向",
     {
         code: LVGL_STYLE_PROP_CODES.LV_STYLE_BASE_DIR,
         description:
-            "Set the base direction of the object. The possible values are LV_BIDI_DIR_LTR/RTL/AUTO.",
+            "设置对象的基础方向。可能的值有 LV_BIDI_DIR_LTR/RTL/AUTO。",
         defaultValue: "LV_BASE_DIR_AUTO",
         inherited: true,
         layout: true,
         extDraw: false
     },
-    ["LTR", "RTL", "AUTO"],
+    ["LTR", "RTL", "AUTO"], // 从左到右、从右到左、自动
     "LV_BASE_DIR_"
 );
 
@@ -2575,9 +2576,9 @@ export interface LVGLPropertiesGroup {
 
 export const lvglProperties: LVGLPropertiesGroup[] = [
     {
-        groupName: "POSITION AND SIZE",
+        groupName: "位置和大小",
         groupDescription:
-            "Properties related to size, position, alignment and layout of the objects.",
+            "与对象的大小、位置、对齐和布局相关的属性。",
         properties: [
             align_property_info,
             width_property_info,
@@ -2614,8 +2615,8 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "LAYOUT",
-        groupDescription: "Properties to describe layout.",
+        groupName: "布局",
+        groupDescription: "描述布局的属性。",
         properties: [
             layout_property_info,
 
@@ -2639,9 +2640,9 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "PADDING",
+        groupName: "内边距",
         groupDescription:
-            "Properties to describe spacing between the parent's sides and the children and among the children. Very similar to the padding properties in HTML.",
+            "描述父对象各边与子对象之间以及子对象相互之间的间距的属性。与 HTML 中的 padding 属性非常相似。",
         properties: [
             pad_top_property_info,
             pad_bottom_property_info,
@@ -2654,9 +2655,9 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "MARGIN",
+        groupName: "外边距",
         groupDescription:
-            "Properties to describe spacing around an object. Very similar to the margin properties in HTML.",
+            "描述对象周围间距的属性。与 HTML 中的 margin 属性非常相似。",
         properties: [
             margin_top_property_info,
             margin_bottom_property_info,
@@ -2666,9 +2667,9 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "BACKGROUND",
+        groupName: "背景",
         groupDescription:
-            "Properties to describe the background color and image of the objects.",
+            "描述对象背景颜色和图像的属性。",
         properties: [
             bg_color_property_info,
             bg_opa_property_info,
@@ -2693,8 +2694,8 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "BORDER",
-        groupDescription: "Properties to describe the borders",
+        groupName: "边框",
+        groupDescription: "描述边框的属性。",
         properties: [
             border_color_property_info,
             border_opa_property_info,
@@ -2705,9 +2706,9 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "OUTLINE",
+        groupName: "外轮廓",
         groupDescription:
-            "Properties to describe the outline. It's like a border but drawn outside of the rectangles.",
+            "描述外轮廓的属性。它类似于边框，但绘制在矩形之外。",
         properties: [
             outline_width_property_info,
             outline_color_property_info,
@@ -2717,9 +2718,9 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "SHADOW",
+        groupName: "阴影",
         groupDescription:
-            "Properties to describe the shadow drawn under the rectangles.",
+            "描述绘制在矩形下方阴影的属性。",
         properties: [
             shadow_width_property_info,
             shadow_ofs_x_property_info,
@@ -2731,8 +2732,8 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "IMAGE",
-        groupDescription: "Properties to describe the images",
+        groupName: "图像",
+        groupDescription: "描述图像的属性。",
         properties: [
             img_opa_property_info,
             img_recolor_property_info,
@@ -2741,8 +2742,8 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "LINE",
-        groupDescription: "Properties to describe line-like objects",
+        groupName: "线条",
+        groupDescription: "描述类线条对象的属性。",
         properties: [
             line_width_property_info,
             line_dash_width_property_info,
@@ -2754,8 +2755,8 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "ARC",
-        groupDescription: "TODO",
+        groupName: "圆弧",
+        groupDescription: "待办",
         properties: [
             arc_width_property_info,
             arc_rounded_property_info,
@@ -2766,9 +2767,9 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "TEXT",
+        groupName: "文本",
         groupDescription:
-            "Properties to describe the properties of text. All these properties are inherited.",
+            "描述文本属性的属性。所有这些属性都会被继承。",
         properties: [
             text_color_property_info,
             text_opa_property_info,
@@ -2781,8 +2782,8 @@ export const lvglProperties: LVGLPropertiesGroup[] = [
     },
 
     {
-        groupName: "MISCELLANEOUS",
-        groupDescription: "Mixed properties for various purposes.",
+        groupName: "其他",
+        groupDescription: "用于各种用途的混合属性。",
         properties: [
             radius_property_info,
             radial_offset_property_info,
@@ -2820,7 +2821,7 @@ export const lvglPropertiesMap = new Map<string, LVGLPropertyInfo>();
 lvglProperties.forEach(propertyGroup =>
     propertyGroup.properties.forEach(property => {
         if (lvglPropertiesMap.get(property.name)) {
-            console.error("UNEXPECTED!", property.name);
+            console.error("意外！", property.name);
         }
         lvglPropertiesMap.set(property.name, property);
     })

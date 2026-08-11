@@ -1,3 +1,4 @@
+// Scale.tsx
 import React from "react";
 import { observable, makeObservable } from "mobx";
 import { observer } from "mobx-react";
@@ -74,22 +75,22 @@ export class LVGLScaleSection extends EezObject {
 
     useStyle: string;
 
-    // Main styles (LV_PART_MAIN)
+    // 主样式 (LV_PART_MAIN)
     mainWidth: number;
     mainColor: string;
     mainOpacity: number;
 
-    // Minor ticks styles (LV_PART_ITEMS)
+    // 次刻度线样式 (LV_PART_ITEMS)
     minorTicksWidth: number;
     minorTicksColor: string;
     minorTicksOpacity: number;
 
-    // Major ticks styles (LV_PART_INDICATOR)
+    // 主刻度线样式 (LV_PART_INDICATOR)
     majorTicksWidth: number;
     majorTicksColor: string;
     majorTicksOpacity: number;
 
-    // Labels styles (LV_PART_INDICATOR)
+    // 标签样式 (LV_PART_INDICATOR)
     labelsTextColor: string;
     labelsTextOpacity: number;
     labelsTextFont: string;
@@ -98,7 +99,7 @@ export class LVGLScaleSection extends EezObject {
         properties: [
             {
                 name: "identifier",
-                displayName: "Name",
+                displayName: "名称",
                 type: PropertyType.String,
                 isOptional: true
             },
@@ -106,14 +107,14 @@ export class LVGLScaleSection extends EezObject {
                 name: "codeIdentifier",
                 type: PropertyType.String,
                 computed: true,
-                formText: `This identifier will be used in the generated source code. It is different from the "Name" above because in the source code we are following "lowercase with underscore" naming convention.`,
+                formText: `此标识符将用于生成的源代码。它与上面的"名称"不同，因为在源代码中我们遵循"小写加下划线"命名约定。`,
                 disabled: (object: LVGLWidget) => object.codeIdentifier == undefined
             },            
             ...makeLvglExpressionProperty("minValue", "integer", "input", ["literal", "expression"], {
-                displayName: "Min value"
+                displayName: "最小值"
             }),
             ...makeLvglExpressionProperty("maxValue", "integer", "input", ["literal", "expression"], {
-                displayName: "Max value"
+                displayName: "最大值"
             }),
 
             {
@@ -124,89 +125,89 @@ export class LVGLScaleSection extends EezObject {
                     lvglStyle.forWidgetType == "LVGLScaleWidget"
             },
 
-            // Main styles (LV_PART_MAIN)
+            // 主样式 (LV_PART_MAIN)
             makePropertiesSection("mainStyles"),
 
             {
                 name: "mainWidth",
-                displayName: "Main width",
+                displayName: "主宽度",
                 type: PropertyType.Number,
                 isOptional: true
             },
             {
                 name: "mainColor",
-                displayName: "Main color",
+                displayName: "主颜色",
                 type: PropertyType.ThemedColor,
                 isOptional: true
             },
             {
                 name: "mainOpacity",
-                displayName: "Main opacity",
+                displayName: "主透明度",
                 type: PropertyType.Number,
                 isOptional: true
             },
 
-            // Minor ticks styles (LV_PART_ITEMS)
+            // 次刻度线样式 (LV_PART_ITEMS)
             makePropertiesSection("minorTicksStyles"),
 
             {
                 name: "minorTicksWidth",
-                displayName: "Minor ticks width",
+                displayName: "次刻度线宽度",
                 type: PropertyType.Number,
                 isOptional: true
             },
             {
                 name: "minorTicksColor",
-                displayName: "Minor ticks color",
+                displayName: "次刻度线颜色",
                 type: PropertyType.ThemedColor,
                 isOptional: true
             },
             {
                 name: "minorTicksOpacity",
-                displayName: "Minor ticks opacity",
+                displayName: "次刻度线透明度",
                 type: PropertyType.Number,
                 isOptional: true
             },
 
-            // Major ticks styles (LV_PART_INDICATOR)
+            // 主刻度线样式 (LV_PART_INDICATOR)
             makePropertiesSection("majorTicksStyles"),
 
             {
                 name: "majorTicksWidth",
-                displayName: "Major ticks width",
+                displayName: "主刻度线宽度",
                 type: PropertyType.Number,
                 isOptional: true
             },
             {
                 name: "majorTicksColor",
-                displayName: "Major ticks color",
+                displayName: "主刻度线颜色",
                 type: PropertyType.ThemedColor,
                 isOptional: true
             },
             {
                 name: "majorTicksOpacity",
-                displayName: "Major ticks opacity",
+                displayName: "主刻度线透明度",
                 type: PropertyType.Number,
                 isOptional: true
             },
 
-            // Labels styles (LV_PART_INDICATOR)
+            // 标签样式 (LV_PART_INDICATOR)
             makePropertiesSection("labelsStyles"),
             {
                 name: "labelsTextColor",
-                displayName: "Labels text color",
+                displayName: "标签文字颜色",
                 type: PropertyType.ThemedColor,
                 isOptional: true
             },
             {
                 name: "labelsTextOpacity",
-                displayName: "Labels text opacity",
+                displayName: "标签文字透明度",
                 type: PropertyType.Number,
                 isOptional: true
             },
             {
                 name: "labelsTextFont",
-                displayName: "Labels text font",
+                displayName: "标签文字字体",
                 type: PropertyType.Enum,
                 enumItems: text_font_property_info.enumItems,
                 isOptional: true,
@@ -214,7 +215,7 @@ export class LVGLScaleSection extends EezObject {
             }
         ],
 
-        listLabel: (section: LVGLScaleSection, collapsed: boolean) => "Section",
+        listLabel: (section: LVGLScaleSection, collapsed: boolean) => "段落",
 
         defaultValue: {
             minValue: 0,
@@ -224,22 +225,22 @@ export class LVGLScaleSection extends EezObject {
 
             useStyle: "",
 
-            // Main styles
+            // 主样式
             mainWidth: undefined,
             mainColor: undefined,
             mainOpacity: undefined,
 
-            // Minor ticks styles
+            // 次刻度线样式
             minorTicksWidth: undefined,
             minorTicksColor: undefined,
             minorTicksOpacity: undefined,
 
-            // Major ticks styles
+            // 主刻度线样式
             majorTicksWidth: undefined,
             majorTicksColor: undefined,
             majorTicksOpacity: undefined,
 
-            // Labels styles
+            // 标签样式
             labelsTextColor: undefined,
             labelsTextOpacity: undefined,
             labelsTextFont: undefined
@@ -264,7 +265,7 @@ export class LVGLScaleSection extends EezObject {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Min value must be an integer`,
+                            `最小值必须是整数`,
                             getChildOfObject(section, "minValue")
                         )
                     );
@@ -278,7 +279,7 @@ export class LVGLScaleSection extends EezObject {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Invalid expression: ${err}`,
+                            `无效表达式: ${err}`,
                             getChildOfObject(section, "minValue")
                         )
                     );
@@ -294,7 +295,7 @@ export class LVGLScaleSection extends EezObject {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Max value must be an integer`,
+                            `最大值必须是整数`,
                             getChildOfObject(section, "maxValue")
                         )
                     );
@@ -308,7 +309,7 @@ export class LVGLScaleSection extends EezObject {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Invalid expression: ${err}`,
+                            `无效表达式: ${err}`,
                             getChildOfObject(section, "maxValue")
                         )
                     );
@@ -325,7 +326,7 @@ export class LVGLScaleSection extends EezObject {
                         messages.push(
                             new Message(
                                 MessageType.ERROR,
-                                `The style "${section.useStyle}" is for widget type "${widgetType}" and cannot be used for Scale widgets.`,
+                                `样式"${section.useStyle}"适用于控件类型"${widgetType}"，不能用于刻度控件。`,
                                 getChildOfObject(section, "useStyle")
                             )
                         );
@@ -350,22 +351,22 @@ export class LVGLScaleSection extends EezObject {
 
             useStyle: observable,
 
-            // Main styles
+            // 主样式
             mainWidth: observable,
             mainColor: observable,
             mainOpacity: observable,
 
-            // Minor ticks styles
+            // 次刻度线样式
             minorTicksWidth: observable,
             minorTicksColor: observable,
             minorTicksOpacity: observable,
 
-            // Major ticks styles
+            // 主刻度线样式
             majorTicksWidth: observable,
             majorTicksColor: observable,
             majorTicksOpacity: observable,
 
-            // Labels styles
+            // 标签样式
             labelsTextColor: observable,
             labelsTextOpacity: observable,
             labelsTextFont: observable
@@ -408,31 +409,31 @@ export class LVGLScaleWidget extends LVGLWidget {
     labelTexts: string;
     sections: LVGLScaleSection[];
 
-    // Main line styles (straight line mode)
+    // 主线样式（直线模式）
     mainLineWidth: number;
     mainLineColor: string;
     mainLineOpacity: number;
 
-    // Main arc styles (round mode)
+    // 主弧样式（圆形模式）
     mainArcWidth: number;
     mainArcColor: string;
     mainArcOpacity: number;
     mainArcRounded: boolean;
     mainArcImageSrc: string;
 
-    // Minor ticks styles (LV_PART_ITEMS)
+    // 次刻度线样式 (LV_PART_ITEMS)
     minorTicksLength: number;
     minorTicksWidth: number;
     minorTicksColor: string;
     minorTicksOpacity: number;
 
-    // Major ticks styles (LV_PART_INDICATOR)
+    // 主刻度线样式 (LV_PART_INDICATOR)
     majorTicksLength: number;
     majorTicksWidth: number;
     majorTicksColor: string;
     majorTicksOpacity: number;
 
-    // Labels styles (LV_PART_INDICATOR)
+    // 标签样式 (LV_PART_INDICATOR)
     labelsTextColor: string;
     labelsTextOpacity: number;
     labelsTextFont: string;
@@ -442,7 +443,7 @@ export class LVGLScaleWidget extends LVGLWidget {
             projectType === ProjectType.LVGL &&
             (!projectStore || projectStore.project.settings.general.lvglVersion.startsWith("9.")),
 
-        componentPaletteGroupName: "!1Visualiser",
+        componentPaletteGroupName: "!1可视化",
 
         properties: [
             {
@@ -456,16 +457,16 @@ export class LVGLScaleWidget extends LVGLWidget {
                 propertyGridGroup: specificGroup
             },
             ...makeLvglExpressionProperty("minValue", "integer", "input", ["literal", "expression"], {
-                displayName: "Min value",
+                displayName: "最小值",
                 propertyGridGroup: specificGroup
             }),
             ...makeLvglExpressionProperty("maxValue", "integer", "input", ["literal", "expression"], {
-                displayName: "Max value",
+                displayName: "最大值",
                 propertyGridGroup: specificGroup
             }),
             {
                 name: "angleRange",
-                displayName: "Angle range",
+                displayName: "角度范围",
                 type: PropertyType.Number,
                 propertyGridGroup: specificGroup
             },
@@ -474,26 +475,26 @@ export class LVGLScaleWidget extends LVGLWidget {
             }),
             {
                 name: "totalTickCount",
-                displayName: "Total tick count",
+                displayName: "刻度线总数",
                 type: PropertyType.Number,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "majorTickEvery",
-                displayName: "Major tick every",
+                displayName: "主刻度线间隔",
                 type: PropertyType.Number,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "postDraw",
-                displayName: "Post draw",
+                displayName: "后绘制",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "drawTicksOnTop",
-                displayName: "Draw ticks on top",
+                displayName: "刻度线置于上层",
                 type: PropertyType.Boolean,
                 checkboxStyleSwitch: true,
                 propertyGridGroup: specificGroup
@@ -506,18 +507,18 @@ export class LVGLScaleWidget extends LVGLWidget {
             },
             {
                 name: "labelTexts",
-                displayName: "Label texts",
+                displayName: "标签文本",
                 type: PropertyType.MultilineText,
                 propertyGridGroup: specificGroup,
-                formText: "Comma-separated list of label texts"
+                formText: "以逗号分隔的标签文本列表"
             },
 
-            // Main line styles (straight line mode - LV_PART_MAIN)
+            // 主线样式（直线模式 - LV_PART_MAIN）
             makePropertiesSection("mainStyles"),
 
             {
                 name: "mainLineWidth",
-                displayName: "Main line width",
+                displayName: "主线宽度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup,
@@ -526,7 +527,7 @@ export class LVGLScaleWidget extends LVGLWidget {
             },
             {
                 name: "mainLineColor",
-                displayName: "Main line color",
+                displayName: "主线颜色",
                 type: PropertyType.ThemedColor,
                 isOptional: true,
                 propertyGridGroup: specificGroup,
@@ -535,7 +536,7 @@ export class LVGLScaleWidget extends LVGLWidget {
             },
             {
                 name: "mainLineOpacity",
-                displayName: "Main line opacity",
+                displayName: "主线透明度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup,
@@ -543,10 +544,10 @@ export class LVGLScaleWidget extends LVGLWidget {
                     widget.scaleMode === "ROUND_INNER" || widget.scaleMode === "ROUND_OUTER"
             },
 
-            // Main arc styles (round mode - LV_PART_MAIN)
+            // 主弧样式（圆形模式 - LV_PART_MAIN）
             {
                 name: "mainArcWidth",
-                displayName: "Main arc width",
+                displayName: "主弧宽度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup,
@@ -555,7 +556,7 @@ export class LVGLScaleWidget extends LVGLWidget {
             },
             {
                 name: "mainArcColor",
-                displayName: "Main arc color",
+                displayName: "主弧颜色",
                 type: PropertyType.ThemedColor,
                 isOptional: true,
                 propertyGridGroup: specificGroup,
@@ -564,7 +565,7 @@ export class LVGLScaleWidget extends LVGLWidget {
             },
             {
                 name: "mainArcOpacity",
-                displayName: "Main arc opacity",
+                displayName: "主弧透明度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup,
@@ -573,7 +574,7 @@ export class LVGLScaleWidget extends LVGLWidget {
             },
             {
                 name: "mainArcRounded",
-                displayName: "Main arc rounded",
+                displayName: "主弧圆角",
                 type: PropertyType.Boolean,
                 isOptional: true,
                 checkboxStyleSwitch: true,
@@ -583,7 +584,7 @@ export class LVGLScaleWidget extends LVGLWidget {
             },
             {
                 name: "mainArcImageSrc",
-                displayName: "Main arc image",
+                displayName: "主弧图像",
                 type: PropertyType.ObjectReference,
                 isOptional: true,
                 referencedObjectCollectionPath: "bitmaps",
@@ -592,87 +593,87 @@ export class LVGLScaleWidget extends LVGLWidget {
                     widget.scaleMode !== "ROUND_INNER" && widget.scaleMode !== "ROUND_OUTER"
             },
 
-            // Minor ticks styles (LV_PART_ITEMS)
+            // 次刻度线样式 (LV_PART_ITEMS)
             makePropertiesSection("minorTicksStyles"),
             {
                 name: "minorTicksLength",
-                displayName: "Minor ticks length",
+                displayName: "次刻度线长度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "minorTicksWidth",
-                displayName: "Minor ticks width",
+                displayName: "次刻度线宽度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "minorTicksColor",
-                displayName: "Minor ticks color",
+                displayName: "次刻度线颜色",
                 type: PropertyType.ThemedColor,
                 isOptional: true,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "minorTicksOpacity",
-                displayName: "Minor ticks opacity",
+                displayName: "次刻度线透明度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup
             },
 
-            // Major ticks styles (LV_PART_INDICATOR)
+            // 主刻度线样式 (LV_PART_INDICATOR)
             makePropertiesSection("majorTicksStyles"),
             {
                 name: "majorTicksLength",
-                displayName: "Major ticks length",
+                displayName: "主刻度线长度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "majorTicksWidth",
-                displayName: "Major ticks width",
+                displayName: "主刻度线宽度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "majorTicksColor",
-                displayName: "Major ticks color",
+                displayName: "主刻度线颜色",
                 type: PropertyType.ThemedColor,
                 isOptional: true,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "majorTicksOpacity",
-                displayName: "Major ticks opacity",
+                displayName: "主刻度线透明度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup
             },
 
-            // Labels styles (LV_PART_INDICATOR)
+            // 标签样式 (LV_PART_INDICATOR)
             makePropertiesSection("labelsStyles"),
             {
                 name: "labelsTextColor",
-                displayName: "Labels text color",
+                displayName: "标签文字颜色",
                 type: PropertyType.ThemedColor,
                 isOptional: true,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "labelsTextOpacity",
-                displayName: "Labels text opacity",
+                displayName: "标签文字透明度",
                 type: PropertyType.Number,
                 isOptional: true,
                 propertyGridGroup: specificGroup
             },
             {
                 name: "labelsTextFont",
-                displayName: "Labels text font",
+                displayName: "标签文字字体",
                 type: PropertyType.Enum,
                 enumItems: text_font_property_info.enumItems,
                 isOptional: true,
@@ -714,31 +715,31 @@ export class LVGLScaleWidget extends LVGLWidget {
             labelTexts: "",
             sections: [],
 
-            // Main line styles (straight mode)
+            // 主线样式（直线模式）
             mainLineWidth: undefined,
             mainLineColor: undefined,
             mainLineOpacity: undefined,
 
-            // Main arc styles (round mode)
+            // 主弧样式（圆形模式）
             mainArcWidth: undefined,
             mainArcColor: undefined,
             mainArcOpacity: undefined,
             mainArcRounded: false,
             mainArcImageSrc: undefined,
 
-            // Minor ticks styles
+            // 次刻度线样式
             minorTicksLength: undefined,
             minorTicksWidth: undefined,
             minorTicksColor: undefined,
             minorTicksOpacity: undefined,
 
-            // Major ticks styles
+            // 主刻度线样式
             majorTicksLength: undefined,
             majorTicksWidth: undefined,
             majorTicksColor: undefined,
             majorTicksOpacity: undefined,
 
-            // Labels styles
+            // 标签样式
             labelsTextColor: undefined,
             labelsTextOpacity: undefined,
             labelsTextFont: undefined
@@ -754,7 +755,7 @@ export class LVGLScaleWidget extends LVGLWidget {
             if (jsObject.rotationType == undefined) {
                 jsObject.rotationType = "literal";
             }
-            // migrate old minorRange/majorRange to minValue/maxValue
+            // 迁移旧的 minorRange/majorRange 到 minValue/maxValue
             if ((jsObject as any).minorRange != undefined && jsObject.minValue == undefined) {
                 jsObject.minValue = (jsObject as any).minorRange;
                 delete (jsObject as any).minorRange;
@@ -797,7 +798,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `Angle range must be an integer`,
+                        `角度范围必须是整数`,
                         getChildOfObject(widget, "angleRange")
                     )
                 );
@@ -810,7 +811,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                     !Number.isInteger(Number(widget.rotation))
                 ) {
                     messages.push(
-                        new Message(MessageType.ERROR, `Rotation must be an integer`, getChildOfObject(widget, "rotation"))
+                        new Message(MessageType.ERROR, `旋转角度必须是整数`, getChildOfObject(widget, "rotation"))
                     );
                 }
             }
@@ -824,7 +825,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Min value must be an integer`,
+                            `最小值必须是整数`,
                             getChildOfObject(widget, "minValue")
                         )
                     );
@@ -840,7 +841,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Max value must be an integer`,
+                            `最大值必须是整数`,
                             getChildOfObject(widget, "maxValue")
                         )
                     );
@@ -855,7 +856,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `Total tick count must be an integer`,
+                        `刻度线总数必须是整数`,
                         getChildOfObject(widget, "totalTickCount")
                     )
                 );
@@ -869,7 +870,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `Major tick every must be an integer`,
+                        `主刻度线间隔必须是整数`,
                         getChildOfObject(widget, "majorTickEvery")
                     )
                 );
@@ -924,31 +925,31 @@ export class LVGLScaleWidget extends LVGLWidget {
             labelTexts: observable,
             sections: observable,
 
-            // Main line styles (straight mode)
+            // 主线样式（直线模式）
             mainLineWidth: observable,
             mainLineColor: observable,
             mainLineOpacity: observable,
 
-            // Main arc styles (round mode)
+            // 主弧样式（圆形模式）
             mainArcWidth: observable,
             mainArcColor: observable,
             mainArcOpacity: observable,
             mainArcRounded: observable,
             mainArcImageSrc: observable,
 
-            // Minor ticks styles
+            // 次刻度线样式
             minorTicksLength: observable,
             minorTicksWidth: observable,
             minorTicksColor: observable,
             minorTicksOpacity: observable,
 
-            // Major ticks styles
+            // 主刻度线样式
             majorTicksLength: observable,
             majorTicksWidth: observable,
             majorTicksColor: observable,
             majorTicksOpacity: observable,
 
-            // Labels styles
+            // 标签样式
             labelsTextColor: observable,
             labelsTextOpacity: observable,
             labelsTextFont: observable
@@ -957,7 +958,7 @@ export class LVGLScaleWidget extends LVGLWidget {
 
     override toLVGLCode(code: LVGLCode) {
         if (!code.isV9) {
-            // Scale widget doesn't exist in LVGL version 8.x
+            // 刻度控件在 LVGL 8.x 版本中不存在
             code.createObject("lv_obj_create");
             return;
         }
@@ -984,7 +985,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                     "int32_t",
                     "new_val",
                     this.minValue as string,
-                    "Failed to evaluate Min value in Scale widget"
+                    "刻度控件中最小值表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -1013,7 +1014,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                     "int32_t",
                     "new_val",
                     this.maxValue as string,
-                    "Failed to evaluate Max value in Scale widget"
+                    "刻度控件中最大值表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -1052,7 +1053,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                     "int32_t",
                     "new_val",
                     this.rotation as string,
-                    "Failed to evaluate Rotation in Scale widget"
+                    "刻度控件中旋转角度表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -1125,7 +1126,7 @@ export class LVGLScaleWidget extends LVGLWidget {
         const isRoundMode = this.scaleMode === "ROUND_INNER" || this.scaleMode === "ROUND_OUTER";
 
         code.postWidgetExecute(() => {
-            // Inline styles for main line (straight mode - LV_PART_MAIN)
+            // 主线内联样式（直线模式 - LV_PART_MAIN）
 
             if (!isRoundMode) {
                 if (this.mainLineWidth != undefined) {
@@ -1173,7 +1174,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                 }
             }
 
-            // Inline styles for main arc (round mode - LV_PART_MAIN)
+            // 主弧内联样式（圆形模式 - LV_PART_MAIN）
             if (isRoundMode) {
                 if (this.mainArcWidth != undefined) {
                     code.callObjectFunction(
@@ -1237,7 +1238,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                 }
             }
 
-            // Inline styles for minor ticks (LV_PART_ITEMS)
+            // 次刻度线内联样式 (LV_PART_ITEMS)
             if (this.minorTicksLength != undefined) {
                 code.callObjectFunction(
                     "lv_obj_set_style_length",
@@ -1289,7 +1290,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                 );
             }
 
-            // Inline styles for major ticks (LV_PART_INDICATOR)
+            // 主刻度线内联样式 (LV_PART_INDICATOR)
             if (this.majorTicksLength != undefined) {
                 code.callObjectFunction(
                     "lv_obj_set_style_length",
@@ -1341,7 +1342,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                 );
             }
 
-            // Inline styles for labels (LV_PART_INDICATOR)
+            // 标签内联样式 (LV_PART_INDICATOR)
             if (this.labelsTextColor) {
                 code.buildColor(
                     this,
@@ -1382,14 +1383,14 @@ export class LVGLScaleWidget extends LVGLWidget {
                 const fontIndex = BUILT_IN_FONTS.indexOf(this.labelsTextFont);
                 if (code.lvglBuild) {
                     if (fontIndex != -1) {
-                        // Built-in font
+                        // 内置字体
                         code.callObjectFunction(
                             "lv_obj_set_style_text_font",
                             `&lv_font_${this.labelsTextFont.toLowerCase()}`,
                             code.constant("LV_PART_INDICATOR")
                         );
                     } else {
-                        // Custom font
+                        // 自定义字体
                         const font = findFont(ProjectEditor.getProject(this), this.labelsTextFont);
                         if (font) {
                             code.callObjectFunction(
@@ -1427,7 +1428,7 @@ export class LVGLScaleWidget extends LVGLWidget {
             }
         });
 
-        // sections
+        // 段落
         if (this.sections) {
             this.sections.forEach((section, sectionIndex) => {
                 code.blockStart("{");
@@ -1457,7 +1458,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                                         "int32_t",
                                         "new_min_val",
                                         section.minValue as string,
-                                        `Failed to evaluate Min value in Scale widget section #${sectionIndex + 1}`
+                                        `刻度控件段落 #${sectionIndex + 1} 中最小值表达式求值失败`
                                     );
                                 }
                             },
@@ -1468,7 +1469,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                                         "int32_t",
                                         "new_max_val",
                                         section.maxValue as string,
-                                        `Failed to evaluate Max value in Scale widget section #${sectionIndex + 1}`
+                                        `刻度控件段落 #${sectionIndex + 1} 中最大值表达式求值失败`
                                     );
                                 }
                             }
@@ -1485,7 +1486,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                             "int32_t",
                             "new_val",
                             section.minValue as string,
-                            `Failed to evaluate Min value in Scale widget section #${sectionIndex + 1}`
+                            `刻度控件段落 #${sectionIndex + 1} 中最小值表达式求值失败`
                         );
                         code.callFreeFunction("lv_scale_section_set_range", sectionVar, new_val, section.maxValue);
                         code.callObjectFunction("lv_obj_invalidate");
@@ -1496,7 +1497,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                             "int32_t",
                             "new_val",
                             section.maxValue as string,
-                            `Failed to evaluate Max value in Scale widget section #${sectionIndex + 1}`
+                            `刻度控件段落 #${sectionIndex + 1} 中最大值表达式求值失败`
                         );
                         code.callFreeFunction("lv_scale_section_set_range", sectionVar, section.minValue, new_val);
                         code.callObjectFunction("lv_obj_invalidate");
@@ -1554,7 +1555,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                 }
 
                 //
-                // Section inline styles
+                // 段落内联样式
                 //
 
                 const getVarName = (part: string) => {
@@ -1563,7 +1564,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                     return `${scaleName}_${sectionName}_${part}_style`;
                 }
 
-                // MAIN part
+                // MAIN 部分
                 const hasMainStyles =
                     section.mainWidth != undefined || section.mainColor || section.mainOpacity != undefined;
 
@@ -1641,7 +1642,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                     }
                 }
 
-                // ITEMS part (minor ticks)
+                // ITEMS 部分（次刻度线）
                 const hasItemsStyles =
                     section.minorTicksWidth != undefined ||
                     section.minorTicksColor ||
@@ -1721,7 +1722,7 @@ export class LVGLScaleWidget extends LVGLWidget {
                     }
                 }
 
-                // INDICATOR part (major ticks and labels)
+                // INDICATOR 部分（主刻度线和标签）
                 const hasIndicatorStyles =
                     section.majorTicksWidth != undefined ||
                     section.majorTicksColor ||
@@ -1822,10 +1823,10 @@ export class LVGLScaleWidget extends LVGLWidget {
                         const fontIndex = BUILT_IN_FONTS.indexOf(section.labelsTextFont);
                         if (code.lvglBuild) {
                             if (fontIndex != -1) {
-                                // Built-in font
+                                // 内置字体
                                 code.callFreeFunction("lv_style_set_text_font", style, `&lv_font_${section.labelsTextFont.toLowerCase()}`);
                             } else {
-                                // Custom font
+                                // 自定义字体
                                 const font = findFont(ProjectEditor.getProject(this), section.labelsTextFont);
                                 if (font) {
                                     code.callFreeFunction("lv_style_set_text_font", style, code.lvglBuild.getFontAccessor(font));

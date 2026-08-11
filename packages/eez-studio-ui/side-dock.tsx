@@ -57,7 +57,7 @@ export class SideDockComponent2 extends React.Component<{
             <div
                 className={dockSwitcherClassName}
                 onClick={this.toggleIsOpen}
-                title={this.isOpen ? "Hide Side bar" : "Show Side bar"}
+                title={this.isOpen ? "隐藏侧边栏" : "显示侧边栏"}
             />
         );
 
@@ -140,7 +140,7 @@ export class LayoutModels {
     static HISTORY_VIEW_SEARCH_RESULTS = {
         type: "tab",
         enableClose: false,
-        name: "Search results",
+        name: "搜索结果",
         id: "SearchResults",
         component: "SearchResults"
     };
@@ -148,7 +148,7 @@ export class LayoutModels {
     static HISTORY_VIEW_FILTERS = {
         type: "tab",
         enableClose: false,
-        name: "Filters",
+        name: "筛选器",
         id: "Filters",
         component: "Filters"
     };
@@ -156,7 +156,7 @@ export class LayoutModels {
     static HISTORY_VIEW_CALENDAR = {
         type: "tab",
         enableClose: false,
-        name: "Calendar",
+        name: "日历",
         id: "Calendar",
         component: "Calendar"
     };
@@ -165,7 +165,7 @@ export class LayoutModels {
     static HISTORY_VIEW_SESSIONS = {
         type: "tab",
         enableClose: false,
-        name: "Sessions",
+        name: "会话",
         id: LayoutModels.HISTORY_VIEW_SESSIONS_TAB_ID,
         component: "Sessions"
     };
@@ -173,7 +173,7 @@ export class LayoutModels {
     static HISTORY_VIEW_SCRAPBOOK = {
         type: "tab",
         enableClose: false,
-        name: "Scrapbook",
+        name: "剪贴簿",
         id: "Scrapbook",
         component: "Scrapbook"
     };
@@ -181,7 +181,7 @@ export class LayoutModels {
     static CHARTS_VIEW_RULERS = {
         type: "tab",
         enableClose: false,
-        name: "Rulers",
+        name: "标尺",
         id: "Rulers",
         component: "Rulers"
     };
@@ -189,7 +189,7 @@ export class LayoutModels {
     static CHARTS_VIEW_MEASUREMENTS = {
         type: "tab",
         enableClose: false,
-        name: "Measurements",
+        name: "测量",
         id: "Measurements",
         component: "Measurements"
     };
@@ -197,7 +197,7 @@ export class LayoutModels {
     static CHARTS_VIEW_OPTIONS = {
         type: "tab",
         enableClose: false,
-        name: "View Options",
+        name: "视图选项",
         id: "ViewOptions",
         component: "ViewOptions"
     };
@@ -205,7 +205,7 @@ export class LayoutModels {
     static CHARTS_VIEW_BOOKMARKS = {
         type: "tab",
         enableClose: false,
-        name: "Bookmarks",
+        name: "书签",
         id: "Bookmarks",
         component: "Bookmarks"
     };
@@ -213,7 +213,7 @@ export class LayoutModels {
     static CHARTS_VIEW_HELP = {
         type: "tab",
         enableClose: false,
-        name: "Help",
+        name: "帮助",
         id: "Help",
         component: "Help"
     };
@@ -541,7 +541,7 @@ export class LayoutModels {
                                     {
                                         type: "tab",
                                         enableClose: false,
-                                        name: "Items",
+                                        name: "项目",
                                         component: "items"
                                     }
                                 ]
@@ -557,7 +557,7 @@ export class LayoutModels {
                                     {
                                         type: "tab",
                                         enableClose: false,
-                                        name: "Selected Item Info",
+                                        name: "选中项目详情",
                                         component: "item-details"
                                     }
                                 ]
@@ -588,7 +588,7 @@ export class LayoutModels {
                                     {
                                         type: "tab",
                                         enableClose: false,
-                                        name: "Tabs",
+                                        name: "标签页",
                                         component: "main-content"
                                     }
                                 ]
@@ -605,7 +605,7 @@ export class LayoutModels {
                                         type: "tab",
                                         icon: "svg:project-editor-scrapbook",
                                         enableClose: false,
-                                        name: "Scrapbook",
+                                        name: "剪贴簿",
                                         component: "scrapbook"
                                     }
                                 ]

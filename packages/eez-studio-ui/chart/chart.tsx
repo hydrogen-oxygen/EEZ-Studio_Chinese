@@ -1,3 +1,4 @@
+// chart.tsx
 import { dialog, getCurrentWindow } from "@electron/remote";
 import { clipboard, SaveDialogOptions } from "electron";
 import bootstrap from "bootstrap";
@@ -189,7 +190,7 @@ export interface ILineController {
         event: PointerEvent
     ): MouseHandler | undefined;
     render(clipId: string): JSX.Element;
-    // find closest point on line to the given point
+    // 查找线上最接近给定点的点
     closestPoint(point: Point): Point | undefined;
 }
 
@@ -1268,7 +1269,7 @@ const AxisView = observer(
                                 height={ZOOM_ICON_SIZE}
                                 padding={ZOOM_ICON_PADDING}
                                 onClick={this.props.axisController.zoomIn}
-                                title="Zoom In"
+                                title="放大"
                             />
                         )}
 
@@ -1283,7 +1284,7 @@ const AxisView = observer(
                                 height={ZOOM_ICON_SIZE}
                                 padding={ZOOM_ICON_PADDING}
                                 onClick={this.props.axisController.zoomOut}
-                                title="Zoom Out"
+                                title="缩小"
                             />
                         )}
 
@@ -2390,7 +2391,7 @@ export const ChartView = observer(
                                 "default"
                             }
                         >
-                            {/* This is required to catch pointer events inside chart */}
+                            {/* 此处需要捕捉图表内的指针事件 */}
                             <rect
                                 x={chartsController.chartLeft}
                                 y={chartsController.chartTop}
@@ -2462,7 +2463,7 @@ function HelpView(props: any) {
                                 height="64"
                                 src="../eez-studio-ui/_images/mouse_middle_button.png"
                             ></img>
-                            <span className="text">or</span>
+                            <span className="text">或</span>
                             <img
                                 width="46"
                                 height="64"
@@ -2473,7 +2474,7 @@ function HelpView(props: any) {
                             <Arrow />
                         </td>
                         <td>
-                            <span className="text">Drag chart</span>
+                            <span className="text">拖拽图表</span>
                         </td>
                     </tr>
                     <tr>
@@ -2488,7 +2489,7 @@ function HelpView(props: any) {
                             <Arrow />
                         </td>
                         <td>
-                            <span className="text">X-Axis Offset</span>
+                            <span className="text">X轴偏移</span>
                         </td>
                     </tr>
                     <tr>
@@ -2505,7 +2506,7 @@ function HelpView(props: any) {
                             <Arrow />
                         </td>
                         <td>
-                            <span className="text">X-Axis Zoom</span>
+                            <span className="text">X轴缩放</span>
                         </td>
                     </tr>
                     <tr>
@@ -2522,7 +2523,7 @@ function HelpView(props: any) {
                             <Arrow />
                         </td>
                         <td>
-                            <span className="text">Y-Axis Offset</span>
+                            <span className="text">Y轴偏移</span>
                         </td>
                     </tr>
                     <tr>
@@ -2543,7 +2544,7 @@ function HelpView(props: any) {
                             <Arrow />
                         </td>
                         <td>
-                            <span className="text">Y-Axis Zoom</span>
+                            <span className="text">Y轴缩放</span>
                         </td>
                     </tr>
                 </tbody>
@@ -3254,7 +3255,7 @@ const Fade = cssTransition({
 function showCalculating() {
     console.log("showCalculating");
     if (!calculatingToastId) {
-        calculatingToastId = notification.info("Calculating...", {
+        calculatingToastId = notification.info("正在计算...", {
             transition: Fade,
             closeButton: false,
             position: "top-center"
@@ -3295,7 +3296,7 @@ class MeasurementsController {
             () => {
                 const measurements = this.measurementsModel.measurements.map(
                     measurementDefinition => {
-                        // reuse existing Measurement object if exists
+                        // 如果存在则重用现有的 Measurement 对象
                         const measurement = this.measurements.find(
                             measurement =>
                                 measurementDefinition.measurementId ===
@@ -3305,7 +3306,7 @@ class MeasurementsController {
                             return measurement;
                         }
 
-                        // create a new Measurement object
+                        // 创建新的 Measurement 对象
                         return new Measurement(
                             this,
                             measurementDefinition,
@@ -3333,7 +3334,7 @@ class MeasurementsController {
                 )
         );
 
-        // mark dirty all chart measurements when measurement interval changes
+        // 当测量区间变化时标记所有图表测量为脏
         this.dispose2 = reaction(
             () => ({
                 isAnimationActive:
@@ -4066,7 +4067,7 @@ class DynamicAxisController extends AxisController {
         }
 
         if (ticks.length === 0 && !this.logarithmic) {
-            // no tick lines, at least add lines for "from" and "to"
+            // 没有刻度线，至少为 "from" 和 "to" 添加线
             let from = Math.ceil(this.from / this.steps[0]) * this.steps[0];
             ticks.push({
                 px: this.valueToPx(from),
@@ -4099,7 +4100,7 @@ class DynamicAxisController extends AxisController {
         } else if (this.logarithmic) {
             ticks = ticks.sort((a, b) => a.px - b.px);
 
-            // set labels from the largest magnitude to the smallest
+            // 从最大数量级到最小数量级设置标签
             for (let iStep = steps.length - 1; iStep >= 0; iStep--) {
                 let step = steps[iStep];
                 for (let iTick = 0; iTick < ticks.length; ++iTick) {
@@ -4107,7 +4108,7 @@ class DynamicAxisController extends AxisController {
                     if (tick.step === step) {
                         let foundTooCloseLabel = false;
 
-                        // test if there is a label on the left that is too close to this tick
+                        // 测试左侧是否有标签离此刻度太近
                         for (
                             let i = iTick - 1;
                             i >= 0 && tick.px - ticks[i].px < minLabelPx;
@@ -4122,7 +4123,7 @@ class DynamicAxisController extends AxisController {
                             continue;
                         }
 
-                        // test if there is a label on the right that is too close to this tick
+                        // 测试右侧是否有标签离此刻度太近
                         for (
                             let i = iTick + 1;
                             i < ticks.length &&
@@ -4144,7 +4145,7 @@ class DynamicAxisController extends AxisController {
             }
         }
 
-        // remove duplicates, i.e. ticks with the same label
+        // 删除重复项，即具有相同标签的刻度
         ticks = uniqWith(ticks, (a, b) =>
             a.label ? a.label === b.label : false
         );
@@ -4277,7 +4278,7 @@ function calcSubdivisionScaleAndOffset(
     to: number,
     subdivision: number
 ) {
-    // first try heuristic to find nice round numbers
+    // 首先尝试启发式方法找到合适的整数
     for (let i = MIN_FIXED_SCALE_POWER; i <= MAX_FIXED_SCALE_POWER; i++) {
         for (let k = 1; k < 10.0; k += 0.01) {
             const scale = k * Math.pow(10, i);
@@ -4714,7 +4715,7 @@ export function getNearestValuePoint(
         xAxisController.pxToValue(point.x + 0.5) * waveform.samplingRate
     );
     if (i2 - i1 > 1) {
-        // find max value for logarithmic unit
+        // 对于对数单位，查找最大值
         let min = waveform.value(i1);
         let max = waveform.value(i1);
         for (let i = i1 + 1; i <= i2; ++i) {
@@ -5303,7 +5304,7 @@ const MeasurementInputField = observer(
             return (
                 <select
                     className="form-select"
-                    title="Chart rendering algorithm"
+                    title="图表渲染算法"
                     value={
                         measurement.arity === 1
                             ? measurement.chartIndex
@@ -5383,7 +5384,7 @@ const MeasurementComponent = observer(
                 <IconAction
                     icon="material:delete"
                     iconSize={16}
-                    title="Remove measurement"
+                    title="移除测量"
                     onClick={() => {
                         runInAction(() => {
                             measurements.splice(index, 1);
@@ -5405,8 +5406,8 @@ const MeasurementComponent = observer(
                             name: `${INPUT_FILED_NAME}${inputIndex}`,
                             displayName:
                                 measurement.arity === 1
-                                    ? "Input"
-                                    : `Input ${inputIndex + 1}`,
+                                    ? "输入"
+                                    : `输入 ${inputIndex + 1}`,
                             type: MeasurementInputField
                         } as IFieldProperties;
                     })
@@ -5420,7 +5421,7 @@ const MeasurementComponent = observer(
             if (this.isResultVisible) {
                 fields.push({
                     name: RESULT_FILED_NAME,
-                    displayName: "Result",
+                    displayName: "结果",
                     type: MeasurementResultField,
                     enclosureClassName:
                         "EezStudio_MeasurementsSideDockView_MeasurementResult_Enclosure"
@@ -5458,7 +5459,7 @@ const MeasurementComponent = observer(
 
             const locale = getLocale();
 
-            // determine CSV separator depending of locale usage of ","
+            // 根据区域设置确定 CSV 分隔符
             let separator;
             if ((0.1).toLocaleString(locale).indexOf(",") != -1) {
                 separator = ";";
@@ -5476,7 +5477,7 @@ const MeasurementComponent = observer(
             let progressToastId: string | number = 0;
 
             if (data.length > CHUNK) {
-                progressToastId = notification.info("Exporting to CSV ...", {
+                progressToastId = notification.info("正在导出为 CSV ...", {
                     autoClose: false,
                     closeButton: false,
                     closeOnClick: false,
@@ -5527,10 +5528,10 @@ const MeasurementComponent = observer(
                 let options: SaveDialogOptions = {
                     filters: [
                         {
-                            name: "CSV Files",
+                            name: "CSV 文件",
                             extensions: ["csv"]
                         },
-                        { name: "All Files", extensions: ["*"] }
+                        { name: "所有文件", extensions: ["*"] }
                     ]
                 };
 
@@ -5547,14 +5548,14 @@ const MeasurementComponent = observer(
 
                     try {
                         await writeBinaryData(filePath, csv);
-                        notification.success(`Saved as "${filePath}"`);
+                        notification.success(`已保存为 "${filePath}"`);
                     } catch (err: any) {
                         console.error(err);
                         notification.error(err.toString());
                     }
                 }
             } else {
-                notification.error(`Failed to export to CSV!`);
+                notification.error(`导出为 CSV 失败！`);
             }
 
             runInAction(() => (this.operationInProgress = false));
@@ -5571,9 +5572,9 @@ const MeasurementComponent = observer(
                 const csv = await this.getCsv();
                 if (csv) {
                     clipboard.writeText(csv);
-                    notification.success("CSV copied to the clipboard");
+                    notification.success("CSV 已复制到剪贴板");
                 } else {
-                    notification.error(`Failed to export to CSV!`);
+                    notification.error(`导出为 CSV 失败！`);
                 }
             } else {
                 const measurementResult = this.props.measurement.result!;
@@ -5603,9 +5604,9 @@ const MeasurementComponent = observer(
 
                 if (text) {
                     clipboard.writeText(text);
-                    notification.success("Value copied to the clipboard");
+                    notification.success("值已复制到剪贴板");
                 } else {
-                    notification.error(`Failed to copy value to clipboard!`);
+                    notification.error(`复制值到剪贴板失败！`);
                 }
             }
 
@@ -5633,7 +5634,7 @@ const MeasurementComponent = observer(
                     </td>
                 );
             } else {
-                // simplify in case of single chart and no measurement function parameters
+                // 在单个图表且无测量函数参数时简化显示
                 content = (
                     <td width="100%">
                         {this.isResultVisible && (
@@ -5655,7 +5656,7 @@ const MeasurementComponent = observer(
                                 <IconAction
                                     icon="material:content_copy"
                                     iconSize={16}
-                                    title="Copy to clipboard"
+                                    title="复制到剪贴板"
                                     onClick={this.onCopy}
                                     enabled={
                                         !this.operationInProgress &&
@@ -5665,7 +5666,7 @@ const MeasurementComponent = observer(
                                 <IconAction
                                     icon="material:save"
                                     iconSize={16}
-                                    title="Save as CSV file"
+                                    title="另存为 CSV 文件"
                                     onClick={this.onSaveAsCsv}
                                     overlayText={"CSV"}
                                     enabled={
@@ -5751,7 +5752,7 @@ const MeasurementsDockView = observer(
                                 );
                             }}
                         >
-                            Refresh
+                            刷新
                         </button>
                     )}
                     <div>
@@ -5777,7 +5778,7 @@ const MeasurementsDockView = observer(
                                 type="button"
                                 data-bs-toggle="dropdown"
                             >
-                                Add Measurement
+                                添加测量
                             </button>
                             <div className="dropdown-menu">
                                 {map(
@@ -5844,8 +5845,7 @@ const MeasurementValue = observer(
                             }}
                         >
                             <div className="alert alert-danger">
-                                Too many samples. Use the X-axis ruler to reduce
-                                input samples.
+                                样本过多。请使用 X 轴标尺减少输入样本。
                             </div>
                         </div>
                     );

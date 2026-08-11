@@ -128,7 +128,7 @@ const AboutBox = observer(
                 versionInfo = (
                     <>
                         <Loader size={20} />
-                        <span>Checking for updates...</span>
+                        <span>正在检查更新...</span>
                     </>
                 );
             } else {
@@ -141,7 +141,7 @@ const AboutBox = observer(
                     ) {
                         versionInfo = (
                             <>
-                                There is a newer version {this.latestVersion} (
+                                存在新版本 {this.latestVersion}（
                                 <a
                                     href="#"
                                     onClick={event => {
@@ -152,13 +152,13 @@ const AboutBox = observer(
                                         );
                                     }}
                                 >
-                                    download
+                                    下载
                                 </a>
-                                )
+                                ）
                             </>
                         );
                     } else {
-                        versionInfo = "You have the latest version";
+                        versionInfo = "您已是最新版本";
                     }
                 } else {
                     versionInfo = "";
@@ -175,7 +175,7 @@ const AboutBox = observer(
             var buildDate = mtime.toString();
 
             return (
-                <Dialog cancelButtonText="Close">
+                <Dialog cancelButtonText="关闭">
                     <div className="EezStudio_AboutBox">
                         <div className="EezStudio_Logo">
                             <img
@@ -188,7 +188,7 @@ const AboutBox = observer(
                         </div>
 
                         <div className="EezStudio_Version">
-                            Version {this.packageJSON.version} (
+                            版本 {this.packageJSON.version}（
                             <a
                                 href="#"
                                 onClick={event => {
@@ -199,13 +199,13 @@ const AboutBox = observer(
                                     );
                                 }}
                             >
-                                release notes
+                                发布说明
                             </a>
-                            )
+                            ）
                         </div>
 
                         <div className="EezStudio_BuildDate">
-                            Build date {formatDateTimeLong(new Date(buildDate))}
+                            构建日期 {formatDateTimeLong(new Date(buildDate))}
                         </div>
 
                         {this.versionInfo}
@@ -215,7 +215,7 @@ const AboutBox = observer(
                             onClick={this.checkForUpdates}
                             disabled={this.checkingForUpdates}
                         >
-                            Check for Updates
+                            检查更新
                         </button>
 
                         <div className="EezStudio_Links">
@@ -226,7 +226,7 @@ const AboutBox = observer(
                                     openLink(STUDIO_HOME_PAGE_URL);
                                 }}
                             >
-                                Home
+                                主页
                             </a>
                             {" | "}
                             <a

@@ -55,12 +55,12 @@ async function openProjectWithFileDialog(focusedWindow: BaseWindow) {
     const result = await dialog.showOpenDialog(focusedWindow, {
         properties: ["openFile"],
         filters: [
-            { name: "EEZ Project", extensions: ["eez-project"] },
+            { name: "EEZ 项目", extensions: ["eez-project"] },
             {
-                name: "EEZ Dashboard",
+                name: "EEZ 仪表盘",
                 extensions: ["eez-dashboard"]
             },
-            { name: "All Files", extensions: ["*"] }
+            { name: "所有文件", extensions: ["*"] }
         ]
     });
     const filePaths = result.filePaths;
@@ -125,14 +125,14 @@ function buildMacOSAppMenu(
         label: APP_NAME,
         submenu: [
             {
-                label: "About " + APP_NAME,
+                label: "关于 " + APP_NAME,
                 click: showAboutBox
             },
             {
                 type: "separator"
             },
             {
-                label: "Services",
+                label: "服务",
                 role: "services",
                 submenu: []
             },
@@ -140,24 +140,24 @@ function buildMacOSAppMenu(
                 type: "separator"
             },
             {
-                label: "Hide " + APP_NAME,
+                label: "隐藏 " + APP_NAME,
                 accelerator: "Command+H",
                 role: "hide"
             },
             {
-                label: "Hide Others",
+                label: "隐藏其他",
                 accelerator: "Command+Alt+H",
                 role: "hideOthers"
             },
             {
-                label: "Show All",
+                label: "显示全部",
                 role: "unhide"
             },
             {
                 type: "separator"
             },
             {
-                label: "Quit",
+                label: "退出",
                 accelerator: "Command+Q",
                 click: function () {
                     setForceQuit();
@@ -175,21 +175,21 @@ function buildFileMenu(win: IWindow | undefined) {
 
     fileMenuSubmenu.push(
         {
-            label: "New Project...",
+            label: "新建项目...",
             accelerator: "CmdOrCtrl+N",
             click: function (item, focusedWindow) {
                 createNewProject();
             }
         },
         {
-            label: "Add Instrument...",
+            label: "添加仪器...",
             accelerator: "CmdOrCtrl+Alt+N",
             click: function (item, focusedWindow) {
                 addInstrument();
             }
         },
         {
-            label: "New Window",
+            label: "新建窗口",
             accelerator: "CmdOrCtrl+Shift+N",
             click: function (item, focusedWindow) {
                 openHomeWindow();
@@ -199,7 +199,7 @@ function buildFileMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Open...",
+            label: "打开...",
             accelerator: "CmdOrCtrl+O",
             click: (item, focusedWindow) => {
                 if (!focusedWindow) {
@@ -213,14 +213,14 @@ function buildFileMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Open Recent",
+            label: "最近打开",
             submenu: settings.mru.map(mru => ({
                 label: mru.filePath,
                 click: function () {
                     if (fs.existsSync(mru.filePath)) {
                         openFile(mru.filePath);
                     } else {
-                        // file not found, remove from mru
+                        // 文件不存在，从最近列表中移除
                         var i = settings.mru.indexOf(mru);
                         if (i != -1) {
                             runInAction(() => {
@@ -228,14 +228,14 @@ function buildFileMenu(win: IWindow | undefined) {
                             });
                         }
 
-                        // notify user
+                        // 通知用户
                         dialog.showMessageBox(
                             BrowserWindow.getFocusedWindow()!,
                             {
                                 type: "error",
                                 title: "EEZ Studio",
-                                message: "File does not exist.",
-                                detail: `The file '${mru.filePath}' does not seem to exist anymore.`
+                                message: "文件不存在。",
+                                detail: `文件 '${mru.filePath}' 似乎已不存在。`
                             }
                         );
                     }
@@ -253,7 +253,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 type: "separator"
             },
             {
-                label: "Reload Project",
+                label: "重新加载项目",
                 click: function (item: any, focusedWindow: any) {
                     focusedWindow.webContents.send("reload-project");
                 }
@@ -265,20 +265,20 @@ function buildFileMenu(win: IWindow | undefined) {
                 type: "separator"
             },
             {
-                label: "Load Debug Info...",
+                label: "加载调试信息...",
                 click: async function (item: any, focusedWindow: any) {
                     const result = await dialog.showOpenDialog(focusedWindow, {
                         properties: ["openFile"],
                         filters: [
                             {
-                                name: "EEZ Debug Info",
+                                name: "EEZ 调试信息",
                                 extensions: ["eez-debug-info"]
                             },
                             {
-                                name: "EEZ Debug Info",
+                                name: "EEZ 调试信息",
                                 extensions: ["eez-debug-info"]
                             },
-                            { name: "All Files", extensions: ["*"] }
+                            { name: "所有文件", extensions: ["*"] }
                         ]
                     });
                     const filePaths = result.filePaths;
@@ -291,7 +291,7 @@ function buildFileMenu(win: IWindow | undefined) {
 
         if (win.state.isDebuggerActive) {
             fileMenuSubmenu.push({
-                label: "Save Debug Info...",
+                label: "保存调试信息...",
                 click: function (item: any, focusedWindow: any) {
                     saveDebugInfo(focusedWindow);
                 }
@@ -304,16 +304,16 @@ function buildFileMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Import Instrument Definition...",
+            label: "导入仪器定义...",
             click: async function (item: any, focusedWindow: any) {
                 const result = await dialog.showOpenDialog(focusedWindow, {
                     properties: ["openFile"],
                     filters: [
                         {
-                            name: "Instrument Definition Files",
+                            name: "仪器定义文件",
                             extensions: ["zip"]
                         },
-                        { name: "All Files", extensions: ["*"] }
+                        { name: "所有文件", extensions: ["*"] }
                     ]
                 });
                 const filePaths = result.filePaths;
@@ -331,7 +331,7 @@ function buildFileMenu(win: IWindow | undefined) {
             },
             {
                 id: "save",
-                label: "Save",
+                label: "保存",
                 accelerator: "CmdOrCtrl+S",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -340,7 +340,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 }
             },
             {
-                label: "Save As",
+                label: "另存为",
                 accelerator: "CmdOrCtrl+Shift+S",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -353,7 +353,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 type: "separator"
             },
             {
-                label: "Check",
+                label: "检查",
                 accelerator: "CmdOrCtrl+K",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -362,7 +362,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 }
             },
             {
-                label: "Build",
+                label: "构建",
                 accelerator: "CmdOrCtrl+B",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -375,7 +375,7 @@ function buildFileMenu(win: IWindow | undefined) {
         if (win.state.hasExtensionDefinitions) {
             fileMenuSubmenu.push(
                 {
-                    label: "Build Extensions",
+                    label: "构建扩展",
                     click: function (item: any, focusedWindow: any) {
                         if (focusedWindow) {
                             focusedWindow.webContents.send("build-extensions");
@@ -383,7 +383,7 @@ function buildFileMenu(win: IWindow | undefined) {
                     }
                 },
                 {
-                    label: "Build and Install Extensions",
+                    label: "构建并安装扩展",
                     click: function (item: any, focusedWindow: any) {
                         if (focusedWindow) {
                             focusedWindow.webContents.send(
@@ -401,7 +401,7 @@ function buildFileMenu(win: IWindow | undefined) {
             },
             {
                 id: "save",
-                label: "Save",
+                label: "保存",
                 accelerator: "CmdOrCtrl+S",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -421,7 +421,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 type: "separator"
             },
             {
-                label: "Close Window",
+                label: "关闭窗口",
                 accelerator: "CmdOrCtrl+W",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -442,7 +442,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 type: "separator"
             },
             {
-                label: "Exit",
+                label: "退出",
                 click: function (item: any, focusedWindow: any) {
                     if (isCrashed(focusedWindow)) {
                         app.exit();
@@ -456,7 +456,7 @@ function buildFileMenu(win: IWindow | undefined) {
     }
 
     return {
-        label: "File",
+        label: "文件",
         submenu: fileMenuSubmenu
     };
 }
@@ -467,7 +467,7 @@ function buildEditMenu(win: IWindow | undefined) {
     const editSubmenu: Electron.MenuItemConstructorOptions[] = [
         {
             id: "undo",
-            label: "Undo",
+            label: "撤销",
             accelerator: "CmdOrCtrl+Z",
             role: "undo",
             click: function (item, focusedWindow) {
@@ -484,7 +484,7 @@ function buildEditMenu(win: IWindow | undefined) {
         },
         {
             id: "redo",
-            label: "Redo",
+            label: "重做",
             accelerator: "CmdOrCtrl+Y",
             role: "redo",
             click: function (item, focusedWindow) {
@@ -503,7 +503,7 @@ function buildEditMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Cut",
+            label: "剪切",
             accelerator: "CmdOrCtrl+X",
             role: "cut",
             click: function (item) {
@@ -513,7 +513,7 @@ function buildEditMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Copy",
+            label: "复制",
             accelerator: "CmdOrCtrl+C",
             role: "copy",
             click: function (item) {
@@ -523,7 +523,7 @@ function buildEditMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Paste",
+            label: "粘贴",
             accelerator: "CmdOrCtrl+V",
             role: "paste",
             click: function (item) {
@@ -533,7 +533,7 @@ function buildEditMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Delete",
+            label: "删除",
             accelerator: "Delete",
             role: "delete",
             click: function (item) {
@@ -546,7 +546,7 @@ function buildEditMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Select All",
+            label: "全选",
             accelerator: "CmdOrCtrl+A",
             role: "selectAll",
             click: function (item) {
@@ -562,7 +562,7 @@ function buildEditMenu(win: IWindow | undefined) {
             type: "separator"
         });
         editSubmenu.push({
-            label: "Find Project Component",
+            label: "查找项目组件",
             accelerator: "CmdOrCtrl+Shift+F",
             click: function (item) {
                 if (win) {
@@ -573,7 +573,7 @@ function buildEditMenu(win: IWindow | undefined) {
     }
 
     const editMenu: Electron.MenuItemConstructorOptions = {
-        label: "Edit",
+        label: "编辑",
         submenu: editSubmenu
     };
 
@@ -603,7 +603,7 @@ function buildViewMenu(win: IWindow | undefined) {
 
     viewSubmenu.push(
         {
-            label: "Home",
+            label: "主页",
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("openTab", "home");
@@ -611,7 +611,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "History",
+            label: "历史",
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("openTab", "history");
@@ -619,7 +619,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Shortcuts and Groups",
+            label: "快捷方式和分组",
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send(
@@ -630,7 +630,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Noteboooks",
+            label: "笔记本",
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send(
@@ -641,7 +641,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Extensions",
+            label: "扩展",
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("openTab", "extensions");
@@ -649,7 +649,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Settings",
+            label: "设置",
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("openTab", "settings");
@@ -660,7 +660,7 @@ function buildViewMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Scrapbook for Project Editor",
+            label: "项目编辑器的剪贴簿",
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("showScrapbookManager");
@@ -674,7 +674,7 @@ function buildViewMenu(win: IWindow | undefined) {
 
     viewSubmenu.push(
         {
-            label: "Toggle Full Screen",
+            label: "切换全屏",
             accelerator: (function () {
                 if (isMacOs()) {
                     return "Ctrl+Command+F";
@@ -689,7 +689,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Toggle Developer Tools",
+            label: "切换开发者工具",
             accelerator: (function () {
                 if (isMacOs()) {
                     return "Alt+Command+I";
@@ -705,8 +705,8 @@ function buildViewMenu(win: IWindow | undefined) {
         },
         {
             label: settings.isDarkTheme
-                ? "Switch to Light Theme"
-                : "Switch to Dark Theme",
+                ? "切换为浅色主题"
+                : "切换为深色主题",
             accelerator: (function () {
                 if (isMacOs()) {
                     return "Alt+Command+T";
@@ -724,15 +724,15 @@ function buildViewMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Zoom In",
+            label: "放大",
             role: "zoomIn"
         },
         {
-            label: "Zoom Out",
+            label: "缩小",
             role: "zoomOut"
         },
         {
-            label: "Reset Zoom",
+            label: "重置缩放",
             role: "resetZoom"
         },
         {
@@ -747,8 +747,8 @@ function buildViewMenu(win: IWindow | undefined) {
 
         viewSubmenu.push({
             label: settings.showComponentsPaletteInProjectEditor
-                ? "Hide Components Palette"
-                : "Show Components Palette",
+                ? "隐藏组件面板"
+                : "显示组件面板",
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send(
@@ -759,7 +759,7 @@ function buildViewMenu(win: IWindow | undefined) {
         });
 
         viewSubmenu.push({
-            label: "Reset Layout",
+            label: "重置布局",
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("resetLayoutModels");
@@ -773,7 +773,7 @@ function buildViewMenu(win: IWindow | undefined) {
     }
 
     viewSubmenu.push({
-        label: "Next Tab",
+        label: "下一个标签页",
         accelerator: "Ctrl+Tab",
         click: function (item) {
             if (win) {
@@ -783,7 +783,7 @@ function buildViewMenu(win: IWindow | undefined) {
     });
 
     viewSubmenu.push({
-        label: "Previous Tab",
+        label: "上一个标签页",
         accelerator: "Ctrl+Shift+Tab",
         click: function (item) {
             if (win) {
@@ -797,7 +797,7 @@ function buildViewMenu(win: IWindow | undefined) {
     });
 
     viewSubmenu.push({
-        label: "Reload",
+        label: "重新加载",
         accelerator: "CmdOrCtrl+R",
         click: function (item) {
             if (win) {
@@ -809,7 +809,7 @@ function buildViewMenu(win: IWindow | undefined) {
     });
 
     return {
-        label: "View",
+        label: "视图",
         submenu: viewSubmenu
     };
 }
@@ -820,16 +820,16 @@ function buildMacOSWindowMenu(
     win: IWindow | undefined
 ): Electron.MenuItemConstructorOptions {
     return {
-        label: "Window",
+        label: "窗口",
         role: "window",
         submenu: [
             {
-                label: "Minimize",
+                label: "最小化",
                 accelerator: "CmdOrCtrl+M",
                 role: "minimize"
             },
             {
-                label: "Close",
+                label: "关闭",
                 accelerator: "CmdOrCtrl+W",
                 role: "close"
             },
@@ -837,7 +837,7 @@ function buildMacOSWindowMenu(
                 type: "separator"
             },
             {
-                label: "Bring All to Front",
+                label: "将所有窗口置于最前",
                 role: "front"
             }
         ]
@@ -853,7 +853,7 @@ function buildHelpMenu(
 
     if (isDev) {
         helpMenuSubmenu.push({
-            label: "Documentation",
+            label: "文档",
             accelerator: "F1",
             click: function (item: any, focusedWindow: any) {
                 focusedWindow.webContents.send("show-documentation-browser");
@@ -865,12 +865,12 @@ function buildHelpMenu(
     }
 
     helpMenuSubmenu.push({
-        label: "About",
+        label: "关于",
         click: showAboutBox
     });
 
     return {
-        label: "Help",
+        label: "帮助",
         role: "help",
         submenu: helpMenuSubmenu
     };

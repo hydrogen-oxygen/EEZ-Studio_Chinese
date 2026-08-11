@@ -164,7 +164,7 @@ export class LVGLBarWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Min must be an integer`,
+                            `最小值必须是整数`,
                             getChildOfObject(widget, "min")
                         )
                     );
@@ -180,7 +180,7 @@ export class LVGLBarWidget extends LVGLWidget {
                     messages.push(
                         new Message(
                             MessageType.ERROR,
-                            `Max must be an integer`,
+                            `最大值必须是整数`,
                             getChildOfObject(widget, "max")
                         )
                     );
@@ -241,7 +241,7 @@ export class LVGLBarWidget extends LVGLWidget {
                     "int32_t",
                     "new_val",
                     this.min as string,
-                    "Failed to evaluate Min in Bar widget"
+                    "条控件中最小值表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -276,7 +276,7 @@ export class LVGLBarWidget extends LVGLWidget {
                     "int32_t",
                     "new_val",
                     this.max as string,
-                    "Failed to evaluate Max in Bar widget"
+                    "条控件中最大值表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -339,7 +339,7 @@ export class LVGLBarWidget extends LVGLWidget {
                     "int32_t",
                     "new_val",
                     this.value as string,
-                    "Failed to evaluate Value in Bar widget"
+                    "条控件中数值表达式求值失败"
                 );
 
                 const cur_val = code.callObjectFunctionWithAssignment(
@@ -400,7 +400,7 @@ export class LVGLBarWidget extends LVGLWidget {
                         "int32_t",
                         "new_val",
                         this.value as string,
-                        "Failed to evaluate Value start in Bar widget"
+                        "条控件中起始值表达式求值失败"
                     );
 
                     const cur_val = code.callObjectFunctionWithAssignment(
