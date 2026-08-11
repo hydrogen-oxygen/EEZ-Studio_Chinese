@@ -1,5 +1,7 @@
 [![GitHub release](https://img.shields.io/github/release/eez-open/studio.svg)](https://github.com/eez-open/studio/releases) [![license](https://img.shields.io/github/license/eez-open/studio.svg)](https://github.com/eez-open/studio/blob/master/LICENSE.TXT) [![liberapay](https://img.shields.io/liberapay/receives/eez-open.svg?logo=liberapay)](https://liberapay.com/eez-open/donate) [![Downloads](https://img.shields.io/github/downloads/eez-open/studio/total)](https://github.com/eez-open/studio/releases)
 
+    注意：大部分翻译内容由AI支持。
+
 ### 技术支持
 
 欢迎在 [Issues](https://github.com/eez-open/studio/issues) 部分提交您的意见、建议、新功能请求和错误报告。但请注意，Envox 团队将按照“尽力而为”原则处理所报告的问题，因此请相应调整您的期望。不过，如果您希望获得更及时、高质量的响应以及直接的技术支持联系，您可以选择我们的 [支持计划](https://www.envox.eu/support-plans/)（另请查看[此篇](https://www.envox.eu/premium-technical-support-for-eez-studio/)博客文章）。  
